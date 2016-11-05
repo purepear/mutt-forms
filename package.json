@@ -1,7 +1,19 @@
 {
   "name": "pug-forms",
   "version": "0.0.1",
+  "author": {
+    "name": "Nick Snell",
+    "email": "nick@boughtbymany.com"
+  },
   "description": "HTML Forms with a squishy face.",
+  "homepage": "https://github.com/boughtbymany/pug-forms",
+  "repository": { 
+    "type" : "git", 
+    "url" : "https://github.com/boughtbymany/pug-forms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/boughtbymany/pug-forms/issues"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.9.0",
@@ -17,6 +29,5 @@
   "scripts": {
     "test": "node_modules/mocha/bin/mocha"
   },
-  "author": "boughtbymany.com",
   "license": "ISC"
 }
