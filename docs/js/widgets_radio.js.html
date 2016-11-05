@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: widgets/radio.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: widgets/radio.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+    pug - widgets/radio.js
+*/
+
+'use strict';
+
+import {BaseChoiceWidget} from './choice';
+
+/**
+* RadioInput - Standard HTML radio input
+*/
+export class RadioInput extends BaseChoiceWidget {
+
+    /**
+    *
+    */
+    constructor(field, type, id, name, label, attribs, options, value) {
+        super(field, type, id, name, label, attribs, options, value);
+        
+        // Booleans do not have choices, so we must contrive
+        // them if they aren't already set
+        if(this.type == 'boolean') {
+            if(options.hasOwnProperty('choices')) {
+                this.choices = options.choices;
+            }
+            else {
+                this.choices = [[true, 'Yes'], [false, 'No']];
+            }
+        }
+    }
+
+    /**
+    * Render the radio input field
+    */
+    renderField() {
+        let radioInputListWrapper = document.createElement('div');
+        let index = 0;
+        let choices = [];
+
+        for(let choice of this.choices) {
+            let [value, label] = choice;
+            let fieldId = `${this.name}_${index}`;
+
+            let radioInputWrapper = document.createElement('div');
+            radioInputWrapper.setAttribute('class', 'pug-field-radio-item');
+
+            let radioInput = document.createElement('input');
+            radioInput.setAttribute('id', fieldId);
+            radioInput.setAttribute('type', 'radio');
+            radioInput.setAttribute('name', this.name);
+            radioInput.setAttribute('value', value);
+            radioInput.setAttribute('class', this.getFieldClass());
+
+            if(this.attribs) {
+                for(let attrib in this.attribs) {
+                    radioInput.setAttribute(attrib, this.attribs[attrib]);
+                }
+            }
+
+            let radioInputLabel = document.createElement('label');
+            radioInputLabel.setAttribute('for', fieldId);
+            radioInputLabel.textContent = this.formatLabel(label);
+
+            radioInputWrapper.appendChild(radioInput);
+            radioInputWrapper.appendChild(radioInputLabel);
+
+            radioInputListWrapper.appendChild(radioInputWrapper);
+
+            index++;
+        }
+
+        return radioInputListWrapper;
+    }
+
+    /**
+    * Get the value of the item. Radio buttons require an overide as
+    * there are multiple elements on the page, we must attempt to get
+    * the selected one
+    */
+    getValue() {
+        let selectedElement = this.getElementWrapper().querySelector('.pug-field:checked');
+
+        if(!selectedElement) {
+            return null;
+        }
+
+        return this.value = selectedElement.value;
+    }
+
+    /**
+    * Get the class name for the widget element
+    */
+    getFieldClass() { return 'pug-field pug-field-radio'; }
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

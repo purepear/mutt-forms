@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pug Overview</title>
+    <link rel="stylesheet" href="assets/milligram.min.css">
+    <link rel="stylesheet" href="assets/doc.css">
+    <script src="../build/pug.js"></script>
+    <script src="assets/doc-form.js"></script>
+    <script>
+    var pugForm;
+
+    function fakeSubmit(data) {
+        window.console.log('Submitted form!');
+        window.console.log(data);
+    }
+
+    function main() {
+        pugForm = new Pug(
+            document.getElementById('demo'),
+            docSchema,
+            docOptions,
+            (data) => {
+                fakeSubmit(data);
+            },
+            true
+        );
+
+        pugForm.setFormId('demo-form');
+        pugForm.render().then((form) => {
+            window.console.log('Rendered -> ' + form.id);
+        });
+
+        var pugFormLocking = new Pug(
+            document.getElementById('locking'),
+            {
+                title: 'Test Lock Form',
+                properties: {
+                    field1: {
+                        type: "string",
+                        title: "String Field",
+                        default: "Test String Value"
+                    },
+                    select: {
+                        type: "string",
+                        title: "Choice - Select Field",
+                        default: "OPTION_2",
+                        enum: [
+                            "OPTION_1",
+                            "OPTION_2"
+                        ]
+                    }
+                }
+            },
+            {},
+            (data) => {
+                fakeSubmit(data);
+            },
+            true
+        );
+
+        pugFormLocking.setFormId('demo-locking-form');
+        pugFormLocking.render().then((form) => {
+            window.console.log('Rendered -> ' + form.id);
+        });
+
+        var lock = document.getElementById('lock');
+        lock.onclick = () => {
+            pugFormLocking.lock();
+        };
+
+        var unlock = document.getElementById('unlock');
+        unlock.onclick = () => {
+            pugFormLocking.unlock();
+        };
+
+
+        var pugFormValidation = new Pug(
+            document.getElementById('validation'),
+            {
+                title: 'Form Validation',
+                properties: {
+                    theField: {
+                        type: "string",
+                        title: "String Field",
+                        required: true
+                    },
+                    theSelect: {
+                        type: "string",
+                        title: "Choice - Select Field",
+                        default: "OPTION_2",
+                        enum: [
+                            "OPTION_1",
+                            "OPTION_2"
+                        ]
+                    }
+                }
+            },
+            {},
+            (data) => {
+                pugFormValidation.validate();
+                return false;
+            },
+            true
+        );
+
+        pugFormValidation.setFormId('demo-validation-form');
+        pugFormValidation.render().then((form) => {
+            window.console.log('Rendered -> ' + form.id);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', main);
+    </script>
+</head>
+<body>
+    <main class="wrapper">
+        <section class="container">
+            <h3>Pug Forms</h3>
+            <p>Simple Javascript Forms.</p>
+            <div id="demo"></div>
+            <hr>
+            <p>Forms Can be locked and unlocked:</p>
+            <div id="locking"></div>
+            <button id="lock">Lock Form</button>
+            <button id="unlock">Unlock Form</button>
+            <hr>
+            <p>Form Validation</p>
+            <div id="validation"></div>
+        </section>
+    </main>
+</body>
+</html>

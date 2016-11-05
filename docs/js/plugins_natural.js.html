@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: plugins/natural.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: plugins/natural.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+    pug - widgets/natural.js
+
+    Widgets for creating natural language forms
+*/
+
+'use strict';
+
+import PugRegistry from '../registry';
+import {Widget} from '../widgets/core';
+import {SelectInput} from '../widgets/select';
+import {TextInput} from '../widgets/text';
+import {RadioInput} from '../widgets/radio';
+import {mixin} from '../utils'; 
+
+// Plugins
+import {TextAutoCompleteInput} from './autocomplete';
+import {DatePickerInput} from './datepicker';
+
+
+/**
+* NaturalMixin - Mixin class for natural language fields
+* @mixin
+*/
+class NaturalMixin {
+
+    /**
+    * Faux constructor for mixin class
+    */
+    init() {
+        this.toggled = false;
+    }
+
+    /**
+    * Render the HTML widget
+    */
+    render() {
+        // Create a fragment for our widget
+        let widgetFragment = document.createDocumentFragment();
+
+        let wrapper = this.renderWrapper();
+        let label = this.renderLabel();
+        let field = this.renderField();
+
+        let fieldModal = document.createElement('div');
+        fieldModal.setAttribute('class', 'pug-natural-modal');
+
+        let fieldModalSkin = document.createElement('div');
+        fieldModalSkin.setAttribute('class', 'pug-natural-modal-skin');        
+        fieldModalSkin.onclick = () => {
+            this.toggleOverlay();
+            return false;
+        }
+
+        let fieldModalInner = document.createElement('div');
+        fieldModalInner.setAttribute('class', 'pug-natural-modal-inner');
+        fieldModalInner.appendChild(label);
+        fieldModalInner.appendChild(field);
+        
+        fieldModal.appendChild(fieldModalSkin);
+        fieldModal.appendChild(fieldModalInner);
+
+        let naturalLanguageContainer = this.renderNaturalLanguage();
+
+        wrapper.appendChild(naturalLanguageContainer);
+        wrapper.appendChild(fieldModal);
+
+        widgetFragment.appendChild(wrapper);
+
+        return widgetFragment;
+    }
+
+    /**
+    * Render the 'natural language' representation of
+    * the field.
+    */
+    renderNaturalLanguage() {
+        let prefix = this.options.natural.prefix;
+        let suffix = this.options.natural.suffix;
+        let trigger = this.options.natural.trigger;
+
+        let naturalLanguageWrapper = document.createElement('span');
+        naturalLanguageWrapper.setAttribute('class', 'pug-natural');
+
+        let naturalLanguageTrigger = document.createElement('a');
+        naturalLanguageTrigger.setAttribute('href', '#');
+        naturalLanguageTrigger.setAttribute('class', 'pug-natural-trigger');
+        naturalLanguageTrigger.textContent = trigger;
+        naturalLanguageTrigger.onclick = () => {
+            this.toggleOverlay();
+            return false;
+        }
+
+        let prefixNode = document.createTextNode(prefix);
+        let suffixNode = document.createTextNode(suffix);
+
+        naturalLanguageWrapper.appendChild(prefixNode);
+        naturalLanguageWrapper.appendChild(naturalLanguageTrigger);
+        naturalLanguageWrapper.appendChild(suffixNode);
+
+        if(this.options.natural.hasOwnProperty('break') 
+            &amp;&amp; this.options.natural.break) {
+            let breakPoint = document.createElement('br');
+            naturalLanguageWrapper.appendChild(breakPoint);
+        }
+
+        return naturalLanguageWrapper;
+    }
+
+    /**
+    * Refresh the elements error state
+    */
+    refreshErrorState(errors) {
+        window.console.log('NATURAL refreshErrorState', this.name);
+        this.errors = errors;
+
+        let elementWrapper = this.getElementNaturalModalInner();
+        let errorElement = this.getElementError();
+        let errorWrapperClass = this.getErrorWrapperClass();
+        
+        if(errorElement) {
+            elementWrapper.classList.remove(errorWrapperClass);
+
+            window.console.log('REMOVE', this.name, elementWrapper, errorElement);
+
+            elementWrapper.removeChild(errorElement);
+        }
+
+        if(this.errors.length > 0) {
+            elementWrapper.classList.add(errorWrapperClass);
+            let errors = this.renderErrors();
+
+            if(errors) {
+                elementWrapper.appendChild(errors);
+            }
+        }
+    }
+
+    /**
+    * Handle the event from the natural language trigger
+    */
+    toggleOverlay() {
+        let wrapper = this.getElementWrapper();
+        let modal = wrapper.querySelector('.pug-natural-modal');
+
+        if(this.toggled) {
+            if(this._field.validate()) {
+                // Fetch the existing value to update the trigger
+                let value = this.getNaturalDisplayValue();
+                let trigger = wrapper.querySelector('.pug-natural-trigger');
+                trigger.classList.add('pug-natural-completed');
+                trigger.textContent = value;
+
+                this.toggled = false;
+                modal.classList.remove('pug-natural-modal-active');
+            }
+        } else {
+            this.toggled = true;
+            modal.classList.add('pug-natural-modal-active');
+        }
+    }
+
+    /**
+    * Standard post render handler. The default is to inject a toggle
+    * button next to the input, but its done as a post render operation
+    * rather than a standard renderNaturalLanguage as it is not always
+    * used - e.g select/radio toggles dont have this
+    */
+    postRender() {
+        let innerModal = this.getElementNaturalModalInner();
+
+        let closeControl = document.createElement('button');
+        closeControl.textContent = 'Done';
+        closeControl.onclick = () => {
+            this.toggleOverlay();
+            return false;
+        }
+
+        innerModal.appendChild(closeControl);
+    }
+
+    /**
+    *
+    */
+    getNaturalDisplayValue() {
+        return this.getValue();
+    }
+
+    /**
+    *
+    */
+    getElementNaturalModal() {
+        return this.getElementWrapper().querySelector('.pug-natural-modal');
+    }
+
+    /**
+    *
+    */
+    getElementNaturalModalInner() {
+        return this.getElementNaturalModal().querySelector('.pug-natural-modal-inner');
+    }
+
+    /**
+    *
+    */
+    getElementError() {
+        return this.getElementNaturalModalInner().querySelector('.pug-error');
+    }
+
+    /**
+    * Get the class name for the widget wrapper
+    */
+    getFieldWrapperClass() {
+        return 'pug-field-wrapper pug-natural-field-wrapper';
+    }
+}
+
+
+/**
+* NaturalTextInput - Text input in a natural language
+* style
+*/
+export class NaturalTextInput extends mixin(TextInput, NaturalMixin) {
+
+}
+
+PugRegistry.registerWidget('naturaltext', NaturalTextInput);
+
+
+/**
+* NaturalSelectInput - Select input in a natural language
+* style
+*/
+export class NaturalSelectInput extends mixin(SelectInput, NaturalMixin) {
+
+    /**
+    *
+    */
+    postRender() {
+        // Bind the toggle action to the select action
+        let innerModal = this.getElementNaturalModalInner();
+        let fields = innerModal.querySelectorAll('.pug-field');
+
+        for(let field of Array.from(fields)) {
+            field.onclick = () => {
+                this.toggleOverlay();
+                return false;
+            }
+        }
+    }
+
+    /**
+    *
+    */
+    getNaturalDisplayValue() {
+        let value = this.getValue();
+
+        for(let choices of this.choices) {
+            let [key, label] = choices;
+            if(key == value) {
+                return label;
+            }
+        }
+
+        return value;
+    }
+
+}
+
+PugRegistry.registerWidget('naturalselect', NaturalSelectInput);
+
+/**
+*
+*/
+export class NaturalRadioInput extends mixin(RadioInput, NaturalMixin) {
+
+    /**
+    *
+    */
+    postRender() {
+        // Bind the toggle action to the select action
+        let innerModal = this.getElementNaturalModalInner();
+        let fields = innerModal.querySelectorAll('.pug-field');
+
+        for(let field of Array.from(fields)) {
+            field.onclick = () => {
+                this.toggleOverlay();
+                return false;
+            }
+        }
+    }
+
+    /**
+    * 
+    */
+    getNaturalDisplayValue() {
+        // NOTE: We don't use this.getValue() here, even though
+        // this seems correct as we need the field to normalise
+        // the data type to give the expected results when matching
+        // the correct label
+        let value = this._field.value;
+
+        for(let choices of this.choices) {
+            let [key, label] = choices;
+
+            if(key == value) {
+                return label;
+            }
+        }
+
+        return value;
+    }
+}
+
+PugRegistry.registerWidget('naturalradio', NaturalRadioInput);
+
+/**
+*
+*/
+export class NaturalTextAutoCompleteInput extends mixin(TextAutoCompleteInput, NaturalMixin) {
+
+    /**
+    * 
+    */
+    postRender() {
+        super.postRender();
+        this.initAutoComplete(); 
+    }
+
+}
+
+PugRegistry.registerWidget('naturalautocomplete', NaturalTextAutoCompleteInput);
+
+
+/**
+*
+*/
+export class NaturalDatePickerInput extends mixin(DatePickerInput, NaturalMixin) {
+    
+    /**
+    * 
+    */
+    postRender() {
+        super.postRender();
+        this.initDatePicker(); 
+    }
+
+}
+
+PugRegistry.registerWidget('naturaldatepicker', NaturalDatePickerInput);
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

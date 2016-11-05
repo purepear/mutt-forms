@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fields/core.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fields/core.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+    pug - fields/core.js
+*/
+
+'use strict';
+
+import {TextInput} from '../widgets/text';
+
+export class Field {
+
+    /**
+    * Initialise the field
+    * @param {string} id the ID of the field
+    * @param {string} name the HTML name of the field
+    *
+    */
+    constructor({id, name, label = null, initial = null, widget = null,
+        validators = [], attribs = {}, description = null, options = {},
+        order = null}) {
+
+        this.id = id;
+        this.name = name;
+        this.label = (label) ? label : this.name; // default
+        this.description = description;
+        this.attribs = attribs;
+        this.options = options;
+        this.validators = validators;
+        this.sortOrder = order;
+        this.locked = false;
+
+        let widgetKlass = widget ? widget : this.getWidget();
+
+        this.widget = new widgetKlass(
+            this,
+            this.type,
+            this.id,
+            this.name,
+            this.label,
+            this.attribs,
+            this.options,
+            initial
+        );
+
+        this._errors = [];
+
+        this.initOptions();
+    }
+
+    /**
+    * Enable the options on the field
+    */
+    initOptions() {
+        if(this.options.hasOwnProperty('order')) {
+            this.sortOrder = this.options.order;
+        }
+    }
+
+    /**
+    * Property - get/set the type (typically set can not be called 
+    * but is included for subclasses who may use this)
+    */
+    get type() {
+        return this.constructor.name.toLowerCase().replace('field', '');
+    }
+
+    set type(someType) {
+        throw new Error('Unable to set type on a field instance!');
+    }
+
+    /**
+    * Property - get/set value
+    */
+    get value() {
+        return this.widget.getValue();
+    }
+
+    set value(value) {
+        this.widget.setValue(value);
+    }
+
+    /**
+    * Property - get/set errors
+    * @param {string} Error string
+    */
+    get errors() {
+        return this._errors;
+    }
+
+    set errors(error) {
+        this._errors.push(error);
+    }
+
+    /**
+    * Render the form field using it's widget interface
+    */
+    render() {
+        return this.widget.render();
+    }
+
+
+    /**
+    * Callback to the field after it has been rendered to
+    * the stage
+    */
+    postRender() {
+        this.widget.postRender();
+    }
+
+    /**
+    * Validate the form field
+    */
+    validate() {
+        // Clear any previous validations
+        this.refreshValidationState();
+
+        let value = this.value;
+
+        for(let validator of this.validators) {
+            if(!validator.validate(value)) {
+                this.errors = validator.error;
+            }
+        }
+
+        if(this.errors.length > 0) {
+            this.widget.refreshErrorState(this.errors);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+    * Turn the field from an editable elment to a readonly one
+    */
+    lock() {
+        if(this.locked) {
+            return false;
+        }
+
+        this.widget.lock();
+        this.locked = true;
+
+        return true;
+    }
+
+    /*
+    * Restore a field from a locked state
+    */
+    unlock() {
+        if(!this.locked) {
+            return false;
+        }
+
+        this.widget.unlock();
+        this.locked = false;
+
+        return true;
+    }
+
+    /**
+    * Refresh the validation state
+    */
+    refreshValidationState() {
+        this._errors = [];
+        this.widget.errors = [];
+        this.widget.refreshErrorState([]);
+    }
+
+    /**
+    * Get the widget class used to render the field
+    */
+    getWidget() {
+        return TextInput;
+    }
+
+    /**
+    * Get the sort order of the field. This is used when
+    * rendering groups of fields.
+    */
+    getSortOrder() {
+        return this.sortOrder;
+    }
+
+    /**
+    * Set the internal sort order for a field.
+    */
+    setSortOrder(order) {
+        this.sortOrder = order;
+    }
+
+    /**
+    * Display field as a string representation
+    */
+    toString() {
+        return `Field &lt;${this.name}>`;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

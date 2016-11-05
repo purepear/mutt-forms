@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: widgets/core.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: widgets/core.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* @file Base widget interface 
+* @copyright Bought By Many 2016
+*/
+
+'use strict';
+
+import {displayReadonlyValue} from './text';
+
+
+/**
+* Base Widget interface
+* @class
+* @namespace Widgets
+*/
+export class Widget {
+
+    /**
+    * Base Widget interface
+    * @constructor
+    * @param {string} type
+    * @param {string} type
+    * @param {string} id
+    * @param {string} name
+    * @param {string} label
+    * @param {object} attribs
+    * @param {object} options
+    * @param {string} value
+    */
+    constructor(field, type, id, name, label, attribs, options, value) {
+        this._field = field;
+        this.type = type;
+        this.id = id;
+        this.name = name;
+        this.label = label;
+        this.attribs = attribs;
+        this.options = options;
+        this.value = value;
+        this.locked = false;
+
+        this.errors = [];
+    }
+
+    /**
+    * Render the HTML widget
+    * @returns {DocumentFragment} Rendered widget as a document fragment
+    */
+    render() {
+        // Create a fragment for our widget
+        let widgetFragment = document.createDocumentFragment();
+
+        let wrapper = this.renderWrapper();
+        let label = this.renderLabel();
+        let field = this.renderField();
+        let errors = this.renderErrors();
+
+        if(label) {
+            wrapper.appendChild(label);
+        }
+
+        wrapper.appendChild(field);
+
+        if(errors) {
+            wrapper.appendChild(errors);
+        }
+
+        widgetFragment.appendChild(wrapper);
+
+        return widgetFragment;
+    }
+
+    /**
+    * Callback to the widget after the widget has been rendered
+    * to the stage
+    */
+    postRender() {
+        // Default is to do nothing...
+        return;
+    }   
+
+    /**
+    * Lock the widget - this places it in a read only state
+    * @returns {bool} returns true if lock is successful, false otherwise
+    */
+    lock() {
+        if(this.locked) {
+            return false;
+        }
+
+        let lockedValue = this.getValue();
+        let wrapper = this.getElementWrapper();
+        let element = this.getElement();
+
+        // Clear the existing field...
+        wrapper.removeChild(element);
+
+        // Add the display only field
+        let displayElement = displayReadonlyValue(lockedValue);
+        wrapper.appendChild(displayElement);
+
+        this.locked = true;
+
+        return true;
+    }
+
+    /**
+    * Unlock the widget - this removes any previous lock and returns
+    * it to it's default state.
+    * @returns {bool} returns true if unlock is successful, false otherwise
+    */
+    unlock() {
+        if(!this.locked) {
+            return false;
+        }
+
+        let wrapper = this.getElementWrapper();
+        let element = this.getElement();
+
+        // Clear the display field
+        wrapper.removeChild(element);
+
+        let field = this.renderField();
+        wrapper.appendChild(field);
+
+        this.locked = false;
+
+        return true;
+    }
+
+    /**
+    * Render the field HTML - intended to be overidden by a subclass
+    */
+    renderField() {
+        /* */
+        throw new Error('renderField should be overidden by a widget subclass!')
+    }
+
+    /**
+    * Render the field wrapper
+    * @returns {HTMLElement} HTML element used for wrapping widget
+    */
+    renderWrapper() {
+        let wrapper = document.createElement('div');
+        wrapper.setAttribute('id', this.id);
+        wrapper.className = this.getFieldWrapperClass();
+        return wrapper;
+    }
+
+    /**
+    * Render the field label
+
+    */
+    renderLabel() {
+        if(this.label) {
+            let label = document.createElement('label');
+            label.setAttribute('for', this.name);
+            label.textContent = this.label;
+            return label;
+        }
+
+        return null;
+    }
+
+    /**
+    * Render the field error information
+    */
+    renderErrors() {
+        if(this.errors.length > 0) {
+            let errorList = document.createElement('ul');
+            errorList.className = this.getErrorClass();
+
+            for(let error of this.errors) {
+                let errorItem = document.createElement('li');
+                errorItem.textContent = error;
+                errorList.appendChild(errorItem);
+            }
+
+            return errorList;
+        }
+
+        return null;
+    }
+
+    /**
+    * Refresh the elements error state
+    */
+    refreshErrorState(errors) {
+        window.console.log('refreshErrorState', this.name);
+
+        this.errors = errors;
+
+        let elementWrapper = this.getElementWrapper();
+        let errorElement = this.getElementError();
+        let errorWrapperClass = this.getErrorWrapperClass();
+        
+        if(errorElement) {
+            elementWrapper.classList.remove(errorWrapperClass);
+            elementWrapper.removeChild(errorElement);
+        }
+
+        if(this.errors.length > 0) {
+            elementWrapper.classList.add(errorWrapperClass);
+            let errors = this.renderErrors();
+
+            if(errors) {
+                elementWrapper.appendChild(errors);
+            }
+        }
+    }
+
+    /**
+    * Get a handle on the element
+    */
+    getElementWrapper() {
+        return document.querySelector(`#${this.id}`);
+    }
+
+    /**
+    *
+    */
+    getElement() {
+        return this.getElementWrapper().querySelector('.pug-field');
+    }
+
+    /**
+    *
+    */
+    getElementError() {
+        return this.getElementWrapper().querySelector('.pug-error');
+    }
+
+    /**
+    *
+    */
+    getValue() {
+        let element = this.getElement();
+
+        if(!element) {
+            throw new Error('Unable to get element!');
+        }
+
+        return this.value = element.value;
+    }
+
+    /**
+    *
+    */
+    setValue(value) {
+        this.value = value;
+
+        let element = this.getElement();
+
+        if(element) {
+            element.value = this.value;
+        }
+    }
+
+    /**
+    * Get the class name for the form element
+    */
+    getFieldClass() { return 'pug-field'; }
+
+    /**
+    * Get the class name for the widget wrapper
+    */
+    getFieldWrapperClass() { return 'pug-field-wrapper'; }
+
+    /**
+    * Get the class name for the error
+    */
+    getErrorClass() { return 'pug-error'; }
+
+    /**
+    * Get the class name for the error wrapper
+    */
+    getErrorWrapperClass() { return 'pug-error-wrapper'; }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

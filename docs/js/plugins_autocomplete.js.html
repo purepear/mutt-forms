@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: plugins/autocomplete.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: plugins/autocomplete.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+	plugins/autocomplete.js
+*/
+
+import {Widget} from '../widgets/core';
+import PugRegistry from '../registry';
+import '../../vendor/awesomplete';
+
+
+/**
+* TextAutoCompleteInput - Autocomplete text input
+*/
+export class TextAutoCompleteInput extends Widget {
+
+    constructor(type, id, name, label, attribs, options, value) {
+        super(type, id, name, label, attribs, options, value);
+        this.awesomplete = null;
+
+        this.dataUrl = null
+        this.dataSource = null;
+        this.dataFilter = null;
+
+        if(this.options.hasOwnProperty('data')) {
+            if(this.options.data.substring(0, 1) == '/' ||
+                this.options.data.substring(0, 4) == 'http') {
+                this.dataUrl = this.options.data;
+            }
+            else {
+                this.dataSource = this.options.data;
+            }
+        }
+
+        if(this.options.hasOwnProperty('filter')) {
+            this.dataFilter = this.options.filter;
+        }
+    }
+
+    /**
+    * Render the text input field
+    */
+    renderField() {
+        let textInput = document.createElement('input');
+        textInput.setAttribute('name', this.name);
+        textInput.setAttribute('type', 'text');
+        textInput.setAttribute('value', (this.value) ? this.value : '');
+        textInput.setAttribute('class', this.getFieldClass());
+
+        if(this.dataSource) {
+            textInput.setAttribute('data-list', this.dataSource);
+        }
+
+        for(let attrib in this.attribs) {
+            textInput.setAttribute(attrib, this.attribs[attrib]);
+        }
+
+        return textInput;
+    }
+
+    /**
+    * 
+    */
+    initAutoComplete() {
+        if(this.dataUrl) {
+            this.fetchData().then((data) => {
+                // Filter the data that comes back
+                if(this.dataFilter) {
+                    data = this.dataFilter(data);
+                }
+
+                this.awesomplete = new Awesomplete(
+                    this.getElement(), 
+                    {list: data}
+                );
+            });
+        }
+        else {
+            this.awesomplete = new Awesomplete(this.getElement());
+        }
+    }
+
+    /**
+    * 
+    */
+    postRender() {
+        super.postRender();
+        this.initAutoComplete(); 
+    }
+
+    /**
+    * 
+    */
+    fetchData() {
+        return fetch(this.dataUrl).then((response) => {
+            return response.json().then((json) => {
+                return json;
+            });
+        }).catch((e) => {
+            throw new Error(
+                `Unable to fetch data for autocomplete: ${this.dataUrl}: ${e}`
+            )
+        });
+    }
+
+    /**
+    * Get the class name for the widget element
+    */
+    getFieldClass() { 
+        return 'pug-field pug-field-text pug-field-autocomplete';
+    }
+}
+
+PugRegistry.registerWidget('autocomplete', TextAutoCompleteInput);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

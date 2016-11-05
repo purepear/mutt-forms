@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fieldsets/core.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fieldsets/core.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+    pug - fieldsets/core.js
+*/
+
+'use strict';
+
+/**
+* Fieldset wrapper class
+*/
+export class Fieldset {
+
+    /**
+    * Setup the fieldset class
+    * @constructor
+    * @param {string} label set the label of the fieldset, typically
+    * used for legends
+    */
+    constructor({label = null}) {
+        this.label = label;
+        this.fields = [];
+        this.errors = {};
+    }
+
+    /**
+    * Add a field to the fieldset
+    * @param {field} field object to add to the fieldset
+    */
+    addField(field) {
+        this.fields.push(field);
+    }
+
+    /**
+    * Check if a fieldset contains a field
+    * @param {string} A Field name
+    */
+    hasField(fieldName) {
+        for(let field in this.fields) {
+            if(field.name == fieldName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+    *
+    * @param {string} A Field name
+    */
+    getField(fieldName) {
+
+    }
+
+    /**
+    * Get the data for the fieldset, this is returned as
+    * an object with field -> value pairs
+    */
+    data() {
+        let data = {};
+
+        for(let field of this.fields) {
+            data[field.name] = field.value;
+        }
+
+        return data;
+    }
+
+    /**
+    * Validate the fields in the fieldset. Stores an object
+    * of error information field name -> error.
+    */
+    validate() {
+        let valid = true;
+
+        for(let field of this.fields) {
+            if(!field.validate()) {
+                this.errors[field.name] = field.errors;
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
+    /**
+    *
+    */
+    setFieldErrors(errors) {
+        for(let errorField in errors) {
+            if(this.hasField(errorField)) {
+                this.getField(errorField);
+            }
+        }
+    }
+
+    /**
+    * 
+    * @param {string} text to be used for the fieldset legend
+    */
+    setLegend(legend) {
+        this.label = legend;
+    }
+
+    /**
+    *
+    */
+    refreshValidationState() {
+        this.errors = {};
+
+        for(let field of this.fields) {
+            field.refreshValidationState();
+        }
+    }
+
+    /**
+    *
+    */
+    render() {
+        let fieldsetContainer = document.createDocumentFragment();
+        let fieldset = document.createElement('fieldset');
+        fieldset.setAttribute('class', 'pug-fieldset');
+
+        if(this.label) {
+            let legend = document.createElement('legend');
+            legend.textContent = this.label;
+            fieldset.appendChild(legend);
+        }
+
+        this.fields.sort(function(a, b) {
+            return a.getSortOrder() - b.getSortOrder();
+        });
+
+        for(let field of this.fields) {
+            let fieldElement = field.render();
+            fieldset.appendChild(fieldElement);
+        }
+
+        fieldsetContainer.appendChild(fieldset);
+
+        return fieldsetContainer;
+    }
+
+    /**
+    * Callback triggered after the element has been rendered to
+    * the stage
+    */
+    postRender() {
+        for(let field of this.fields) {
+            field.postRender();
+        }
+    }
+
+    /**
+    *
+    */
+    lock() {
+        for(let field of this.fields) {
+            field.lock();
+        }
+    }
+
+    /**
+    *
+    */
+    unlock() {
+        for(let field of this.fields) {
+            field.unlock();
+        }
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="ArrayInput.html">ArrayInput</a></li><li><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></li><li><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></li><li><a href="CheckboxInput.html">CheckboxInput</a></li><li><a href="DatePickerInput.html">DatePickerInput</a></li><li><a href="Field.html">Field</a></li><li><a href="Fieldset.html">Fieldset</a></li><li><a href="IntegerValidator.html">IntegerValidator</a></li><li><a href="LengthValidator.html">LengthValidator</a></li><li><a href="module.exports.html">exports</a></li><li><a href="NaturalDatePickerInput.html">NaturalDatePickerInput</a></li><li><a href="NaturalRadioInput.html">NaturalRadioInput</a></li><li><a href="NaturalSelectInput.html">NaturalSelectInput</a></li><li><a href="NaturalTextAutoCompleteInput.html">NaturalTextAutoCompleteInput</a></li><li><a href="NaturalTextInput.html">NaturalTextInput</a></li><li><a href="NumberInput.html">NumberInput</a></li><li><a href="ObjectInput.html">ObjectInput</a></li><li><a href="PCAInput.html">PCAInput</a></li><li><a href="PugRegistry.html">PugRegistry</a></li><li><a href="RadioInput.html">RadioInput</a></li><li><a href="RequiredValidator.html">RequiredValidator</a></li><li><a href="SelectInput.html">SelectInput</a></li><li><a href="TextAutoCompleteInput.html">TextAutoCompleteInput</a></li><li><a href="Validator.html">Validator</a></li><li><a href="Widget.html">Widget</a></li></ul><h3>Namespaces</h3><ul><li><a href="Widgets.html">Widgets</a></li></ul><h3>Mixins</h3><ul><li><a href="NaturalMixin.html">NaturalMixin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#build">build</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></li><li><a href="global.html#lock">lock</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mixin">mixin</a></li><li><a href="global.html#refreshValidationState">refreshValidationState</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#setFormId">setFormId</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#unlock">unlock</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 18 2016 21:43:38 GMT+0100 (BST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
