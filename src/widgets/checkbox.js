@@ -25,7 +25,7 @@ export class CheckboxInput extends Widget {
         checkbox.setAttribute('type', 'checkbox');
         checkbox.setAttribute('class', this.getFieldClass());
 
-        if(this.getValue()) {
+        if(this.value) {
             checkbox.setAttribute('checked', 'checked');
         }
 
