@@ -39,8 +39,6 @@ export class RadioInput extends BaseChoiceWidget {
         let index = 0;
         let choices = [];
 
-        let fieldValue = this.getValue();
-
         for(let choice of this.choices) {
             let [value, label] = choice;
             let fieldId = `${this.name}_${index}`;
@@ -70,7 +68,7 @@ export class RadioInput extends BaseChoiceWidget {
                 }
             }
 
-            if(fieldValue == value) {
+            if(this.value == value) {
                 radioInput.setAttribute('checked', 'checked');
             }
 

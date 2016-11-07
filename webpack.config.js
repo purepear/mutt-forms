@@ -18,15 +18,15 @@ module.exports = [
                 exclude: /node_modules/,
                 loader: 'babel',
             }]
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                // Introspection prevents mangling
-                mangle: false, 
-                compress: {
-                    warnings: false
-                }
-            })
-        ]
+        }//,
+        // plugins: [
+        //     new webpack.optimize.UglifyJsPlugin({
+        //         // Introspection prevents mangling
+        //         mangle: false, 
+        //         compress: {
+        //             warnings: false
+        //         }
+        //     })
+        // ]
     }
 ]

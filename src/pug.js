@@ -23,6 +23,12 @@ export default class Pug {
     constructor(container, schema, options = {}, callback = null, 
         debug = false) {
 
+        if(container === null) {
+            throw new Error(
+                'You must pass a valid container to create a Pug form!'
+            )
+        }
+
         this.container = container;
         this.mulipart = false;
         this.callback = callback;

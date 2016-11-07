@@ -15,12 +15,11 @@ export class NumberInput extends Widget {
     * Render the text input field
     */
     renderField() {
-        let value = this.getValue();
         let textInput = document.createElement('input');
         textInput.setAttribute('name', this.name);
         textInput.setAttribute('type', 'number');
         textInput.setAttribute('class', this.getFieldClass());
-        textInput.setAttribute('value', (value) ? value : '');
+        textInput.setAttribute('value', (this.value) ? this.value : '');
 
         for(let attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib]);

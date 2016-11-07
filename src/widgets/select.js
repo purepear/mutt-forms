@@ -23,15 +23,13 @@ export class SelectInput extends BaseChoiceWidget {
             selectInput.setAttribute(attrib, this.attribs[attrib]);
         }
 
-        let fieldValue = this.getValue();
-
         for(let choice of this.choices) {
             let [value, label] = choice;
             let option = document.createElement('option');
             option.value = value;
             option.textContent = this.formatLabel(label);
 
-            if(fieldValue == value) {
+            if(this.value == value) {
                 option.setAttribute('selected', 'selected');
             }
 

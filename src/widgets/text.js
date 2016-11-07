@@ -20,11 +20,10 @@ export class TextInput extends Widget {
     * @returns {HTMLElement} render the input widget
     */
     renderField() {
-        let value = this.getValue();
         let textInput = document.createElement('input');
         textInput.setAttribute('name', this.name);
         textInput.setAttribute('type', 'text');
-        textInput.setAttribute('value', (value) ? value : '');
+        textInput.setAttribute('value', (this.value) ? this.value : '');
         textInput.setAttribute('class', this.getFieldClass());
 
         for(let attrib in this.attribs) {
