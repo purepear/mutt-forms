@@ -47,7 +47,6 @@ build/
 include/
 /lib
 dev/
-dist/
 __py
 .coverage
 .idea/

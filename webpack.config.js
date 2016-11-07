@@ -7,8 +7,8 @@ module.exports = [
     {
         entry: './src/pug.js',
         output: {
-            path: './build',
-            filename: 'pug.min.js',
+            path: './dist',
+            filename: 'pug.js',
             library: ['Pug'],
             libraryTarget: 'commonjs2'
         },

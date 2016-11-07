@@ -5,7 +5,7 @@
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
   },
-  "main": "src/pug.js",
+  "main": "dist/pug.js",
   "description": "HTML Forms with a squishy face.",
   "homepage": "https://github.com/boughtbymany/pug-forms",
   "repository": { 
