@@ -60,7 +60,55 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _core = __webpack_require__(1);
+	var _fields = __webpack_require__(1);
+
+	Object.keys(_fields).forEach(function (key) {
+	    if (key === "default" || key === "__esModule") return;
+	    Object.defineProperty(exports, key, {
+	        enumerable: true,
+	        get: function get() {
+	            return _fields[key];
+	        }
+	    });
+	});
+
+	var _widgets = __webpack_require__(21);
+
+	Object.keys(_widgets).forEach(function (key) {
+	    if (key === "default" || key === "__esModule") return;
+	    Object.defineProperty(exports, key, {
+	        enumerable: true,
+	        get: function get() {
+	            return _widgets[key];
+	        }
+	    });
+	});
+
+	var _validators = __webpack_require__(22);
+
+	Object.keys(_validators).forEach(function (key) {
+	    if (key === "default" || key === "__esModule") return;
+	    Object.defineProperty(exports, key, {
+	        enumerable: true,
+	        get: function get() {
+	            return _validators[key];
+	        }
+	    });
+	});
+
+	var _registry = __webpack_require__(3);
+
+	Object.keys(_registry).forEach(function (key) {
+	    if (key === "default" || key === "__esModule") return;
+	    Object.defineProperty(exports, key, {
+	        enumerable: true,
+	        get: function get() {
+	            return _registry[key];
+	        }
+	    });
+	});
+
+	var _core = __webpack_require__(23);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -598,6 +646,14 @@ module.exports =
 	        }
 
 	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'use',
+	        value: function use(plugin) {}
+
+	        /**
 	        * Log a message
 	        * @param {string} Message to log
 	        */
@@ -620,934 +676,77 @@ module.exports =
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	* @file Fieldset Interface
-	* @copyright Bought By Many 2016
-	*/
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Fieldset = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _registry = __webpack_require__(2);
-
-	var _registry2 = _interopRequireDefault(_registry);
-
-	var _core = __webpack_require__(4);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	* Fieldset wrapper class
-	* @class
-	*/
-	var Fieldset = exports.Fieldset = function () {
-
-	    /**
-	    * Setup the fieldset class
-	    * @constructor
-	    * @param {string} label set the label of the fieldset, typically
-	    * used for legends
-	    */
-	    function Fieldset(_ref) {
-	        var _ref$label = _ref.label;
-	        var label = _ref$label === undefined ? null : _ref$label;
-	        var _ref$name = _ref.name;
-	        var name = _ref$name === undefined ? null : _ref$name;
-
-	        _classCallCheck(this, Fieldset);
-
-	        this.name = name;
-	        this.label = label;
-	        this.fields = [];
-	        this.errors = {};
-	    }
-
-	    /**
-	    * Add a field to the fieldset
-	    * @param {field} field object to add to the fieldset
-	    */
-
-
-	    _createClass(Fieldset, [{
-	        key: 'addField',
-	        value: function addField(field) {
-	            this.fields.push(field);
-	        }
-
-	        /**
-	        * Check if a fieldset contains a field
-	        * @param {string} A Field name
-	        */
-
-	    }, {
-	        key: 'hasField',
-	        value: function hasField(fieldName) {
-	            for (var field in this.fields) {
-	                if (field.name == fieldName) {
-	                    return true;
-	                }
-	            }
-
-	            return false;
-	        }
-
-	        /**
-	        * Get a field from the fieldset
-	        * @param {string} A Field name
-	        */
-
-	    }, {
-	        key: 'getField',
-	        value: function getField(fieldName) {}
-
-	        /**
-	        * Get the data for the fieldset, this is returned as
-	        * an object with field -> value pairs
-	        * @returns {object}
-	        */
-
-	    }, {
-	        key: 'data',
-	        value: function data() {
-	            var data = {};
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = this.fields[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var field = _step.value;
-
-	                    data[field.name] = field.value;
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            return data;
-	        }
-
-	        /**
-	        * Validate the fields in the fieldset. Stores an object
-	        * of error information field name -> error.
-	        * @returns {boolean}
-	        */
-
-	    }, {
-	        key: 'validate',
-	        value: function validate() {
-	            var valid = true;
-
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-
-	            try {
-	                for (var _iterator2 = this.fields[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var field = _step2.value;
-
-	                    if (!field.validate()) {
-	                        this.errors[field.name] = field.errors;
-	                        valid = false;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-
-	            return valid;
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'setFieldErrors',
-	        value: function setFieldErrors(errors) {
-	            for (var errorField in errors) {
-	                if (this.hasField(errorField)) {
-	                    this.getField(errorField);
-	                }
-	            }
-	        }
-
-	        /**
-	        * 
-	        * @param {string} text to be used for the fieldset legend
-	        */
-
-	    }, {
-	        key: 'setLegend',
-	        value: function setLegend(legend) {
-	            this.label = legend;
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'refreshValidationState',
-	        value: function refreshValidationState() {
-	            this.errors = {};
-
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-
-	            try {
-	                for (var _iterator3 = this.fields[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var field = _step3.value;
-
-	                    field.refreshValidationState();
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	        }
-
-	        /**
-	        *
-	        * @returns {HTMLFragment}
-	        */
-
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var fieldsetContainer = document.createDocumentFragment();
-	            var fieldset = document.createElement('fieldset');
-	            fieldset.classList.add('pug-fieldset');
-
-	            if (this.name) {
-	                fieldset.setAttribute('name', this.name);
-	            }
-
-	            if (this.label) {
-	                var legend = document.createElement('legend');
-	                legend.textContent = this.label;
-	                fieldset.appendChild(legend);
-	            }
-
-	            this.fields.sort(function (a, b) {
-	                return a.getSortOrder() - b.getSortOrder();
-	            });
-
-	            var _iteratorNormalCompletion4 = true;
-	            var _didIteratorError4 = false;
-	            var _iteratorError4 = undefined;
-
-	            try {
-	                for (var _iterator4 = this.fields[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                    var field = _step4.value;
-
-	                    var fieldElement = field.render();
-	                    fieldset.appendChild(fieldElement);
-	                }
-	            } catch (err) {
-	                _didIteratorError4 = true;
-	                _iteratorError4 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                        _iterator4.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError4) {
-	                        throw _iteratorError4;
-	                    }
-	                }
-	            }
-
-	            fieldsetContainer.appendChild(fieldset);
-
-	            return fieldsetContainer;
-	        }
-
-	        /**
-	        * Callback triggered after the element has been rendered to
-	        * the stage
-	        */
-
-	    }, {
-	        key: 'postRender',
-	        value: function postRender() {
-	            var _iteratorNormalCompletion5 = true;
-	            var _didIteratorError5 = false;
-	            var _iteratorError5 = undefined;
-
-	            try {
-	                for (var _iterator5 = this.fields[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	                    var field = _step5.value;
-
-	                    field.postRender();
-	                }
-	            } catch (err) {
-	                _didIteratorError5 = true;
-	                _iteratorError5 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	                        _iterator5.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError5) {
-	                        throw _iteratorError5;
-	                    }
-	                }
-	            }
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'lock',
-	        value: function lock() {
-	            var _iteratorNormalCompletion6 = true;
-	            var _didIteratorError6 = false;
-	            var _iteratorError6 = undefined;
-
-	            try {
-	                for (var _iterator6 = this.fields[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-	                    var field = _step6.value;
-
-	                    field.lock();
-	                }
-	            } catch (err) {
-	                _didIteratorError6 = true;
-	                _iteratorError6 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
-	                        _iterator6.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError6) {
-	                        throw _iteratorError6;
-	                    }
-	                }
-	            }
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'unlock',
-	        value: function unlock() {
-	            var _iteratorNormalCompletion7 = true;
-	            var _didIteratorError7 = false;
-	            var _iteratorError7 = undefined;
-
-	            try {
-	                for (var _iterator7 = this.fields[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-	                    var field = _step7.value;
-
-	                    field.unlock();
-	                }
-	            } catch (err) {
-	                _didIteratorError7 = true;
-	                _iteratorError7 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
-	                        _iterator7.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError7) {
-	                        throw _iteratorError7;
-	                    }
-	                }
-	            }
-	        }
-
-	        /**
-	        * Create a new fieldset. Th
-	        * @staticmethod
-	        * @params {object} schema - JSON schema for the fieldset spec
-	        * @params [object] options - options for fields and the fieldset
-	        * @params [string] name - optional name for the fieldset (added as class)
-	        */
-
-	    }], [{
-	        key: 'new',
-	        value: function _new(schema) {
-	            var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	            var fields = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-	            var name = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-
-	            var fieldsetSpec = {};
-
-	            if (schema.hasOwnProperty('title')) {
-	                fieldsetSpec.label = schema.title;
-	            }
-	            if (options.hasOwnProperty('form')) {
-	                if (options.form.hasOwnProperty('label')) {
-	                    fieldsetSpec.label = options.form.label;
-	                }
-	            }
-
-	            Object.assign(fieldsetSpec, options);
-
-	            if (schema.hasOwnProperty('properties')) {
-	                schema = schema.properties;
-	            }
-
-	            var fieldset = new Fieldset(fieldsetSpec);
-	            var fieldIndex = 1;
-
-	            var _iteratorNormalCompletion8 = true;
-	            var _didIteratorError8 = false;
-	            var _iteratorError8 = undefined;
-
-	            try {
-	                for (var _iterator8 = Object.keys(schema)[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-	                    var fieldName = _step8.value;
-
-	                    var fieldId = fieldName + '_field_' + fieldIndex;
-	                    var fieldSchema = schema[fieldName];
-	                    var fieldOptions = {};
-
-	                    // If a set of fields is specified, we only allow
-	                    // these to be created
-	                    if (fields) {
-	                        if (!Object.keys(fields).includes(fieldName)) {
-	                            continue;
-	                        }
-	                    }
-
-	                    if (options.fields) {
-	                        if (options.fields.hasOwnProperty(fieldName)) {
-	                            fieldOptions = options.fields[fieldName];
-	                        }
-	                    }
-
-	                    if (options.fieldsets) {
-	                        fieldOptions.fieldsets = options.fieldsets;
-	                    }
-
-	                    var field = _core.Field.new(fieldId, fieldName, fieldSchema, fieldOptions);
-
-	                    if (field) {
-	                        // Only set the sort order if this wasn't set previously,
-	                        // this may of been set by options
-	                        if (!field.getSortOrder()) {
-	                            field.setSortOrder(fieldIndex);
-	                        }
-
-	                        fieldset.addField(field);
-	                        fieldIndex++;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError8 = true;
-	                _iteratorError8 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion8 && _iterator8.return) {
-	                        _iterator8.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError8) {
-	                        throw _iteratorError8;
-	                    }
-	                }
-	            }
-
-	            return fieldset;
-	        }
-	    }]);
-
-	    return Fieldset;
-	}();
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	* @file Registry of pug config and plugins
-	* @copyright Bought By Many 2016
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _core = __webpack_require__(2);
 
-	var _array = __webpack_require__(3);
+	Object.defineProperty(exports, 'Field', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.Field;
+	  }
+	});
 
-	var _boolean = __webpack_require__(9);
+	var _array = __webpack_require__(4);
 
-	var _choice = __webpack_require__(11);
+	Object.defineProperty(exports, 'ArrayField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _array.ArrayField;
+	  }
+	});
 
-	var _integer = __webpack_require__(14);
+	var _boolean = __webpack_require__(8);
+
+	Object.defineProperty(exports, 'BooleanField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _boolean.BooleanField;
+	  }
+	});
+
+	var _choice = __webpack_require__(10);
+
+	Object.defineProperty(exports, 'ChoiceField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _choice.ChoiceField;
+	  }
+	});
+
+	var _integer = __webpack_require__(13);
+
+	Object.defineProperty(exports, 'IntegerField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _integer.IntegerField;
+	  }
+	});
 
 	var _object = __webpack_require__(16);
 
+	Object.defineProperty(exports, 'ObjectField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _object.ObjectField;
+	  }
+	});
+
 	var _text = __webpack_require__(18);
 
-	var _radio = __webpack_require__(19);
-
-	var _text2 = __webpack_require__(5);
-
-	var _date = __webpack_require__(20);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var PugRegistry = function () {
-
-	    /**
-	    * Pug Registry is used a singleton class that contains
-	    * configuration information. It's used by the builder
-	    * utility to decide field mappings and by the plugins
-	    * to extend the core functionality.
-	    * @constructor
-	    */
-	    function PugRegistry() {
-	        _classCallCheck(this, PugRegistry);
-
-	        this.fields = {
-	            'boolean': _boolean.BooleanField,
-	            'integer': _integer.IntegerField,
-	            'string': _text.StringField,
-	            'date': _text.StringField,
-	            'datetime': _text.StringField,
-	            'enum': _choice.ChoiceField,
-	            'array': _array.ArrayField,
-	            'object': _object.ObjectField
-	        };
-
-	        this.widgets = {
-	            'date': _date.DateInput,
-	            'dateselect': _date.DateSelectionInput,
-	            'email': _text2.EmailInput,
-	            'radio': _radio.RadioInput,
-	            'hidden': _text2.HiddenInput,
-	            'textarea': _text2.TextAreaInput,
-	            'password': _text2.PasswordInput,
-	            'display': _text2.DisplayWidget
-	        };
-	    }
-
-	    /**
-	    * Register a new field type or overwrite an existing field
-	    * type with a new field class.
-	    * @param {string} type - field type
-	    * @param {Field} fieldKlass - field class to be used for type
-	    */
-
-
-	    _createClass(PugRegistry, [{
-	        key: 'registerField',
-	        value: function registerField(type, fieldKlass) {
-	            this.fields[type] = fieldKlass;
-	        }
-
-	        /**
-	        * Check if a field type exists in the registry
-	        * @param {string} type - name of field type to check
-	        * @returns {bool} returns true if field type exists in registry
-	        */
-
-	    }, {
-	        key: 'hasField',
-	        value: function hasField(type) {
-	            if (this.fields.hasOwnProperty(type)) {
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        /**
-	        *
-	        * @param {string}
-	        */
-
-	    }, {
-	        key: 'getField',
-	        value: function getField(type) {
-	            if (this.fields.hasOwnProperty(type)) {
-	                return this.fields[type];
-	            }
-	            return null;
-	        }
-
-	        /**
-	        *
-	        * @param {string}
-	        * @param {Widget}
-	        */
-
-	    }, {
-	        key: 'registerWidget',
-	        value: function registerWidget(name, widgetKlass) {
-	            this.widgets[name] = widgetKlass;
-	        }
-
-	        /**
-	        *
-	        * @param {string}
-	        */
-
-	    }, {
-	        key: 'hasWidget',
-	        value: function hasWidget(name) {
-	            if (this.widgets.hasOwnProperty(name)) {
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        /**
-	        *
-	        * @param {string}
-	        */
-
-	    }, {
-	        key: 'getWidget',
-	        value: function getWidget(name) {
-	            if (this.widgets.hasOwnProperty(name)) {
-	                return this.widgets[name];
-	            }
-	            return null;
-	        }
-	    }]);
-
-	    return PugRegistry;
-	}();
-
-	exports.default = new PugRegistry();
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	* @file Array field
-	* @copyright Bought By Many 2016
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	Object.defineProperty(exports, 'StringField', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.StringField;
+	  }
 	});
-	exports.ArrayField = undefined;
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _core = __webpack_require__(4);
-
-	var _array = __webpack_require__(8);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* Array is a complex field type, which is essentially a list
-	* of other fields.
-	* @class
-	* @namespace Fields
-	*/
-	var ArrayField = exports.ArrayField = function (_Field) {
-	    _inherits(ArrayField, _Field);
-
-	    /**
-	    *
-	    */
-	    function ArrayField(_ref) {
-	        var id = _ref.id;
-	        var name = _ref.name;
-	        var _ref$label = _ref.label;
-	        var label = _ref$label === undefined ? null : _ref$label;
-	        var _ref$initial = _ref.initial;
-	        var initial = _ref$initial === undefined ? null : _ref$initial;
-	        var _ref$widget = _ref.widget;
-	        var widget = _ref$widget === undefined ? null : _ref$widget;
-	        var _ref$validators = _ref.validators;
-	        var validators = _ref$validators === undefined ? [] : _ref$validators;
-	        var _ref$attribs = _ref.attribs;
-	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
-	        var _ref$description = _ref.description;
-	        var description = _ref$description === undefined ? null : _ref$description;
-	        var _ref$options = _ref.options;
-	        var options = _ref$options === undefined ? {} : _ref$options;
-	        var _ref$items = _ref.items;
-	        var items = _ref$items === undefined ? {} : _ref$items;
-	        var _ref$minItems = _ref.minItems;
-	        var minItems = _ref$minItems === undefined ? 1 : _ref$minItems;
-	        var _ref$maxItems = _ref.maxItems;
-	        var maxItems = _ref$maxItems === undefined ? null : _ref$maxItems;
-
-	        _classCallCheck(this, ArrayField);
-
-	        // TODO: Sanity check min/max items
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ArrayField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
-	            description: description, options: options }));
-
-	        _this.minItems = minItems;
-	        _this.maxItems = maxItems;
-	        _this.itemSchema = items; // schema to make new items
-	        _this.itemOptions = options;
-
-	        // We store the array fields in the slot
-	        _this.slots = [];
-
-	        for (var i in Array.from(Array(_this.minItems).keys())) {
-	            var position = parseInt(i) + 1;
-	            var fieldId = id + '_item_' + position;
-	            var fieldName = name + '_' + position;
-	            var field = _this.constructor.new(fieldId, fieldName, _this.itemSchema,
-	            // FIXME: This is a workaround, really should
-	            // get the correct option structure to this class
-	            _this.itemOptions);
-
-	            _this.slots.push(field);
-	        }
-
-	        // Store errors as an object
-	        _this.errors = {};
-	        return _this;
-	    }
-
-	    /**
-	    * Property - get/set value
-	    */
-
-
-	    _createClass(ArrayField, [{
-	        key: 'validate',
-
-
-	        /**
-	        * Validate the form field
-	        * @returns {bool} returns sucess or failure of validation
-	        */
-	        value: function validate() {
-	            var valid = true;
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = this.slots[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var field = _step.value;
-
-	                    if (!field.validate()) {
-	                        this._errors[field.name] = field.errors;
-	                        valid = false;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            return valid;
-	        }
-
-	        /**
-	        * Refresh the validation state
-	        */
-
-	    }, {
-	        key: 'refreshValidationState',
-	        value: function refreshValidationState() {
-	            _get(Object.getPrototypeOf(ArrayField.prototype), 'refreshValidationState', this).call(this);
-	            this._errors = {};
-	        }
-
-	        /**
-	        * Triggers post render call on all fields in array
-	        */
-
-	    }, {
-	        key: 'postRender',
-	        value: function postRender() {
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-
-	            try {
-	                for (var _iterator2 = this.slots[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var field = _step2.value;
-
-	                    field.postRender();
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'getWidget',
-	        value: function getWidget() {
-	            return _array.ArrayInput;
-	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return this.widget.renderList(this.slots);
-	        }
-
-	        /**
-	        * Property - get/set errors
-	        * @param {string} Error string
-	        */
-
-	    }, {
-	        key: 'value',
-	        get: function get() {
-	            var valueArray = [];
-
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-
-	            try {
-	                for (var _iterator3 = this.slots[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var slot = _step3.value;
-
-	                    valueArray.push(slot.value);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-
-	            return valueArray;
-	        },
-	        set: function set(value) {
-	            if (!Array.isArray(value)) {
-	                throw new Error('Unable to set array field value(s) from non-array!');
-	            }
-
-	            var fieldValueMap = this.slots.map(function (field, index) {
-	                return [field, value[index]];
-	            });
-
-	            for (var _ref4 in fieldValueMap) {
-	                var _ref3 = _slicedToArray(_ref4, 2);
-
-	                var field = _ref3[0];
-	                var _value = _ref3[1];
-
-	                field.value = _value;
-	            }
-	        }
-	    }, {
-	        key: 'errors',
-	        get: function get() {
-	            return this._errors;
-	        },
-	        set: function set(error) {
-	            this._errors = error;
-	        }
-	    }]);
-
-	    return ArrayField;
-	}(_core.Field);
 
 /***/ },
-/* 4 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1564,13 +763,13 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _registry = __webpack_require__(2);
+	var _registry = __webpack_require__(3);
 
 	var _registry2 = _interopRequireDefault(_registry);
 
-	var _text = __webpack_require__(5);
+	var _text = __webpack_require__(7);
 
-	var _core = __webpack_require__(7);
+	var _core = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1993,11 +1192,11 @@ module.exports =
 	}();
 
 /***/ },
-/* 5 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	* @file Text input widget interface
+	* @file Registry of pug config and plugins
 	* @copyright Bought By Many 2016
 	*/
 
@@ -2006,11 +1205,449 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.DisplayWidget = exports.PasswordInput = exports.HiddenInput = exports.EmailInput = exports.TextAreaInput = exports.TextInput = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	exports.displayReadonlyValue = displayReadonlyValue;
+	var _array = __webpack_require__(4);
+
+	var _boolean = __webpack_require__(8);
+
+	var _choice = __webpack_require__(10);
+
+	var _integer = __webpack_require__(13);
+
+	var _object = __webpack_require__(16);
+
+	var _text = __webpack_require__(18);
+
+	var _radio = __webpack_require__(19);
+
+	var _text2 = __webpack_require__(7);
+
+	var _date = __webpack_require__(20);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var PugRegistry = function () {
+
+	    /**
+	    * Pug Registry is used a singleton class that contains
+	    * configuration information. It's used by the builder
+	    * utility to decide field mappings and by the plugins
+	    * to extend the core functionality.
+	    * @constructor
+	    */
+	    function PugRegistry() {
+	        _classCallCheck(this, PugRegistry);
+
+	        this.fields = {
+	            'boolean': _boolean.BooleanField,
+	            'integer': _integer.IntegerField,
+	            'string': _text.StringField,
+	            'date': _text.StringField,
+	            'datetime': _text.StringField,
+	            'enum': _choice.ChoiceField,
+	            'array': _array.ArrayField,
+	            'object': _object.ObjectField
+	        };
+
+	        this.widgets = {
+	            'date': _date.DateInput,
+	            'dateselect': _date.DateSelectionInput,
+	            'email': _text2.EmailInput,
+	            'radio': _radio.RadioInput,
+	            'hidden': _text2.HiddenInput,
+	            'textarea': _text2.TextAreaInput,
+	            'password': _text2.PasswordInput,
+	            'display': _text2.DisplayWidget
+	        };
+	    }
+
+	    /**
+	    * Register a new field type or overwrite an existing field
+	    * type with a new field class.
+	    * @param {string} type - field type
+	    * @param {Field} fieldKlass - field class to be used for type
+	    */
+
+
+	    _createClass(PugRegistry, [{
+	        key: 'registerField',
+	        value: function registerField(type, fieldKlass) {
+	            this.fields[type] = fieldKlass;
+	        }
+
+	        /**
+	        * Check if a field type exists in the registry
+	        * @param {string} type - name of field type to check
+	        * @returns {bool} returns true if field type exists in registry
+	        */
+
+	    }, {
+	        key: 'hasField',
+	        value: function hasField(type) {
+	            if (this.fields.hasOwnProperty(type)) {
+	                return true;
+	            }
+	            return false;
+	        }
+
+	        /**
+	        *
+	        * @param {string}
+	        */
+
+	    }, {
+	        key: 'getField',
+	        value: function getField(type) {
+	            if (this.fields.hasOwnProperty(type)) {
+	                return this.fields[type];
+	            }
+	            return null;
+	        }
+
+	        /**
+	        *
+	        * @param {string}
+	        * @param {Widget}
+	        */
+
+	    }, {
+	        key: 'registerWidget',
+	        value: function registerWidget(name, widgetKlass) {
+	            this.widgets[name] = widgetKlass;
+	        }
+
+	        /**
+	        *
+	        * @param {string}
+	        */
+
+	    }, {
+	        key: 'hasWidget',
+	        value: function hasWidget(name) {
+	            if (this.widgets.hasOwnProperty(name)) {
+	                return true;
+	            }
+	            return false;
+	        }
+
+	        /**
+	        *
+	        * @param {string}
+	        */
+
+	    }, {
+	        key: 'getWidget',
+	        value: function getWidget(name) {
+	            if (this.widgets.hasOwnProperty(name)) {
+	                return this.widgets[name];
+	            }
+	            return null;
+	        }
+	    }]);
+
+	    return PugRegistry;
+	}();
+
+	exports.default = new PugRegistry();
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Array field
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ArrayField = undefined;
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _core = __webpack_require__(2);
+
+	var _array = __webpack_require__(5);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* Array is a complex field type, which is essentially a list
+	* of other fields.
+	* @class
+	* @namespace Fields
+	*/
+	var ArrayField = exports.ArrayField = function (_Field) {
+	    _inherits(ArrayField, _Field);
+
+	    /**
+	    *
+	    */
+	    function ArrayField(_ref) {
+	        var id = _ref.id;
+	        var name = _ref.name;
+	        var _ref$label = _ref.label;
+	        var label = _ref$label === undefined ? null : _ref$label;
+	        var _ref$initial = _ref.initial;
+	        var initial = _ref$initial === undefined ? null : _ref$initial;
+	        var _ref$widget = _ref.widget;
+	        var widget = _ref$widget === undefined ? null : _ref$widget;
+	        var _ref$validators = _ref.validators;
+	        var validators = _ref$validators === undefined ? [] : _ref$validators;
+	        var _ref$attribs = _ref.attribs;
+	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
+	        var _ref$description = _ref.description;
+	        var description = _ref$description === undefined ? null : _ref$description;
+	        var _ref$options = _ref.options;
+	        var options = _ref$options === undefined ? {} : _ref$options;
+	        var _ref$items = _ref.items;
+	        var items = _ref$items === undefined ? {} : _ref$items;
+	        var _ref$minItems = _ref.minItems;
+	        var minItems = _ref$minItems === undefined ? 1 : _ref$minItems;
+	        var _ref$maxItems = _ref.maxItems;
+	        var maxItems = _ref$maxItems === undefined ? null : _ref$maxItems;
+
+	        _classCallCheck(this, ArrayField);
+
+	        // TODO: Sanity check min/max items
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ArrayField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
+	            description: description, options: options }));
+
+	        _this.minItems = minItems;
+	        _this.maxItems = maxItems;
+	        _this.itemSchema = items; // schema to make new items
+	        _this.itemOptions = options;
+
+	        // We store the array fields in the slot
+	        _this.slots = [];
+
+	        for (var i in Array.from(Array(_this.minItems).keys())) {
+	            var position = parseInt(i) + 1;
+	            var fieldId = id + '_item_' + position;
+	            var fieldName = name + '_' + position;
+	            var field = _this.constructor.new(fieldId, fieldName, _this.itemSchema,
+	            // FIXME: This is a workaround, really should
+	            // get the correct option structure to this class
+	            _this.itemOptions);
+
+	            _this.slots.push(field);
+	        }
+
+	        // Store errors as an object
+	        _this.errors = {};
+	        return _this;
+	    }
+
+	    /**
+	    * Property - get/set value
+	    */
+
+
+	    _createClass(ArrayField, [{
+	        key: 'validate',
+
+
+	        /**
+	        * Validate the form field
+	        * @returns {bool} returns sucess or failure of validation
+	        */
+	        value: function validate() {
+	            var valid = true;
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = this.slots[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var field = _step.value;
+
+	                    if (!field.validate()) {
+	                        this._errors[field.name] = field.errors;
+	                        valid = false;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return valid;
+	        }
+
+	        /**
+	        * Refresh the validation state
+	        */
+
+	    }, {
+	        key: 'refreshValidationState',
+	        value: function refreshValidationState() {
+	            _get(Object.getPrototypeOf(ArrayField.prototype), 'refreshValidationState', this).call(this);
+	            this._errors = {};
+	        }
+
+	        /**
+	        * Triggers post render call on all fields in array
+	        */
+
+	    }, {
+	        key: 'postRender',
+	        value: function postRender() {
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+
+	            try {
+	                for (var _iterator2 = this.slots[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var field = _step2.value;
+
+	                    field.postRender();
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'getWidget',
+	        value: function getWidget() {
+	            return _array.ArrayInput;
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return this.widget.renderList(this.slots);
+	        }
+
+	        /**
+	        * Property - get/set errors
+	        * @param {string} Error string
+	        */
+
+	    }, {
+	        key: 'value',
+	        get: function get() {
+	            var valueArray = [];
+
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+
+	            try {
+	                for (var _iterator3 = this.slots[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var slot = _step3.value;
+
+	                    valueArray.push(slot.value);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+
+	            return valueArray;
+	        },
+	        set: function set(value) {
+	            if (!Array.isArray(value)) {
+	                throw new Error('Unable to set array field value(s) from non-array!');
+	            }
+
+	            var fieldValueMap = this.slots.map(function (field, index) {
+	                return [field, value[index]];
+	            });
+
+	            for (var _ref4 in fieldValueMap) {
+	                var _ref3 = _slicedToArray(_ref4, 2);
+
+	                var field = _ref3[0];
+	                var _value = _ref3[1];
+
+	                field.value = _value;
+	            }
+	        }
+	    }, {
+	        key: 'errors',
+	        get: function get() {
+	            return this._errors;
+	        },
+	        set: function set(error) {
+	            this._errors = error;
+	        }
+	    }]);
+
+	    return ArrayField;
+	}(_core.Field);
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Array Widgets
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ArrayInput = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _core = __webpack_require__(6);
 
@@ -2021,322 +1658,103 @@ module.exports =
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
-	* TextInput - Standard HTML text input
+	* ArrayInput - Render a list of fields
 	* @class
 	* @namespace Widgets
 	*/
-	var TextInput = exports.TextInput = function (_Widget) {
-	    _inherits(TextInput, _Widget);
+	var ArrayInput = exports.ArrayInput = function (_Widget) {
+	    _inherits(ArrayInput, _Widget);
 
-	    function TextInput() {
-	        _classCallCheck(this, TextInput);
+	    function ArrayInput() {
+	        _classCallCheck(this, ArrayInput);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TextInput).apply(this, arguments));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(ArrayInput).apply(this, arguments));
 	    }
 
-	    _createClass(TextInput, [{
-	        key: 'renderField',
+	    _createClass(ArrayInput, [{
+	        key: 'renderList',
 
 
 	        /**
-	        * Render the text input field
-	        * @returns {HTMLElement} render the input widget
+	        * Render the list of input fields
+	        * @params {array} fields - a list of Field objects to render
+	        * @returns {HTMLElement} returns a HTML fragment containing 
+	        * all rendered fields
 	        */
-	        value: function renderField() {
-	            var textInput = document.createElement('input');
-	            textInput.setAttribute('name', this.name);
-	            textInput.setAttribute('type', 'text');
-	            textInput.setAttribute('value', this.value ? this.value : '');
-	            textInput.setAttribute('class', this.getFieldClass());
+	        value: function renderList(fields) {
+	            // Create a fragment for our widget
+	            var widgetFragment = document.createDocumentFragment();
 
-	            for (var attrib in this.attribs) {
-	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            var wrapper = this.renderWrapper();
+
+	            fields.sort(function (a, b) {
+	                return a.getSortOrder() - b.getSortOrder();
+	            });
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = fields[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var field = _step.value;
+
+	                    var renderedField = field.render();
+	                    wrapper.appendChild(renderedField);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
 	            }
 
-	            return textInput;
+	            widgetFragment.appendChild(wrapper);
+
+	            return widgetFragment;
 	        }
 
 	        /**
-	        * Get the class name for the widget element
+	        * @throws render is not supported on Arrays - renderList must be used
 	        */
 
 	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-text';
-	        }
-	    }]);
-
-	    return TextInput;
-	}(_core.Widget);
-
-	/**
-	* TextAreaInput - Standard HTML textarea input
-	* @class
-	* @namespace Widgets
-	*/
-
-
-	var TextAreaInput = exports.TextAreaInput = function (_Widget2) {
-	    _inherits(TextAreaInput, _Widget2);
-
-	    function TextAreaInput() {
-	        _classCallCheck(this, TextAreaInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TextAreaInput).apply(this, arguments));
-	    }
-
-	    _createClass(TextAreaInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            var textareaInput = document.createElement('textarea');
-	            textareaInput.setAttribute('name', this.name);
-	            textareaInput.setAttribute('class', this.getFieldClass());
-	            textareaInput.textContent = this.value ? this.value : '';
-
-	            for (var attrib in this.attribs) {
-	                textareaInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return textareaInput;
+	        key: 'render',
+	        value: function render() {
+	            throw new Error('ArrayInput must render as a list - use renderList');
 	        }
 
 	        /**
-	        * Get the class name for the widget element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-text';
-	        }
-	    }]);
-
-	    return TextAreaInput;
-	}(_core.Widget);
-
-	/**
-	* EmailInput - Standard HTML text input
-	* @class
-	* @namespace Widgets
-	*/
-
-
-	var EmailInput = exports.EmailInput = function (_TextInput) {
-	    _inherits(EmailInput, _TextInput);
-
-	    function EmailInput() {
-	        _classCallCheck(this, EmailInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(EmailInput).apply(this, arguments));
-	    }
-
-	    _createClass(EmailInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            var textInput = document.createElement('input');
-	            textInput.setAttribute('name', this.name);
-	            textInput.setAttribute('type', 'email');
-	            textInput.setAttribute('value', this.value ? this.value : '');
-	            textInput.setAttribute('class', this.getFieldClass());
-
-	            for (var attrib in this.attribs) {
-	                textInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return textInput;
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-email';
-	        }
-	    }]);
-
-	    return EmailInput;
-	}(TextInput);
-
-	/**
-	* HiddenInput - Standard HTML hidden input
-	* @class
-	* @namespace Widgets
-	*/
-
-
-	var HiddenInput = exports.HiddenInput = function (_Widget3) {
-	    _inherits(HiddenInput, _Widget3);
-
-	    function HiddenInput() {
-	        _classCallCheck(this, HiddenInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(HiddenInput).apply(this, arguments));
-	    }
-
-	    _createClass(HiddenInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            var textInput = document.createElement('input');
-	            textInput.setAttribute('name', this.name);
-	            textInput.setAttribute('type', 'hidden');
-	            textInput.setAttribute('value', this.value ? this.value : '');
-	            textInput.setAttribute('class', this.getFieldClass());
-
-	            for (var attrib in this.attribs) {
-	                textInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return textInput;
-	        }
-
-	        /**
-	        * Label is not used for hidden fields
+	        * @throws renderLabel is not supported on array fields
 	        */
 
 	    }, {
 	        key: 'renderLabel',
 	        value: function renderLabel() {
-	            return null;
-	        }
-
-	        /**
-	        * Errors are not shown for hidden fields
-	        */
-
-	    }, {
-	        key: 'renderErrors',
-	        value: function renderErrors() {
-	            return null;
-	        }
-	    }]);
-
-	    return HiddenInput;
-	}(_core.Widget);
-
-	/**
-	* PasswordInput - Standard HTML password input
-	* @class
-	* @namespace Widgets
-	*/
-
-
-	var PasswordInput = exports.PasswordInput = function (_TextInput2) {
-	    _inherits(PasswordInput, _TextInput2);
-
-	    function PasswordInput() {
-	        _classCallCheck(this, PasswordInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(PasswordInput).apply(this, arguments));
-	    }
-
-	    _createClass(PasswordInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            var textInput = document.createElement('input');
-	            textInput.setAttribute('name', this.name);
-	            textInput.setAttribute('type', 'password');
-	            textInput.setAttribute('value', this.value ? this.value : '');
-	            textInput.setAttribute('class', this.getFieldClass());
-
-	            for (var attrib in this.attribs) {
-	                textInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return textInput;
+	            throw new Error('ArrayInput does not support a label!');
 	        }
 
 	        /**
 	        * Get the class name for the widget element
+	        * @returns {string} the class to use for the field element
 	        */
 
 	    }, {
 	        key: 'getFieldClass',
 	        value: function getFieldClass() {
-	            return 'pug-field pug-field-password';
+	            return 'pug-field pug-field-array';
 	        }
 	    }]);
 
-	    return PasswordInput;
-	}(TextInput);
-
-	/**
-	* DisplayWidget - Display only widget, this just shows the field as
-	* plain text. Typically used by the lock form utility.
-	*/
-
-
-	function displayReadonlyValue(value) {
-	    var display = document.createElement('span');
-
-	    // TODO: Support for the class being set dynamically
-	    display.setAttribute('class', 'pug-field pug-field-display');
-	    display.textContent = value;
-
-	    return display;
-	}
-
-	/**
-	* DisplayWidget - Widget to display field as plain text
-	* @class
-	* @namespace Widgets
-	*/
-
-	var DisplayWidget = exports.DisplayWidget = function (_Widget4) {
-	    _inherits(DisplayWidget, _Widget4);
-
-	    function DisplayWidget() {
-	        _classCallCheck(this, DisplayWidget);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayWidget).apply(this, arguments));
-	    }
-
-	    _createClass(DisplayWidget, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            return displayReadonlyValue(this.value);
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-display';
-	        }
-	    }]);
-
-	    return DisplayWidget;
+	    return ArrayInput;
 	}(_core.Widget);
 
 /***/ },
@@ -2357,7 +1775,7 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _text = __webpack_require__(5);
+	var _text = __webpack_require__(7);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2742,6 +2160,981 @@ module.exports =
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Text input widget interface
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.DisplayWidget = exports.PasswordInput = exports.HiddenInput = exports.EmailInput = exports.TextAreaInput = exports.TextInput = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	exports.displayReadonlyValue = displayReadonlyValue;
+
+	var _core = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* TextInput - Standard HTML text input
+	* @class
+	* @namespace Widgets
+	*/
+	var TextInput = exports.TextInput = function (_Widget) {
+	    _inherits(TextInput, _Widget);
+
+	    function TextInput() {
+	        _classCallCheck(this, TextInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TextInput).apply(this, arguments));
+	    }
+
+	    _createClass(TextInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        * @returns {HTMLElement} render the input widget
+	        */
+	        value: function renderField() {
+	            var textInput = document.createElement('input');
+	            textInput.setAttribute('name', this.name);
+	            textInput.setAttribute('type', 'text');
+	            textInput.setAttribute('value', this.value ? this.value : '');
+	            textInput.setAttribute('class', this.getFieldClass());
+
+	            for (var attrib in this.attribs) {
+	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-text';
+	        }
+	    }]);
+
+	    return TextInput;
+	}(_core.Widget);
+
+	/**
+	* TextAreaInput - Standard HTML textarea input
+	* @class
+	* @namespace Widgets
+	*/
+
+
+	var TextAreaInput = exports.TextAreaInput = function (_Widget2) {
+	    _inherits(TextAreaInput, _Widget2);
+
+	    function TextAreaInput() {
+	        _classCallCheck(this, TextAreaInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TextAreaInput).apply(this, arguments));
+	    }
+
+	    _createClass(TextAreaInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            var textareaInput = document.createElement('textarea');
+	            textareaInput.setAttribute('name', this.name);
+	            textareaInput.setAttribute('class', this.getFieldClass());
+	            textareaInput.textContent = this.value ? this.value : '';
+
+	            for (var attrib in this.attribs) {
+	                textareaInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textareaInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-text';
+	        }
+	    }]);
+
+	    return TextAreaInput;
+	}(_core.Widget);
+
+	/**
+	* EmailInput - Standard HTML text input
+	* @class
+	* @namespace Widgets
+	*/
+
+
+	var EmailInput = exports.EmailInput = function (_TextInput) {
+	    _inherits(EmailInput, _TextInput);
+
+	    function EmailInput() {
+	        _classCallCheck(this, EmailInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(EmailInput).apply(this, arguments));
+	    }
+
+	    _createClass(EmailInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            var textInput = document.createElement('input');
+	            textInput.setAttribute('name', this.name);
+	            textInput.setAttribute('type', 'email');
+	            textInput.setAttribute('value', this.value ? this.value : '');
+	            textInput.setAttribute('class', this.getFieldClass());
+
+	            for (var attrib in this.attribs) {
+	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-email';
+	        }
+	    }]);
+
+	    return EmailInput;
+	}(TextInput);
+
+	/**
+	* HiddenInput - Standard HTML hidden input
+	* @class
+	* @namespace Widgets
+	*/
+
+
+	var HiddenInput = exports.HiddenInput = function (_Widget3) {
+	    _inherits(HiddenInput, _Widget3);
+
+	    function HiddenInput() {
+	        _classCallCheck(this, HiddenInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(HiddenInput).apply(this, arguments));
+	    }
+
+	    _createClass(HiddenInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            var textInput = document.createElement('input');
+	            textInput.setAttribute('name', this.name);
+	            textInput.setAttribute('type', 'hidden');
+	            textInput.setAttribute('value', this.value ? this.value : '');
+	            textInput.setAttribute('class', this.getFieldClass());
+
+	            for (var attrib in this.attribs) {
+	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textInput;
+	        }
+
+	        /**
+	        * Label is not used for hidden fields
+	        */
+
+	    }, {
+	        key: 'renderLabel',
+	        value: function renderLabel() {
+	            return null;
+	        }
+
+	        /**
+	        * Errors are not shown for hidden fields
+	        */
+
+	    }, {
+	        key: 'renderErrors',
+	        value: function renderErrors() {
+	            return null;
+	        }
+	    }]);
+
+	    return HiddenInput;
+	}(_core.Widget);
+
+	/**
+	* PasswordInput - Standard HTML password input
+	* @class
+	* @namespace Widgets
+	*/
+
+
+	var PasswordInput = exports.PasswordInput = function (_TextInput2) {
+	    _inherits(PasswordInput, _TextInput2);
+
+	    function PasswordInput() {
+	        _classCallCheck(this, PasswordInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(PasswordInput).apply(this, arguments));
+	    }
+
+	    _createClass(PasswordInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            var textInput = document.createElement('input');
+	            textInput.setAttribute('name', this.name);
+	            textInput.setAttribute('type', 'password');
+	            textInput.setAttribute('value', this.value ? this.value : '');
+	            textInput.setAttribute('class', this.getFieldClass());
+
+	            for (var attrib in this.attribs) {
+	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-password';
+	        }
+	    }]);
+
+	    return PasswordInput;
+	}(TextInput);
+
+	/**
+	* DisplayWidget - Display only widget, this just shows the field as
+	* plain text. Typically used by the lock form utility.
+	*/
+
+
+	function displayReadonlyValue(value) {
+	    var display = document.createElement('span');
+
+	    // TODO: Support for the class being set dynamically
+	    display.setAttribute('class', 'pug-field pug-field-display');
+	    display.textContent = value;
+
+	    return display;
+	}
+
+	/**
+	* DisplayWidget - Widget to display field as plain text
+	* @class
+	* @namespace Widgets
+	*/
+
+	var DisplayWidget = exports.DisplayWidget = function (_Widget4) {
+	    _inherits(DisplayWidget, _Widget4);
+
+	    function DisplayWidget() {
+	        _classCallCheck(this, DisplayWidget);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayWidget).apply(this, arguments));
+	    }
+
+	    _createClass(DisplayWidget, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            return displayReadonlyValue(this.value);
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-display';
+	        }
+	    }]);
+
+	    return DisplayWidget;
+	}(_core.Widget);
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	    pug - fields/boolean.js
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.BooleanField = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(2);
+
+	var _checkbox = __webpack_require__(9);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function toBool(value) {
+	    if (value == undefined) {
+	        return null;
+	    }
+
+	    switch (value.toLowerCase().trim()) {
+	        case "true":case "yes":case "1":
+	            return true;
+	        case "false":case "no":case "0":case null:
+	            return false;
+	        default:
+	            return Boolean(value);
+	    }
+	}
+
+	var BooleanField = exports.BooleanField = function (_Field) {
+	    _inherits(BooleanField, _Field);
+
+	    function BooleanField() {
+	        _classCallCheck(this, BooleanField);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BooleanField).apply(this, arguments));
+	    }
+
+	    _createClass(BooleanField, [{
+	        key: 'getWidget',
+
+
+	        /**
+	        * Get the widget for the field
+	        */
+	        value: function getWidget() {
+	            return _checkbox.CheckboxInput;
+	        }
+	    }, {
+	        key: 'value',
+
+
+	        /**
+	           * Property - get/set value
+	           */
+	        get: function get() {
+	            var value = this.widget.getValue();
+
+	            // Widgets deal with the HTML value, which
+	            // can not represent a boolean. Coerce to
+	            // the expected type
+	            return toBool(value);
+	        },
+	        set: function set(value) {
+	            this.widget.setValue(value);
+	        }
+	    }]);
+
+	    return BooleanField;
+	}(_core.Field);
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Checkbox Widgets
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.CheckboxInput = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* CheckboxInput - Standard HTML checkbox
+	* @class
+	* @namespace Widgets
+	*/
+	var CheckboxInput = exports.CheckboxInput = function (_Widget) {
+	    _inherits(CheckboxInput, _Widget);
+
+	    function CheckboxInput() {
+	        _classCallCheck(this, CheckboxInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(CheckboxInput).apply(this, arguments));
+	    }
+
+	    _createClass(CheckboxInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        * @returns {HTMLElement} returns the rendered HTML checkbox 
+	        * input field
+	        */
+	        value: function renderField() {
+	            var checkbox = document.createElement('input');
+	            checkbox.setAttribute('name', this.name);
+	            checkbox.setAttribute('type', 'checkbox');
+	            checkbox.setAttribute('class', this.getFieldClass());
+
+	            if (this.value) {
+	                checkbox.setAttribute('checked', 'checked');
+	            }
+
+	            for (var attrib in this.attribs) {
+	                checkbox.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return checkbox;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        * @returns {string} the class to use for the field element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-checkbox';
+	        }
+	    }]);
+
+	    return CheckboxInput;
+	}(_core.Widget);
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	    pug - fields/choice.js
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ChoiceField = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(2);
+
+	var _select = __webpack_require__(11);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ChoiceField = exports.ChoiceField = function (_Field) {
+	    _inherits(ChoiceField, _Field);
+
+	    function ChoiceField(_ref) {
+	        var id = _ref.id;
+	        var name = _ref.name;
+	        var _ref$label = _ref.label;
+	        var label = _ref$label === undefined ? null : _ref$label;
+	        var _ref$initial = _ref.initial;
+	        var initial = _ref$initial === undefined ? null : _ref$initial;
+	        var _ref$widget = _ref.widget;
+	        var widget = _ref$widget === undefined ? null : _ref$widget;
+	        var _ref$validators = _ref.validators;
+	        var validators = _ref$validators === undefined ? [] : _ref$validators;
+	        var _ref$attribs = _ref.attribs;
+	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
+	        var _ref$description = _ref.description;
+	        var description = _ref$description === undefined ? null : _ref$description;
+	        var _ref$options = _ref.options;
+	        var options = _ref$options === undefined ? {} : _ref$options;
+	        var _ref$order = _ref.order;
+	        var order = _ref$order === undefined ? null : _ref$order;
+	        var _ref$choices = _ref.choices;
+	        var choices = _ref$choices === undefined ? [] : _ref$choices;
+
+	        _classCallCheck(this, ChoiceField);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ChoiceField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
+	            description: description, options: options, order: order }));
+
+	        _this.choices = choices;
+
+	        if (options.hasOwnProperty('choices')) {
+	            _this.choices = options.choices;
+	        }
+
+	        _this.widget.setChoices(_this.choices);
+	        return _this;
+	    }
+
+	    _createClass(ChoiceField, [{
+	        key: 'getWidget',
+	        value: function getWidget() {
+	            return _select.SelectInput;
+	        }
+	    }]);
+
+	    return ChoiceField;
+	}(_core.Field);
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	    pug - widgets/select.js
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.SelectInput = undefined;
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _choice2 = __webpack_require__(12);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* SelectInput - Standard HTML select input
+	*/
+	var SelectInput = exports.SelectInput = function (_BaseChoiceWidget) {
+	    _inherits(SelectInput, _BaseChoiceWidget);
+
+	    function SelectInput() {
+	        _classCallCheck(this, SelectInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SelectInput).apply(this, arguments));
+	    }
+
+	    _createClass(SelectInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the select field
+	        */
+	        value: function renderField() {
+	            var selectInput = document.createElement('select');
+	            selectInput.setAttribute('name', this.name);
+	            selectInput.setAttribute('class', this.getFieldClass());
+
+	            for (var attrib in this.attribs) {
+	                selectInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = this.choices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var choice = _step.value;
+
+	                    var _choice = _slicedToArray(choice, 2);
+
+	                    var value = _choice[0];
+	                    var label = _choice[1];
+
+	                    var option = document.createElement('option');
+	                    option.value = value;
+	                    option.textContent = this.formatLabel(label);
+
+	                    if (this.value == value) {
+	                        option.setAttribute('selected', 'selected');
+	                    }
+
+	                    selectInput.appendChild(option);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return selectInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-select';
+	        }
+	    }]);
+
+	    return SelectInput;
+	}(_choice2.BaseChoiceWidget);
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Choice Widgets
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.BaseChoiceWidget = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* BaseChoiceWidget - Abstract input for choice fields
+	* @class
+	* @abstract
+	* @namespace Widgets
+	*/
+	var BaseChoiceWidget = exports.BaseChoiceWidget = function (_Widget) {
+	    _inherits(BaseChoiceWidget, _Widget);
+
+	    /**
+	    * Abstract class for managing widgets with choices, such as selects
+	    * @constructor
+	    * @param {Field} field - fields object widget is bound too
+	    * @param {string} type - name of field type
+	    * @param {string} id - ID of the field (used in HTML)
+	    * @param {string} name - name of the field (used in HTML)
+	    * @param [string] label - optional label for the field
+	    * @param [object] attribs - optional HTML attributes for the field
+	    * @param [object] options - optional values to configure the widget
+	    * @param [string] value - initial value for the widget 
+	    */
+	    function BaseChoiceWidget(field, type, id, name, label, attribs, options, value) {
+	        _classCallCheck(this, BaseChoiceWidget);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BaseChoiceWidget).call(this, field, type, id, name, label, attribs, options, value));
+
+	        _this.choices = [];
+	        return _this;
+	    }
+
+	    /**
+	    * 
+	    * @params {array}
+	    */
+
+
+	    _createClass(BaseChoiceWidget, [{
+	        key: 'setChoices',
+	        value: function setChoices(choices) {
+	            this.choices = choices;
+	        }
+
+	        /**
+	        * Get the choices used by the widget
+	        * @returns {array} choice pair array
+	        */
+
+	    }, {
+	        key: 'getChoices',
+	        value: function getChoices() {
+	            return this.choices;
+	        }
+
+	        /**
+	        * Format the label text for display as a choice
+	        * @returns {string} formated label
+	        */
+
+	    }, {
+	        key: 'formatLabel',
+	        value: function formatLabel(label) {
+	            if (label) {
+	                label = label.toLowerCase().replace('_', ' ');
+	                return '' + label.charAt(0).toUpperCase() + label.slice(1);
+	            }
+
+	            return label;
+	        }
+
+	        /**
+	        * @throws Unable to render the field, must be overidden by a subclass
+	        */
+
+	    }, {
+	        key: 'renderField',
+	        value: function renderField() {
+	            throw new Error('Unable to render abstract widget BaseChoiceInput!');
+	        }
+	    }]);
+
+	    return BaseChoiceWidget;
+	}(_core.Widget);
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	    pug - fields/integer.js
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.IntegerField = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(2);
+
+	var _numbers = __webpack_require__(14);
+
+	var _core2 = __webpack_require__(15);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var IntegerField = exports.IntegerField = function (_Field) {
+	    _inherits(IntegerField, _Field);
+
+	    function IntegerField(_ref) {
+	        var id = _ref.id;
+	        var name = _ref.name;
+	        var _ref$label = _ref.label;
+	        var label = _ref$label === undefined ? null : _ref$label;
+	        var _ref$initial = _ref.initial;
+	        var initial = _ref$initial === undefined ? null : _ref$initial;
+	        var _ref$widget = _ref.widget;
+	        var widget = _ref$widget === undefined ? null : _ref$widget;
+	        var _ref$validators = _ref.validators;
+	        var validators = _ref$validators === undefined ? [] : _ref$validators;
+	        var _ref$attribs = _ref.attribs;
+	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
+	        var _ref$description = _ref.description;
+	        var description = _ref$description === undefined ? null : _ref$description;
+	        var _ref$options = _ref.options;
+	        var options = _ref$options === undefined ? {} : _ref$options;
+	        var _ref$order = _ref.order;
+	        var order = _ref$order === undefined ? null : _ref$order;
+
+	        _classCallCheck(this, IntegerField);
+
+	        // Always append an integer validator
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntegerField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
+	            description: description, options: options, order: order }));
+
+	        _this.validators.push(new _core2.IntegerValidator());
+	        return _this;
+	    }
+
+	    /**
+	       * Property - get/set value
+	       */
+
+
+	    _createClass(IntegerField, [{
+	        key: 'getWidget',
+
+
+	        /**
+	        *
+	        */
+	        value: function getWidget() {
+	            return _numbers.NumberInput;
+	        }
+	    }, {
+	        key: 'value',
+	        get: function get() {
+	            var value = this.widget.getValue();
+
+	            // Widgets deal with the HTML value, which
+	            // can not represent an integer. Coerce to
+	            // the expected type
+	            return parseInt(value);
+	        },
+	        set: function set(value) {
+	            this.widget.setValue(value);
+	        }
+	    }]);
+
+	    return IntegerField;
+	}(_core.Field);
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	    pug - widgets/text.js
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.NumberInput = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	* NumberInput - Standard HTML number input
+	*/
+	var NumberInput = exports.NumberInput = function (_Widget) {
+	    _inherits(NumberInput, _Widget);
+
+	    function NumberInput() {
+	        _classCallCheck(this, NumberInput);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(NumberInput).apply(this, arguments));
+	    }
+
+	    _createClass(NumberInput, [{
+	        key: 'renderField',
+
+
+	        /**
+	        * Render the text input field
+	        */
+	        value: function renderField() {
+	            var textInput = document.createElement('input');
+	            textInput.setAttribute('name', this.name);
+	            textInput.setAttribute('type', 'number');
+	            textInput.setAttribute('class', this.getFieldClass());
+	            textInput.setAttribute('value', this.value ? this.value : '');
+
+	            for (var attrib in this.attribs) {
+	                textInput.setAttribute(attrib, this.attribs[attrib]);
+	            }
+
+	            return textInput;
+	        }
+
+	        /**
+	        * Get the class name for the widget element
+	        */
+
+	    }, {
+	        key: 'getFieldClass',
+	        value: function getFieldClass() {
+	            return 'pug-field pug-field-text';
+	        }
+	    }]);
+
+	    return NumberInput;
+	}(_core.Widget);
+
+/***/ },
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2919,760 +3312,6 @@ module.exports =
 	}(Validator);
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	* @file Array Widgets
-	* @copyright Bought By Many 2016
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.ArrayInput = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* ArrayInput - Render a list of fields
-	* @class
-	* @namespace Widgets
-	*/
-	var ArrayInput = exports.ArrayInput = function (_Widget) {
-	    _inherits(ArrayInput, _Widget);
-
-	    function ArrayInput() {
-	        _classCallCheck(this, ArrayInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(ArrayInput).apply(this, arguments));
-	    }
-
-	    _createClass(ArrayInput, [{
-	        key: 'renderList',
-
-
-	        /**
-	        * Render the list of input fields
-	        * @params {array} fields - a list of Field objects to render
-	        * @returns {HTMLElement} returns a HTML fragment containing 
-	        * all rendered fields
-	        */
-	        value: function renderList(fields) {
-	            // Create a fragment for our widget
-	            var widgetFragment = document.createDocumentFragment();
-
-	            var wrapper = this.renderWrapper();
-
-	            fields.sort(function (a, b) {
-	                return a.getSortOrder() - b.getSortOrder();
-	            });
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = fields[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var field = _step.value;
-
-	                    var renderedField = field.render();
-	                    wrapper.appendChild(renderedField);
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            widgetFragment.appendChild(wrapper);
-
-	            return widgetFragment;
-	        }
-
-	        /**
-	        * @throws render is not supported on Arrays - renderList must be used
-	        */
-
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            throw new Error('ArrayInput must render as a list - use renderList');
-	        }
-
-	        /**
-	        * @throws renderLabel is not supported on array fields
-	        */
-
-	    }, {
-	        key: 'renderLabel',
-	        value: function renderLabel() {
-	            throw new Error('ArrayInput does not support a label!');
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        * @returns {string} the class to use for the field element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-array';
-	        }
-	    }]);
-
-	    return ArrayInput;
-	}(_core.Widget);
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	    pug - fields/boolean.js
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.BooleanField = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(4);
-
-	var _checkbox = __webpack_require__(10);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function toBool(value) {
-	    if (value == undefined) {
-	        return null;
-	    }
-
-	    switch (value.toLowerCase().trim()) {
-	        case "true":case "yes":case "1":
-	            return true;
-	        case "false":case "no":case "0":case null:
-	            return false;
-	        default:
-	            return Boolean(value);
-	    }
-	}
-
-	var BooleanField = exports.BooleanField = function (_Field) {
-	    _inherits(BooleanField, _Field);
-
-	    function BooleanField() {
-	        _classCallCheck(this, BooleanField);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BooleanField).apply(this, arguments));
-	    }
-
-	    _createClass(BooleanField, [{
-	        key: 'getWidget',
-
-
-	        /**
-	        * Get the widget for the field
-	        */
-	        value: function getWidget() {
-	            return _checkbox.CheckboxInput;
-	        }
-	    }, {
-	        key: 'value',
-
-
-	        /**
-	           * Property - get/set value
-	           */
-	        get: function get() {
-	            var value = this.widget.getValue();
-
-	            // Widgets deal with the HTML value, which
-	            // can not represent a boolean. Coerce to
-	            // the expected type
-	            return toBool(value);
-	        },
-	        set: function set(value) {
-	            this.widget.setValue(value);
-	        }
-	    }]);
-
-	    return BooleanField;
-	}(_core.Field);
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	* @file Checkbox Widgets
-	* @copyright Bought By Many 2016
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.CheckboxInput = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* CheckboxInput - Standard HTML checkbox
-	* @class
-	* @namespace Widgets
-	*/
-	var CheckboxInput = exports.CheckboxInput = function (_Widget) {
-	    _inherits(CheckboxInput, _Widget);
-
-	    function CheckboxInput() {
-	        _classCallCheck(this, CheckboxInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(CheckboxInput).apply(this, arguments));
-	    }
-
-	    _createClass(CheckboxInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        * @returns {HTMLElement} returns the rendered HTML checkbox 
-	        * input field
-	        */
-	        value: function renderField() {
-	            var checkbox = document.createElement('input');
-	            checkbox.setAttribute('name', this.name);
-	            checkbox.setAttribute('type', 'checkbox');
-	            checkbox.setAttribute('class', this.getFieldClass());
-
-	            if (this.getValue()) {
-	                checkbox.setAttribute('checked', 'checked');
-	            }
-
-	            for (var attrib in this.attribs) {
-	                checkbox.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return checkbox;
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        * @returns {string} the class to use for the field element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-checkbox';
-	        }
-	    }]);
-
-	    return CheckboxInput;
-	}(_core.Widget);
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	    pug - fields/choice.js
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.ChoiceField = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(4);
-
-	var _select = __webpack_require__(12);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ChoiceField = exports.ChoiceField = function (_Field) {
-	    _inherits(ChoiceField, _Field);
-
-	    function ChoiceField(_ref) {
-	        var id = _ref.id;
-	        var name = _ref.name;
-	        var _ref$label = _ref.label;
-	        var label = _ref$label === undefined ? null : _ref$label;
-	        var _ref$initial = _ref.initial;
-	        var initial = _ref$initial === undefined ? null : _ref$initial;
-	        var _ref$widget = _ref.widget;
-	        var widget = _ref$widget === undefined ? null : _ref$widget;
-	        var _ref$validators = _ref.validators;
-	        var validators = _ref$validators === undefined ? [] : _ref$validators;
-	        var _ref$attribs = _ref.attribs;
-	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
-	        var _ref$description = _ref.description;
-	        var description = _ref$description === undefined ? null : _ref$description;
-	        var _ref$options = _ref.options;
-	        var options = _ref$options === undefined ? {} : _ref$options;
-	        var _ref$order = _ref.order;
-	        var order = _ref$order === undefined ? null : _ref$order;
-	        var _ref$choices = _ref.choices;
-	        var choices = _ref$choices === undefined ? [] : _ref$choices;
-
-	        _classCallCheck(this, ChoiceField);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ChoiceField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
-	            description: description, options: options, order: order }));
-
-	        _this.choices = choices;
-
-	        if (options.hasOwnProperty('choices')) {
-	            _this.choices = options.choices;
-	        }
-
-	        _this.widget.setChoices(_this.choices);
-	        return _this;
-	    }
-
-	    _createClass(ChoiceField, [{
-	        key: 'getWidget',
-	        value: function getWidget() {
-	            return _select.SelectInput;
-	        }
-	    }]);
-
-	    return ChoiceField;
-	}(_core.Field);
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	    pug - widgets/select.js
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.SelectInput = undefined;
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _choice2 = __webpack_require__(13);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* SelectInput - Standard HTML select input
-	*/
-	var SelectInput = exports.SelectInput = function (_BaseChoiceWidget) {
-	    _inherits(SelectInput, _BaseChoiceWidget);
-
-	    function SelectInput() {
-	        _classCallCheck(this, SelectInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SelectInput).apply(this, arguments));
-	    }
-
-	    _createClass(SelectInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the select field
-	        */
-	        value: function renderField() {
-	            var selectInput = document.createElement('select');
-	            selectInput.setAttribute('name', this.name);
-	            selectInput.setAttribute('class', this.getFieldClass());
-
-	            for (var attrib in this.attribs) {
-	                selectInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = this.choices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var choice = _step.value;
-
-	                    var _choice = _slicedToArray(choice, 2);
-
-	                    var value = _choice[0];
-	                    var label = _choice[1];
-
-	                    var option = document.createElement('option');
-	                    option.value = value;
-	                    option.textContent = this.formatLabel(label);
-
-	                    if (this.value == value) {
-	                        option.setAttribute('selected', 'selected');
-	                    }
-
-	                    selectInput.appendChild(option);
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-
-	            return selectInput;
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-select';
-	        }
-	    }]);
-
-	    return SelectInput;
-	}(_choice2.BaseChoiceWidget);
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	* @file Choice Widgets
-	* @copyright Bought By Many 2016
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.BaseChoiceWidget = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* BaseChoiceWidget - Abstract input for choice fields
-	* @class
-	* @abstract
-	* @namespace Widgets
-	*/
-	var BaseChoiceWidget = exports.BaseChoiceWidget = function (_Widget) {
-	    _inherits(BaseChoiceWidget, _Widget);
-
-	    /**
-	    * Abstract class for managing widgets with choices, such as selects
-	    * @constructor
-	    * @param {Field} field - fields object widget is bound too
-	    * @param {string} type - name of field type
-	    * @param {string} id - ID of the field (used in HTML)
-	    * @param {string} name - name of the field (used in HTML)
-	    * @param [string] label - optional label for the field
-	    * @param [object] attribs - optional HTML attributes for the field
-	    * @param [object] options - optional values to configure the widget
-	    * @param [string] value - initial value for the widget 
-	    */
-	    function BaseChoiceWidget(field, type, id, name, label, attribs, options, value) {
-	        _classCallCheck(this, BaseChoiceWidget);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BaseChoiceWidget).call(this, field, type, id, name, label, attribs, options, value));
-
-	        _this.choices = [];
-	        return _this;
-	    }
-
-	    /**
-	    * 
-	    * @params {array}
-	    */
-
-
-	    _createClass(BaseChoiceWidget, [{
-	        key: 'setChoices',
-	        value: function setChoices(choices) {
-	            this.choices = choices;
-	        }
-
-	        /**
-	        * Get the choices used by the widget
-	        * @returns {array} choice pair array
-	        */
-
-	    }, {
-	        key: 'getChoices',
-	        value: function getChoices() {
-	            return this.choices;
-	        }
-
-	        /**
-	        * Format the label text for display as a choice
-	        * @returns {string} formated label
-	        */
-
-	    }, {
-	        key: 'formatLabel',
-	        value: function formatLabel(label) {
-	            if (label) {
-	                label = label.toLowerCase().replace('_', ' ');
-	                return '' + label.charAt(0).toUpperCase() + label.slice(1);
-	            }
-
-	            return label;
-	        }
-
-	        /**
-	        * @throws Unable to render the field, must be overidden by a subclass
-	        */
-
-	    }, {
-	        key: 'renderField',
-	        value: function renderField() {
-	            throw new Error('Unable to render abstract widget BaseChoiceInput!');
-	        }
-	    }]);
-
-	    return BaseChoiceWidget;
-	}(_core.Widget);
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	    pug - fields/integer.js
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.IntegerField = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(4);
-
-	var _numbers = __webpack_require__(15);
-
-	var _core2 = __webpack_require__(7);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var IntegerField = exports.IntegerField = function (_Field) {
-	    _inherits(IntegerField, _Field);
-
-	    function IntegerField(_ref) {
-	        var id = _ref.id;
-	        var name = _ref.name;
-	        var _ref$label = _ref.label;
-	        var label = _ref$label === undefined ? null : _ref$label;
-	        var _ref$initial = _ref.initial;
-	        var initial = _ref$initial === undefined ? null : _ref$initial;
-	        var _ref$widget = _ref.widget;
-	        var widget = _ref$widget === undefined ? null : _ref$widget;
-	        var _ref$validators = _ref.validators;
-	        var validators = _ref$validators === undefined ? [] : _ref$validators;
-	        var _ref$attribs = _ref.attribs;
-	        var attribs = _ref$attribs === undefined ? {} : _ref$attribs;
-	        var _ref$description = _ref.description;
-	        var description = _ref$description === undefined ? null : _ref$description;
-	        var _ref$options = _ref.options;
-	        var options = _ref$options === undefined ? {} : _ref$options;
-	        var _ref$order = _ref.order;
-	        var order = _ref$order === undefined ? null : _ref$order;
-
-	        _classCallCheck(this, IntegerField);
-
-	        // Always append an integer validator
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntegerField).call(this, { id: id, name: name, label: label, initial: initial, widget: widget, validators: validators, attribs: attribs,
-	            description: description, options: options, order: order }));
-
-	        _this.validators.push(new _core2.IntegerValidator());
-	        return _this;
-	    }
-
-	    /**
-	       * Property - get/set value
-	       */
-
-
-	    _createClass(IntegerField, [{
-	        key: 'getWidget',
-
-
-	        /**
-	        *
-	        */
-	        value: function getWidget() {
-	            return _numbers.NumberInput;
-	        }
-	    }, {
-	        key: 'value',
-	        get: function get() {
-	            var value = this.widget.getValue();
-
-	            // Widgets deal with the HTML value, which
-	            // can not represent an integer. Coerce to
-	            // the expected type
-	            return parseInt(value);
-	        },
-	        set: function set(value) {
-	            this.widget.setValue(value);
-	        }
-	    }]);
-
-	    return IntegerField;
-	}(_core.Field);
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	    pug - widgets/text.js
-	*/
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.NumberInput = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	* NumberInput - Standard HTML number input
-	*/
-	var NumberInput = exports.NumberInput = function (_Widget) {
-	    _inherits(NumberInput, _Widget);
-
-	    function NumberInput() {
-	        _classCallCheck(this, NumberInput);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(NumberInput).apply(this, arguments));
-	    }
-
-	    _createClass(NumberInput, [{
-	        key: 'renderField',
-
-
-	        /**
-	        * Render the text input field
-	        */
-	        value: function renderField() {
-	            var textInput = document.createElement('input');
-	            textInput.setAttribute('name', this.name);
-	            textInput.setAttribute('type', 'number');
-	            textInput.setAttribute('class', this.getFieldClass());
-	            textInput.setAttribute('value', this.value ? this.value : '');
-
-	            for (var attrib in this.attribs) {
-	                textInput.setAttribute(attrib, this.attribs[attrib]);
-	            }
-
-	            return textInput;
-	        }
-
-	        /**
-	        * Get the class name for the widget element
-	        */
-
-	    }, {
-	        key: 'getFieldClass',
-	        value: function getFieldClass() {
-	            return 'pug-field pug-field-text';
-	        }
-	    }]);
-
-	    return NumberInput;
-	}(_core.Widget);
-
-/***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3693,7 +3332,7 @@ module.exports =
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _core = __webpack_require__(4);
+	var _core = __webpack_require__(2);
 
 	var _object = __webpack_require__(17);
 
@@ -4219,9 +3858,9 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _core = __webpack_require__(4);
+	var _core = __webpack_require__(2);
 
-	var _text = __webpack_require__(5);
+	var _text = __webpack_require__(7);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4268,7 +3907,7 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _choice2 = __webpack_require__(13);
+	var _choice2 = __webpack_require__(12);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4780,6 +4419,675 @@ module.exports =
 
 	    return DateSelectionInput;
 	}(_core.Widget);
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _core = __webpack_require__(6);
+
+	Object.defineProperty(exports, 'Widget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.Widget;
+	  }
+	});
+
+	var _array = __webpack_require__(5);
+
+	Object.defineProperty(exports, 'ArrayInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _array.ArrayInput;
+	  }
+	});
+
+	var _checkbox = __webpack_require__(9);
+
+	Object.defineProperty(exports, 'CheckboxInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _checkbox.CheckboxInput;
+	  }
+	});
+
+	var _choice = __webpack_require__(12);
+
+	Object.defineProperty(exports, 'BaseChoiceWidget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _choice.BaseChoiceWidget;
+	  }
+	});
+
+	var _date = __webpack_require__(20);
+
+	Object.defineProperty(exports, 'DateInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _date.DateInput;
+	  }
+	});
+	Object.defineProperty(exports, 'DateSelectionInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _date.DateSelectionInput;
+	  }
+	});
+
+	var _numbers = __webpack_require__(14);
+
+	Object.defineProperty(exports, 'NumberInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _numbers.NumberInput;
+	  }
+	});
+
+	var _object = __webpack_require__(17);
+
+	Object.defineProperty(exports, 'ObjectInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _object.ObjectInput;
+	  }
+	});
+
+	var _radio = __webpack_require__(19);
+
+	Object.defineProperty(exports, 'RadioInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _radio.RadioInput;
+	  }
+	});
+
+	var _select = __webpack_require__(11);
+
+	Object.defineProperty(exports, 'SelectInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _select.SelectInput;
+	  }
+	});
+
+	var _text = __webpack_require__(7);
+
+	Object.defineProperty(exports, 'TextInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.TextInput;
+	  }
+	});
+	Object.defineProperty(exports, 'TextAreaInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.TextAreaInput;
+	  }
+	});
+	Object.defineProperty(exports, 'EmailInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.EmailInput;
+	  }
+	});
+	Object.defineProperty(exports, 'HiddenInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.HiddenInput;
+	  }
+	});
+	Object.defineProperty(exports, 'PasswordInput', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.PasswordInput;
+	  }
+	});
+	Object.defineProperty(exports, 'DisplayWidget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.DisplayWidget;
+	  }
+	});
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _core = __webpack_require__(15);
+
+	Object.defineProperty(exports, 'Validator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.Validator;
+	  }
+	});
+	Object.defineProperty(exports, 'RequiredValidator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.RequiredValidator;
+	  }
+	});
+	Object.defineProperty(exports, 'BooleanRequiredValidator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.BooleanRequiredValidator;
+	  }
+	});
+	Object.defineProperty(exports, 'LengthValidator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.LengthValidator;
+	  }
+	});
+	Object.defineProperty(exports, 'IntegerValidator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _core.IntegerValidator;
+	  }
+	});
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	* @file Fieldset Interface
+	* @copyright Bought By Many 2016
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Fieldset = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _registry = __webpack_require__(3);
+
+	var _registry2 = _interopRequireDefault(_registry);
+
+	var _core = __webpack_require__(2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	* Fieldset wrapper class
+	* @class
+	*/
+	var Fieldset = exports.Fieldset = function () {
+
+	    /**
+	    * Setup the fieldset class
+	    * @constructor
+	    * @param {string} label set the label of the fieldset, typically
+	    * used for legends
+	    */
+	    function Fieldset(_ref) {
+	        var _ref$label = _ref.label;
+	        var label = _ref$label === undefined ? null : _ref$label;
+	        var _ref$name = _ref.name;
+	        var name = _ref$name === undefined ? null : _ref$name;
+
+	        _classCallCheck(this, Fieldset);
+
+	        this.name = name;
+	        this.label = label;
+	        this.fields = [];
+	        this.errors = {};
+	    }
+
+	    /**
+	    * Add a field to the fieldset
+	    * @param {field} field object to add to the fieldset
+	    */
+
+
+	    _createClass(Fieldset, [{
+	        key: 'addField',
+	        value: function addField(field) {
+	            this.fields.push(field);
+	        }
+
+	        /**
+	        * Check if a fieldset contains a field
+	        * @param {string} A Field name
+	        */
+
+	    }, {
+	        key: 'hasField',
+	        value: function hasField(fieldName) {
+	            for (var field in this.fields) {
+	                if (field.name == fieldName) {
+	                    return true;
+	                }
+	            }
+
+	            return false;
+	        }
+
+	        /**
+	        * Get a field from the fieldset
+	        * @param {string} A Field name
+	        */
+
+	    }, {
+	        key: 'getField',
+	        value: function getField(fieldName) {}
+
+	        /**
+	        * Get the data for the fieldset, this is returned as
+	        * an object with field -> value pairs
+	        * @returns {object}
+	        */
+
+	    }, {
+	        key: 'data',
+	        value: function data() {
+	            var data = {};
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = this.fields[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var field = _step.value;
+
+	                    data[field.name] = field.value;
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            return data;
+	        }
+
+	        /**
+	        * Validate the fields in the fieldset. Stores an object
+	        * of error information field name -> error.
+	        * @returns {boolean}
+	        */
+
+	    }, {
+	        key: 'validate',
+	        value: function validate() {
+	            var valid = true;
+
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+
+	            try {
+	                for (var _iterator2 = this.fields[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var field = _step2.value;
+
+	                    if (!field.validate()) {
+	                        this.errors[field.name] = field.errors;
+	                        valid = false;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+
+	            return valid;
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'setFieldErrors',
+	        value: function setFieldErrors(errors) {
+	            for (var errorField in errors) {
+	                if (this.hasField(errorField)) {
+	                    this.getField(errorField);
+	                }
+	            }
+	        }
+
+	        /**
+	        * 
+	        * @param {string} text to be used for the fieldset legend
+	        */
+
+	    }, {
+	        key: 'setLegend',
+	        value: function setLegend(legend) {
+	            this.label = legend;
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'refreshValidationState',
+	        value: function refreshValidationState() {
+	            this.errors = {};
+
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+
+	            try {
+	                for (var _iterator3 = this.fields[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var field = _step3.value;
+
+	                    field.refreshValidationState();
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        *
+	        * @returns {HTMLFragment}
+	        */
+
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var fieldsetContainer = document.createDocumentFragment();
+	            var fieldset = document.createElement('fieldset');
+	            fieldset.classList.add('pug-fieldset');
+
+	            if (this.name) {
+	                fieldset.setAttribute('name', this.name);
+	            }
+
+	            if (this.label) {
+	                var legend = document.createElement('legend');
+	                legend.textContent = this.label;
+	                fieldset.appendChild(legend);
+	            }
+
+	            this.fields.sort(function (a, b) {
+	                return a.getSortOrder() - b.getSortOrder();
+	            });
+
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+
+	            try {
+	                for (var _iterator4 = this.fields[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var field = _step4.value;
+
+	                    var fieldElement = field.render();
+	                    fieldset.appendChild(fieldElement);
+	                }
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
+	                    }
+	                }
+	            }
+
+	            fieldsetContainer.appendChild(fieldset);
+
+	            return fieldsetContainer;
+	        }
+
+	        /**
+	        * Callback triggered after the element has been rendered to
+	        * the stage
+	        */
+
+	    }, {
+	        key: 'postRender',
+	        value: function postRender() {
+	            var _iteratorNormalCompletion5 = true;
+	            var _didIteratorError5 = false;
+	            var _iteratorError5 = undefined;
+
+	            try {
+	                for (var _iterator5 = this.fields[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                    var field = _step5.value;
+
+	                    field.postRender();
+	                }
+	            } catch (err) {
+	                _didIteratorError5 = true;
+	                _iteratorError5 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError5) {
+	                        throw _iteratorError5;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'lock',
+	        value: function lock() {
+	            var _iteratorNormalCompletion6 = true;
+	            var _didIteratorError6 = false;
+	            var _iteratorError6 = undefined;
+
+	            try {
+	                for (var _iterator6 = this.fields[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+	                    var field = _step6.value;
+
+	                    field.lock();
+	                }
+	            } catch (err) {
+	                _didIteratorError6 = true;
+	                _iteratorError6 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+	                        _iterator6.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError6) {
+	                        throw _iteratorError6;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        *
+	        */
+
+	    }, {
+	        key: 'unlock',
+	        value: function unlock() {
+	            var _iteratorNormalCompletion7 = true;
+	            var _didIteratorError7 = false;
+	            var _iteratorError7 = undefined;
+
+	            try {
+	                for (var _iterator7 = this.fields[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+	                    var field = _step7.value;
+
+	                    field.unlock();
+	                }
+	            } catch (err) {
+	                _didIteratorError7 = true;
+	                _iteratorError7 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
+	                        _iterator7.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError7) {
+	                        throw _iteratorError7;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        * Create a new fieldset. Th
+	        * @staticmethod
+	        * @params {object} schema - JSON schema for the fieldset spec
+	        * @params [object] options - options for fields and the fieldset
+	        * @params [string] name - optional name for the fieldset (added as class)
+	        */
+
+	    }], [{
+	        key: 'new',
+	        value: function _new(schema) {
+	            var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	            var fields = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+	            var name = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+	            var fieldsetSpec = {};
+
+	            if (schema.hasOwnProperty('title')) {
+	                fieldsetSpec.label = schema.title;
+	            }
+	            if (options.hasOwnProperty('form')) {
+	                if (options.form.hasOwnProperty('label')) {
+	                    fieldsetSpec.label = options.form.label;
+	                }
+	            }
+
+	            Object.assign(fieldsetSpec, options);
+
+	            if (schema.hasOwnProperty('properties')) {
+	                schema = schema.properties;
+	            }
+
+	            var fieldset = new Fieldset(fieldsetSpec);
+	            var fieldIndex = 1;
+
+	            var _iteratorNormalCompletion8 = true;
+	            var _didIteratorError8 = false;
+	            var _iteratorError8 = undefined;
+
+	            try {
+	                for (var _iterator8 = Object.keys(schema)[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+	                    var fieldName = _step8.value;
+
+	                    var fieldId = fieldName + '_field_' + fieldIndex;
+	                    var fieldSchema = schema[fieldName];
+	                    var fieldOptions = {};
+
+	                    // If a set of fields is specified, we only allow
+	                    // these to be created
+	                    if (fields) {
+	                        if (!Object.keys(fields).includes(fieldName)) {
+	                            continue;
+	                        }
+	                    }
+
+	                    if (options.fields) {
+	                        if (options.fields.hasOwnProperty(fieldName)) {
+	                            fieldOptions = options.fields[fieldName];
+	                        }
+	                    }
+
+	                    if (options.fieldsets) {
+	                        fieldOptions.fieldsets = options.fieldsets;
+	                    }
+
+	                    var field = _core.Field.new(fieldId, fieldName, fieldSchema, fieldOptions);
+
+	                    if (field) {
+	                        // Only set the sort order if this wasn't set previously,
+	                        // this may of been set by options
+	                        if (!field.getSortOrder()) {
+	                            field.setSortOrder(fieldIndex);
+	                        }
+
+	                        fieldset.addField(field);
+	                        fieldIndex++;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError8 = true;
+	                _iteratorError8 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion8 && _iterator8.return) {
+	                        _iterator8.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError8) {
+	                        throw _iteratorError8;
+	                    }
+	                }
+	            }
+
+	            return fieldset;
+	        }
+	    }]);
+
+	    return Fieldset;
+	}();
 
 /***/ }
 /******/ ]);

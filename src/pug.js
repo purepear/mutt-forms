@@ -9,6 +9,11 @@
 
 import {Fieldset} from './fieldsets/core';
 
+export * from './fields';
+export * from './widgets';
+export * from './validators';
+export * from './registry';
+
 export default class Pug {
 
     /**
@@ -313,6 +318,13 @@ export default class Pug {
         for(let fieldset of this.fieldsets) {
             fieldset.setFieldErrors(errors);
         }
+    }
+
+    /**
+    *
+    */
+    use(plugin) {
+
     }
 
     /**

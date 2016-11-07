@@ -3,7 +3,6 @@
 * @copyright Bought By Many 2016
 */
 
-
 var assert = require('assert');
 
 describe('Array', function() {
