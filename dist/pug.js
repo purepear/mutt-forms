@@ -57,7 +57,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.registry = exports.validators = exports.widgets = exports.fields = undefined;
+	exports.PugRegistry = exports.validators = exports.widgets = exports.fields = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -77,7 +77,7 @@ module.exports =
 
 	var _registry = __webpack_require__(2);
 
-	var registry = _interopRequireWildcard(_registry);
+	var PugRegistry = _interopRequireWildcard(_registry);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -86,7 +86,7 @@ module.exports =
 	exports.fields = fields;
 	exports.widgets = widgets;
 	exports.validators = validators;
-	exports.registry = registry;
+	exports.PugRegistry = PugRegistry;
 
 	var Pug = function () {
 
@@ -620,14 +620,6 @@ module.exports =
 	                }
 	            }
 	        }
-
-	        /**
-	        *
-	        */
-
-	    }, {
-	        key: 'use',
-	        value: function use(plugin) {}
 
 	        /**
 	        * Log a message
