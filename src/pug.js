@@ -13,8 +13,9 @@ import * as fields from './fields';
 import * as widgets from './widgets';
 import * as validators from './validators';
 import * as PugRegistry from './registry';
+import * as utils from './utils';
 
-export {fields, widgets, validators, PugRegistry};
+export {fields, widgets, validators, utils, PugRegistry};
 
 export default class Pug {
 
