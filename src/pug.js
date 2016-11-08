@@ -9,10 +9,12 @@
 
 import {Fieldset} from './fieldsets/core';
 
-export * from './fields';
-export * from './widgets';
-export * from './validators';
-export * from './registry';
+import * as fields from './fields';
+import * as widgets from './widgets';
+import * as validators from './validators';
+import * as registry from './registry';
+
+export {fields, widgets, validators, registry};
 
 export default class Pug {
 
