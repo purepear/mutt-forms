@@ -75,13 +75,15 @@ module.exports =
 
 	var validators = _interopRequireWildcard(_validators);
 
-	var _registry = __webpack_require__(2);
-
-	var PugRegistry = _interopRequireWildcard(_registry);
-
 	var _utils = __webpack_require__(24);
 
 	var utils = _interopRequireWildcard(_utils);
+
+	var _registry = __webpack_require__(2);
+
+	var _registry2 = _interopRequireDefault(_registry);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -91,7 +93,7 @@ module.exports =
 	exports.widgets = widgets;
 	exports.validators = validators;
 	exports.utils = utils;
-	exports.PugRegistry = PugRegistry;
+	exports.PugRegistry = _registry2.default;
 
 	var Pug = function () {
 

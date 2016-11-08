@@ -12,8 +12,8 @@ import {Fieldset} from './fieldsets/core';
 import * as fields from './fields';
 import * as widgets from './widgets';
 import * as validators from './validators';
-import * as PugRegistry from './registry';
 import * as utils from './utils';
+import PugRegistry from './registry';
 
 export {fields, widgets, validators, utils, PugRegistry};
 
