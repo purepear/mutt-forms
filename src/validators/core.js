@@ -85,7 +85,9 @@ export class LengthValidator extends Validator {
 export class IntegerValidator extends Validator {
 
     validate(value) {
-        if(isNaN(value)) {
+        // NOTE: We only check it's an integer IF we
+        // have a value.
+        if(value && isNaN(value)) {
             this.error = `Value must be an integer`
             return false
         }
