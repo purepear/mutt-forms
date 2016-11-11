@@ -4,6 +4,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Field} from './core'
 import {SelectInput} from '../widgets/select'
 
@@ -38,3 +39,5 @@ export class ChoiceField extends Field {
         return SelectInput
     }
 }
+
+PugRegistry.registerField('enum', ChoiceField)

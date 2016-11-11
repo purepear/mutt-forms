@@ -4,6 +4,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Field} from './core'
 import {NumberInput} from '../widgets/numbers'
 import {IntegerValidator} from '../validators/core'
@@ -53,3 +54,5 @@ export class IntegerField extends Field {
         return NumberInput
     }
 }
+
+PugRegistry.registerField('integer', IntegerField)

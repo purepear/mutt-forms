@@ -6,6 +6,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Field} from './core'
 import {CheckboxInput} from '../widgets/checkbox'
 
@@ -56,3 +57,5 @@ export class BooleanField extends Field {
         return CheckboxInput
     }
 }
+
+PugRegistry.registerField('boolean', BooleanField)

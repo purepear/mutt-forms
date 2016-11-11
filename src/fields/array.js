@@ -5,6 +5,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Field} from './core'
 import {ArrayInput} from '../widgets/array'
 
@@ -21,7 +22,7 @@ export class ArrayField extends Field {
     */
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        items = {}, minItems = 1, maxItems = null}) {
+        order = null, items = {}, minItems = 1, maxItems = null}) {
         super({
             id,
             name,
@@ -31,7 +32,8 @@ export class ArrayField extends Field {
             validators,
             attribs,
             description,
-            options
+            options,
+            order
         })
 
         // TODO: Sanity check min/max items
@@ -150,3 +152,5 @@ export class ArrayField extends Field {
         this._errors = error
     }
 }
+
+PugRegistry.registerField('array', ArrayField)

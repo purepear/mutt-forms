@@ -5,22 +5,6 @@
 
 'use strict'
 
-import {ArrayField} from './fields/array'
-import {BooleanField} from './fields/boolean'
-import {ChoiceField} from './fields/choice'
-import {IntegerField} from './fields/integer'
-import {ObjectField} from './fields/object'
-import {StringField} from './fields/text'
-import {RadioInput} from './widgets/radio'
-import {
-    TextAreaInput,
-    PasswordInput,
-    EmailInput,
-    HiddenInput,
-    DisplayWidget
-} from './widgets/text'
-import {DateInput, DateSelectionInput} from './widgets/date'
-
 class PugRegistry {
 
     /**
@@ -31,28 +15,8 @@ class PugRegistry {
     * @constructor
     */
     constructor() {
-        this.fields = {
-            'boolean': BooleanField,
-            'integer': IntegerField,
-            'string': StringField,
-            'date': StringField,
-            'datetime': StringField,
-            'enum': ChoiceField,
-            'array': ArrayField,
-            'object': ObjectField
-            // 'number': 'FloatField',
-        }
-
-        this.widgets = {
-            'date': DateInput,
-            'dateselect': DateSelectionInput,
-            'email': EmailInput,
-            'radio': RadioInput,
-            'hidden': HiddenInput,
-            'textarea': TextAreaInput,
-            'password': PasswordInput,
-            'display': DisplayWidget
-        }
+        this.fields = {}
+        this.widgets = {}
     }
 
     /**
@@ -121,4 +85,6 @@ class PugRegistry {
 
 }
 
-export default new PugRegistry()
+const registry = new PugRegistry()
+
+export default registry

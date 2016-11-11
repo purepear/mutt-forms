@@ -38,7 +38,7 @@ export class Field {
         order = null}) {
         this.id = id
         this.name = name
-        this.label = label || this.name
+        this.label = label
         this.description = description
         this.attribs = attribs
         this.options = options
@@ -46,10 +46,18 @@ export class Field {
         this.sortOrder = order
         this.locked = false
 
+        if(!this.label) {
+            this.label = this.name
+        }
+
         this.initOptions()
 
         // Setup the widget
-        let WidgetKlass = widget || this.getWidget()
+        let WidgetKlass = this.getWidget()
+
+        if(widget) {
+            WidgetKlass = widget
+        }
 
         this.widget = new WidgetKlass(
             this,
@@ -118,6 +126,7 @@ export class Field {
 
     /**
     * Render the form field using it's widget interface
+    * @returns
     */
     render() {
         return this.widget.render()

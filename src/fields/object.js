@@ -6,6 +6,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Field} from './core'
 import {ObjectInput} from '../widgets/object'
 
@@ -31,7 +32,8 @@ export class ObjectField extends Field {
             validators,
             attribs,
             description,
-            options
+            options,
+            order
         })
 
         this.object = {}
@@ -150,7 +152,8 @@ export class ObjectField extends Field {
             if(field.name === searchName) {
                 if(pathParts.length === 0) {
                     return field
-                } else if(field.hasOwnProperty('getFieldByPath')) {
+                } else if(field.constructor.prototype
+                                .hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }
             }
@@ -171,3 +174,5 @@ export class ObjectField extends Field {
         this._errors = error
     }
 }
+
+PugRegistry.registerField('object', ObjectField)

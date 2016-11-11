@@ -188,11 +188,12 @@ export class Fieldset {
         let pathParts = path.split('.')
         let searchName = pathParts.shift()
 
-        for(let field in this.fields) {
+        for(let field of this.fields) {
             if(field.name === searchName) {
                 if(pathParts.length === 0) {
                     return field
-                } else if(field.hasOwnProperty('getFieldByPath')) {
+                } else if(field.constructor.prototype
+                            .hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }
             }

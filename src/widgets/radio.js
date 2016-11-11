@@ -5,6 +5,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {BaseChoiceWidget} from './choice'
 
 /**
@@ -111,3 +112,5 @@ export class RadioInput extends BaseChoiceWidget {
     */
     getFieldClass() { return 'pug-field pug-field-radio' }
 }
+
+PugRegistry.registerWidget('radio', RadioInput)

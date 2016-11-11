@@ -94,8 +94,8 @@ export class Widget {
         wrapper.removeChild(element)
 
         // Add the display only field
-        let displayElement = displayReadonlyValue(lockedValue)
-        wrapper.appendChild(displayElement)
+        // let displayElement = displayReadonlyValue(lockedValue)
+        // wrapper.appendChild(displayElement)
 
         this.locked = true
 

@@ -4,6 +4,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -100,3 +101,5 @@ export class ObjectInput extends Widget {
     */
     getFieldClass() { return 'pug-field pug-field-object' }
 }
+
+PugRegistry.registerWidget('object', ObjectInput)

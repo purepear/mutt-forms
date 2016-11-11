@@ -5,6 +5,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -38,6 +39,8 @@ export class TextInput extends Widget {
     getFieldClass() { return 'pug-field pug-field-text' }
 }
 
+PugRegistry.registerWidget('text', TextInput)
+
 /**
 * TextAreaInput - Standard HTML textarea input
 * @class
@@ -66,6 +69,8 @@ export class TextAreaInput extends Widget {
     */
     getFieldClass() { return 'pug-field pug-field-text' }
 }
+
+PugRegistry.registerWidget('textarea', TextAreaInput)
 
 /**
 * EmailInput - Standard HTML text input
@@ -96,6 +101,8 @@ export class EmailInput extends TextInput {
     */
     getFieldClass() { return 'pug-field pug-field-email' }
 }
+
+PugRegistry.registerWidget('email', EmailInput)
 
 /**
 * HiddenInput - Standard HTML hidden input
@@ -136,6 +143,8 @@ export class HiddenInput extends Widget {
     }
 }
 
+PugRegistry.registerWidget('hidden', HiddenInput)
+
 /**
 * PasswordInput - Standard HTML password input
 * @class
@@ -165,6 +174,8 @@ export class PasswordInput extends TextInput {
     */
     getFieldClass() { return 'pug-field pug-field-password' }
 }
+
+PugRegistry.registerWidget('password', PasswordInput)
 
 /**
 * DisplayWidget - Display only widget, this just shows the field as
@@ -199,3 +210,5 @@ export class DisplayWidget extends Widget {
     */
     getFieldClass() { return 'pug-field pug-field-display' }
 }
+
+PugRegistry.registerWidget('display', DisplayWidget)

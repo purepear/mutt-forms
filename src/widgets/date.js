@@ -5,6 +5,7 @@
 
 'use strict'
 
+import PugRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -49,6 +50,8 @@ export class DateInput extends Widget {
     */
     getFieldClass() { return 'pug-field pug-field-date' }
 }
+
+PugRegistry.registerWidget('date', DateInput)
 
 /**
 * DateSelectionInput - Selection Input for date
@@ -243,3 +246,6 @@ export class DateSelectionInput extends Widget {
         this.setDateValue(value)
     }
 }
+
+PugRegistry.registerWidget('dateselect', DateInput)
+
