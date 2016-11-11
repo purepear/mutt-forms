@@ -3,15 +3,15 @@
 * @copyright Bought By Many 2016
 */
 
-'use strict';
+'use strict'
 
-import PugRegistry from '../registry';
-import {TextInput} from '../widgets/text';
+import PugRegistry from '../registry'
+import {TextInput} from '../widgets/text'
 import {
-    RequiredValidator, 
+    RequiredValidator,
     BooleanRequiredValidator,
     LengthValidator
-} from '../validators/core';
+} from '../validators/core'
 
 /**
 *
@@ -33,26 +33,25 @@ export class Field {
     * @param [object] options - rendering options for the field
     * @param [integer] order - order flag for sorting multiple fields
     */
-    constructor({id, name, label=null, initial=null, widget=null,
-        validators=[], attribs={}, description=null, options={},
-        order=null}) {
+    constructor({id, name, label = null, initial = null, widget = null,
+        validators = [], attribs = {}, description = null, options = {},
+        order = null}) {
+        this.id = id
+        this.name = name
+        this.label = label || this.name
+        this.description = description
+        this.attribs = attribs
+        this.options = options
+        this.validators = validators
+        this.sortOrder = order
+        this.locked = false
 
-        this.id = id;
-        this.name = name;
-        this.label = (label) ? label : this.name; // default
-        this.description = description;
-        this.attribs = attribs;
-        this.options = options;
-        this.validators = validators;
-        this.sortOrder = order;
-        this.locked = false;
-
-        this.initOptions();
+        this.initOptions()
 
         // Setup the widget
-        let widgetKlass = widget ? widget : this.getWidget();
+        let WidgetKlass = widget || this.getWidget()
 
-        this.widget = new widgetKlass(
+        this.widget = new WidgetKlass(
             this,
             this.type,
             this.id,
@@ -61,9 +60,9 @@ export class Field {
             this.attribs,
             this.options,
             initial
-        );
+        )
 
-        this._errors = [];
+        this._errors = []
     }
 
     /**
@@ -71,38 +70,38 @@ export class Field {
     */
     initOptions() {
         if(this.options.hasOwnProperty('order')) {
-            this.sortOrder = this.options.order;
+            this.sortOrder = this.options.order
         }
         if(this.options.hasOwnProperty('label')) {
-            this.label = this.options.label;
+            this.label = this.options.label
         }
         if(this.options.hasOwnProperty('description')) {
-            this.description = this.options.description;
+            this.description = this.options.description
         }
     }
 
     /**
-    * Property - get/set the type (typically set can not be called 
+    * Property - get/set the type (typically set can not be called
     * but is included for subclasses who may use this)
     */
     get type() {
-        let type = this.constructor.name.toLowerCase();
-        return (type != 'field') ? type.replace('field', '') : type;
+        let type = this.constructor.name.toLowerCase()
+        return (type !== 'field') ? type.replace('field', '') : type
     }
 
     set type(someType) {
-        throw new Error('Unable to set type on a field instance!');
+        throw new Error('Unable to set type on a field instance!')
     }
 
     /**
     * Property - get/set value
     */
     get value() {
-        return this.widget.getValue();
+        return this.widget.getValue()
     }
 
     set value(value) {
-        this.widget.setValue(value);
+        this.widget.setValue(value)
     }
 
     /**
@@ -110,27 +109,26 @@ export class Field {
     * @param {string} Error string
     */
     get errors() {
-        return this._errors;
+        return this._errors
     }
 
     set errors(error) {
-        this._errors.push(error);
+        this._errors.push(error)
     }
 
     /**
     * Render the form field using it's widget interface
     */
     render() {
-        return this.widget.render();
+        return this.widget.render()
     }
-
 
     /**
     * Callback to the field after it has been rendered to
     * the stage
     */
     postRender() {
-        this.widget.postRender();
+        this.widget.postRender()
     }
 
     /**
@@ -138,22 +136,22 @@ export class Field {
     */
     validate() {
         // Clear any previous validations
-        this.refreshValidationState();
+        this.refreshValidationState()
 
-        let value = this.value;
+        let value = this.value
 
         for(let validator of this.validators) {
             if(!validator.validate(value)) {
-                this.errors = validator.error;
+                this.errors = validator.error
             }
         }
 
         if(this.errors.length > 0) {
-            this.widget.refreshErrorState(this.errors);
-            return false;
+            this.widget.refreshErrorState(this.errors)
+            return false
         }
 
-        return true;
+        return true
     }
 
     /**
@@ -161,13 +159,13 @@ export class Field {
     */
     lock() {
         if(this.locked) {
-            return false;
+            return false
         }
 
-        this.widget.lock();
-        this.locked = true;
+        this.widget.lock()
+        this.locked = true
 
-        return true;
+        return true
     }
 
     /*
@@ -175,29 +173,29 @@ export class Field {
     */
     unlock() {
         if(!this.locked) {
-            return false;
+            return false
         }
 
-        this.widget.unlock();
-        this.locked = false;
+        this.widget.unlock()
+        this.locked = false
 
-        return true;
+        return true
     }
 
     /**
     * Refresh the validation state
     */
     refreshValidationState() {
-        this._errors = [];
-        this.widget.errors = [];
-        this.widget.refreshErrorState([]);
+        this._errors = []
+        this.widget.errors = []
+        this.widget.refreshErrorState([])
     }
 
     /**
     * Get the widget class used to render the field
     */
     getWidget() {
-        return TextInput;
+        return TextInput
     }
 
     /**
@@ -205,21 +203,21 @@ export class Field {
     * rendering groups of fields.
     */
     getSortOrder() {
-        return this.sortOrder;
+        return this.sortOrder
     }
 
     /**
     * Set the internal sort order for a field.
     */
     setSortOrder(order) {
-        this.sortOrder = order;
+        this.sortOrder = order
     }
 
     /**
     * Display field as a string representation
     */
     toString() {
-        return `Field <${this.name} ${this.type}>`;
+        return `Field <${this.name} ${this.type}>`
     }
 
     /**
@@ -231,106 +229,106 @@ export class Field {
             name: name,
             options: options,
             attribs: {}
-        };
+        }
 
-        let fieldKlass = null;
-        let validators = [];
+        let FieldKlass = null
+        let validators = []
 
         if(schema.description) {
-            fieldSpec.description = schema.description;
+            fieldSpec.description = schema.description
         }
 
         if(schema.title) {
-            fieldSpec.label = schema.title;
+            fieldSpec.label = schema.title
         }
 
         if(schema.default) {
-            fieldSpec.initial = schema.default;
+            fieldSpec.initial = schema.default
         }
 
         if(schema.enum) {
-            let choices = [];
+            let choices = []
 
             for(let option of schema.enum) {
-                choices.push([option, option]);
+                choices.push([option, option])
             }
 
-            fieldSpec.choices = choices;
-            fieldKlass = PugRegistry.getField('enum');
+            fieldSpec.choices = choices
+            FieldKlass = PugRegistry.getField('enum')
         }
 
         // This is awkward as we are trying to support the
         // legacy/Alpaca option format
         if(options.hasOwnProperty('hidden')) {
             if(options.hidden) {
-                fieldSpec.widget = PugRegistry.getWidget('hidden');
+                fieldSpec.widget = PugRegistry.getWidget('hidden')
             }
         }
 
         if(schema.format) {
             if(PugRegistry.hasWidget(schema.format)) {
-                fieldSpec.widget = PugRegistry.getWidget(schema.format);
+                fieldSpec.widget = PugRegistry.getWidget(schema.format)
             }
         }
 
         if(options.widget) {
             if(PugRegistry.hasWidget(options.widget)) {
-                fieldSpec.widget = PugRegistry.getWidget(options.widget);
+                fieldSpec.widget = PugRegistry.getWidget(options.widget)
             }
         }
 
         if(schema.items) {
-            fieldSpec.items = schema.items;
+            fieldSpec.items = schema.items
         }
 
         if(schema.properties) {
-            fieldSpec.properties = schema.properties;
+            fieldSpec.properties = schema.properties
         }
 
         // Build validator list
         if(schema.required) {
-            if(schema.type == 'boolean') {
-                validators.push(new BooleanRequiredValidator());
+            if(schema.type === 'boolean') {
+                validators.push(new BooleanRequiredValidator())
             } else {
-                validators.push(new RequiredValidator());
+                validators.push(new RequiredValidator())
             }
 
-            fieldSpec.attribs.required = 'true';
+            fieldSpec.attribs.required = 'true'
         }
 
         if(schema.minLength) {
             validators.push(
-                new LengthValidator(min=schema.minLength)
-            );
+                new LengthValidator({min: schema.minLength})
+            )
         }
 
         if(schema.maxLength) {
             validators.push(
-                new LengthValidator(max=schema.maxLength)
-            );
+                new LengthValidator({max: schema.maxLength})
+            )
         }
 
         if(schema.minItems) {
-            fieldSpec.minItems = schema.minItems;
+            fieldSpec.minItems = schema.minItems
         }
 
         if(schema.maxItems) {
-            fieldSpec.maxItems = schema.maxItems;
+            fieldSpec.maxItems = schema.maxItems
         }
 
-        fieldSpec.validators = validators;
+        fieldSpec.validators = validators
 
-        if(!fieldKlass) {
+        if(!FieldKlass) {
             // Attempt to get the field spec
             if(!PugRegistry.hasField(schema.type)) {
-                return null;
+                return null
             }
 
-            fieldKlass = PugRegistry.getField(schema.type);
+            FieldKlass = PugRegistry.getField(schema.type)
         }
 
-        let field = new fieldKlass(fieldSpec);
+        let field = new FieldKlass(fieldSpec)
 
-        return field;
+        return field
     }
 }

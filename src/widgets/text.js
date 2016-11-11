@@ -3,10 +3,9 @@
 * @copyright Bought By Many 2016
 */
 
-'use strict';
+'use strict'
 
-import {Widget} from './core';
-
+import {Widget} from './core'
 
 /**
 * TextInput - Standard HTML text input
@@ -20,25 +19,24 @@ export class TextInput extends Widget {
     * @returns {HTMLElement} render the input widget
     */
     renderField() {
-        let textInput = document.createElement('input');
-        textInput.setAttribute('name', this.name);
-        textInput.setAttribute('type', 'text');
-        textInput.setAttribute('value', (this.value) ? this.value : '');
-        textInput.setAttribute('class', this.getFieldClass());
+        let textInput = document.createElement('input')
+        textInput.setAttribute('name', this.name)
+        textInput.setAttribute('type', 'text')
+        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('class', this.getFieldClass())
 
         for(let attrib in this.attribs) {
-            textInput.setAttribute(attrib, this.attribs[attrib]);
+            textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
-        return textInput;
+        return textInput
     }
 
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-text'; }
+    getFieldClass() { return 'pug-field pug-field-text' }
 }
-
 
 /**
 * TextAreaInput - Standard HTML textarea input
@@ -51,24 +49,23 @@ export class TextAreaInput extends Widget {
     * Render the text input field
     */
     renderField() {
-        let textareaInput = document.createElement('textarea');
-        textareaInput.setAttribute('name', this.name);
-        textareaInput.setAttribute('class', this.getFieldClass());
-        textareaInput.textContent = (this.value) ? this.value : '';
+        let textareaInput = document.createElement('textarea')
+        textareaInput.setAttribute('name', this.name)
+        textareaInput.setAttribute('class', this.getFieldClass())
+        textareaInput.textContent = (this.value) ? this.value : ''
 
         for(let attrib in this.attribs) {
-            textareaInput.setAttribute(attrib, this.attribs[attrib]);
+            textareaInput.setAttribute(attrib, this.attribs[attrib])
         }
 
-        return textareaInput;
+        return textareaInput
     }
 
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-text'; }
+    getFieldClass() { return 'pug-field pug-field-text' }
 }
-
 
 /**
 * EmailInput - Standard HTML text input
@@ -81,25 +78,24 @@ export class EmailInput extends TextInput {
     * Render the text input field
     */
     renderField() {
-        let textInput = document.createElement('input');
-        textInput.setAttribute('name', this.name);
-        textInput.setAttribute('type', 'email');
-        textInput.setAttribute('value', (this.value) ? this.value : '');
-        textInput.setAttribute('class', this.getFieldClass());
+        let textInput = document.createElement('input')
+        textInput.setAttribute('name', this.name)
+        textInput.setAttribute('type', 'email')
+        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('class', this.getFieldClass())
 
         for(let attrib in this.attribs) {
-            textInput.setAttribute(attrib, this.attribs[attrib]);
+            textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
-        return textInput;
+        return textInput
     }
 
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-email'; }
+    getFieldClass() { return 'pug-field pug-field-email' }
 }
-
 
 /**
 * HiddenInput - Standard HTML hidden input
@@ -112,34 +108,33 @@ export class HiddenInput extends Widget {
     * Render the text input field
     */
     renderField() {
-        let textInput = document.createElement('input');
-        textInput.setAttribute('name', this.name);
-        textInput.setAttribute('type', 'hidden');
-        textInput.setAttribute('value', (this.value) ? this.value : '');
-        textInput.setAttribute('class', this.getFieldClass());
+        let textInput = document.createElement('input')
+        textInput.setAttribute('name', this.name)
+        textInput.setAttribute('type', 'hidden')
+        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('class', this.getFieldClass())
 
         for(let attrib in this.attribs) {
-            textInput.setAttribute(attrib, this.attribs[attrib]);
+            textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
-        return textInput;
+        return textInput
     }
 
     /**
     * Label is not used for hidden fields
     */
     renderLabel() {
-        return null;
+        return null
     }
 
     /**
     * Errors are not shown for hidden fields
     */
     renderErrors() {
-        return null;
+        return null
     }
 }
-
 
 /**
 * PasswordInput - Standard HTML password input
@@ -152,38 +147,37 @@ export class PasswordInput extends TextInput {
     * Render the text input field
     */
     renderField() {
-        let textInput = document.createElement('input');
-        textInput.setAttribute('name', this.name);
-        textInput.setAttribute('type', 'password');
-        textInput.setAttribute('value', (this.value) ? this.value : '');
-        textInput.setAttribute('class', this.getFieldClass());
+        let textInput = document.createElement('input')
+        textInput.setAttribute('name', this.name)
+        textInput.setAttribute('type', 'password')
+        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('class', this.getFieldClass())
 
         for(let attrib in this.attribs) {
-            textInput.setAttribute(attrib, this.attribs[attrib]);
+            textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
-        return textInput;
+        return textInput
     }
 
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-password'; }
+    getFieldClass() { return 'pug-field pug-field-password' }
 }
-
 
 /**
 * DisplayWidget - Display only widget, this just shows the field as
 * plain text. Typically used by the lock form utility.
 */
 export function displayReadonlyValue(value) {
-    let display = document.createElement('span');
+    let display = document.createElement('span')
 
     // TODO: Support for the class being set dynamically
-    display.setAttribute('class', 'pug-field pug-field-display');
-    display.textContent = value;
+    display.setAttribute('class', 'pug-field pug-field-display')
+    display.textContent = value
 
-    return display;
+    return display
 }
 
 /**
@@ -197,11 +191,11 @@ export class DisplayWidget extends Widget {
     * Render the text input field
     */
     renderField() {
-        return displayReadonlyValue(this.value);
+        return displayReadonlyValue(this.value)
     }
 
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-display'; }
+    getFieldClass() { return 'pug-field pug-field-display' }
 }

@@ -3,23 +3,23 @@
 * @copyright Bought By Many 2016
 */
 
-'use strict';
+'use strict'
 
-import {ArrayField} from './fields/array';
-import {BooleanField} from './fields/boolean';
-import {ChoiceField} from './fields/choice';
-import {IntegerField} from './fields/integer';
-import {ObjectField} from './fields/object';
-import {StringField} from './fields/text';
-import {RadioInput} from './widgets/radio';
+import {ArrayField} from './fields/array'
+import {BooleanField} from './fields/boolean'
+import {ChoiceField} from './fields/choice'
+import {IntegerField} from './fields/integer'
+import {ObjectField} from './fields/object'
+import {StringField} from './fields/text'
+import {RadioInput} from './widgets/radio'
 import {
     TextAreaInput,
     PasswordInput,
     EmailInput,
     HiddenInput,
     DisplayWidget
-} from './widgets/text';
-import {DateInput, DateSelectionInput} from './widgets/date';
+} from './widgets/text'
+import {DateInput, DateSelectionInput} from './widgets/date'
 
 class PugRegistry {
 
@@ -32,27 +32,27 @@ class PugRegistry {
     */
     constructor() {
         this.fields = {
-            'boolean':  BooleanField,
-            'integer':  IntegerField,
-            'string':   StringField,
-            'date':     StringField,
+            'boolean': BooleanField,
+            'integer': IntegerField,
+            'string': StringField,
+            'date': StringField,
             'datetime': StringField,
-            'enum':     ChoiceField,
-            'array':    ArrayField,
-            'object':   ObjectField,
-            //'number': 'FloatField',
-        };
+            'enum': ChoiceField,
+            'array': ArrayField,
+            'object': ObjectField
+            // 'number': 'FloatField',
+        }
 
         this.widgets = {
-            'date':         DateInput,
-            'dateselect':   DateSelectionInput,
-            'email':        EmailInput,
-            'radio':        RadioInput,
-            'hidden':       HiddenInput,
-            'textarea':     TextAreaInput,
-            'password':     PasswordInput,
-            'display':      DisplayWidget,
-        };
+            'date': DateInput,
+            'dateselect': DateSelectionInput,
+            'email': EmailInput,
+            'radio': RadioInput,
+            'hidden': HiddenInput,
+            'textarea': TextAreaInput,
+            'password': PasswordInput,
+            'display': DisplayWidget
+        }
     }
 
     /**
@@ -62,7 +62,7 @@ class PugRegistry {
     * @param {Field} fieldKlass - field class to be used for type
     */
     registerField(type, fieldKlass) {
-        this.fields[type] = fieldKlass;
+        this.fields[type] = fieldKlass
     }
 
     /**
@@ -72,9 +72,9 @@ class PugRegistry {
     */
     hasField(type) {
         if(this.fields.hasOwnProperty(type)) {
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     /**
@@ -83,9 +83,9 @@ class PugRegistry {
     */
     getField(type) {
         if(this.fields.hasOwnProperty(type)) {
-            return this.fields[type];
+            return this.fields[type]
         }
-        return null;
+        return null
     }
 
     /**
@@ -94,7 +94,7 @@ class PugRegistry {
     * @param {Widget}
     */
     registerWidget(name, widgetKlass) {
-        this.widgets[name] = widgetKlass;
+        this.widgets[name] = widgetKlass
     }
 
     /**
@@ -103,9 +103,9 @@ class PugRegistry {
     */
     hasWidget(name) {
         if(this.widgets.hasOwnProperty(name)) {
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     /**
@@ -114,11 +114,11 @@ class PugRegistry {
     */
     getWidget(name) {
         if(this.widgets.hasOwnProperty(name)) {
-            return this.widgets[name];
+            return this.widgets[name]
         }
-        return null;
+        return null
     }
 
 }
 
-export default new PugRegistry();
+export default new PugRegistry()

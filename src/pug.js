@@ -1,21 +1,21 @@
 /**
 * A simple HTML form interface, with a squishy face.
-* @file Standalone Pug build 
+* @file Standalone Pug build
 * @version 0.0.1
 * @copyright Bought By Many 2016
 */
 
-'use strict';
+'use strict'
 
-import {Fieldset} from './fieldsets/core';
+import {Fieldset} from './fieldsets/core'
 
-import * as fields from './fields';
-import * as widgets from './widgets';
-import * as validators from './validators';
-import * as utils from './utils';
-import PugRegistry from './registry';
+import * as fields from './fields'
+import * as widgets from './widgets'
+import * as validators from './validators'
+import * as utils from './utils'
+import PugRegistry from './registry'
 
-export {fields, widgets, validators, utils, PugRegistry};
+export {fields, widgets, validators, utils, PugRegistry}
 
 export default class Pug {
 
@@ -28,32 +28,31 @@ export default class Pug {
     * @param {function} callback optional callback for form submission
     * @param {boolean} debug debugging flag
     */
-    constructor(container, schema, options = {}, callback = null, 
+    constructor(container, schema, options = {}, callback = null,
         debug = false) {
-
         if(container === null) {
             throw new Error(
                 'You must pass a valid container to create a Pug form!'
             )
         }
 
-        this.container = container;
-        this.mulipart = false;
-        this.callback = callback;
-        this.id = null;
-        this.debug = debug;
-        this.locked = false;
+        this.container = container
+        this.mulipart = false
+        this.callback = callback
+        this.id = null
+        this.debug = debug
+        this.locked = false
 
-        this.form = null;
-        this.fieldsets = [];
-        this.options = {};
+        this.form = null
+        this.fieldsets = []
+        this.options = {}
 
         if(options && options.hasOwnProperty('form')) {
-            this.options = options.form;
+            this.options = options.form
         }
 
         // Build the form from the config
-        this.build(schema, options);
+        this.build(schema, options)
     }
 
     /**
@@ -69,33 +68,32 @@ export default class Pug {
         // If fieldsets is specfied in the form options we are
         // going to attempt to build multiple ones
         if(options.hasOwnProperty('fieldsets')) {
-            let fieldsetIndex = 0;
+            let fieldsetIndex = 0
 
             for(let fieldsetSpec of options.fieldsets) {
-                let fieldsetFields = null;
+                let fieldsetFields = null
 
                 if(fieldsetSpec.hasOwnProperty('fields')) {
-                    fieldsetFields = fieldsetSpec.fields;
+                    fieldsetFields = fieldsetSpec.fields
                 }
 
                 if(fieldsetSpec.hasOwnProperty('fieldsets')) {
-                    options.fieldsets = fieldsetSpec.fieldsets;
+                    options.fieldsets = fieldsetSpec.fieldsets
                 }
 
                 let fieldset = Fieldset.new(
-                    schema, 
-                    options, 
+                    schema,
+                    options,
                     fieldsetFields,
-                     `pug-fieldset-${fieldsetIndex}`
-                );
+                    `pug-fieldset-${fieldsetIndex}`
+                )
 
-                this.fieldsets.push(fieldset);
-                fieldsetIndex++;
+                this.fieldsets.push(fieldset)
+                fieldsetIndex++
             }
-        }
-        else {
-            let fieldset = Fieldset.new(schema, options);
-            this.fieldsets.push(fieldset);
+        } else {
+            let fieldset = Fieldset.new(schema, options)
+            this.fieldsets.push(fieldset)
         }
     }
 
@@ -104,97 +102,97 @@ export default class Pug {
     * @returns {object} data object for the form
     */
     data() {
-        let data = [];
+        let data = []
 
         for(let fieldset of this.fieldsets) {
-            data.push(fieldset.data());
+            data.push(fieldset.data())
         }
 
         // TODO: Yuck - fix.
-        if(data.length == 1) {
-            return data[0];
+        if(data.length === 1) {
+            return data[0]
         }
 
-        return data;
+        return data
     }
 
     /**
     * Render the form
-    * @returns {promise} a promise to be resolved once rendering 
+    * @returns {promise} a promise to be resolved once rendering
     * is complete
     */
     render() {
-        return new Promise((fulfill, reject) => {
-            let formContainer = document.createDocumentFragment();
-            this.form = document.createElement('form');
+        return new Promise((resolve, reject) => {
+            let formContainer = document.createDocumentFragment()
+            this.form = document.createElement('form')
 
             if(this.id) {
-                this.form.setAttribute('id', this.id);
+                this.form.setAttribute('id', this.id)
             }
 
-            this.form.setAttribute('method', 'POST');
-            this.form.setAttribute('action', '');
-            this.form.setAttribute('class', 'pug-form');
+            this.form.setAttribute('method', 'POST')
+            this.form.setAttribute('action', '')
+            this.form.setAttribute('class', 'pug-form')
 
             if(this.mulipart) {
-                this.form.setAttribute('enctype', 'multipart/form-data');
+                this.form.setAttribute('enctype', 'multipart/form-data')
             }
 
             for(let fieldset of this.fieldsets) {
-                let fieldsetElement = fieldset.render();
-                this.form.appendChild(fieldsetElement);
+                let fieldsetElement = fieldset.render()
+                this.form.appendChild(fieldsetElement)
             }
 
             // Add form controls
-            let buttonClass = 'pug-button';
-            let buttonText = 'Submit';
+            let buttonClass = 'pug-button'
+            let buttonText = 'Submit'
 
             // Check for button overide options
             if(this.options.hasOwnProperty('buttons')) {
                 if(this.options.buttons.hasOwnProperty('class')) {
-                    buttonClass = buttonClass + ' ' + this.options.buttons.class;
+                    buttonClass = buttonClass + ' ' + this.options.buttons.class
                 }
 
                 if(this.options.buttons.hasOwnProperty('text')) {
-                    buttonText = this.options.buttons.text;
+                    buttonText = this.options.buttons.text
                 }
             }
 
-            let buttonWrapper = document.createElement('div');
-            buttonWrapper.setAttribute('class', 'pug-button-wrapper');
+            let buttonWrapper = document.createElement('div')
+            buttonWrapper.setAttribute('class', 'pug-button-wrapper')
 
-            let button = document.createElement('button');
-            button.setAttribute('class', buttonClass);
-            button.setAttribute('type', 'submit');
-            button.textContent = buttonText;
+            let button = document.createElement('button')
+            button.setAttribute('class', buttonClass)
+            button.setAttribute('type', 'submit')
+            button.textContent = buttonText
             button.onclick = (e) => {
-                this.submit(e);
-                return false;
-            };
+                this.submit(e)
+                return false
+            }
 
-            buttonWrapper.appendChild(button);
-            this.form.appendChild(buttonWrapper);
+            buttonWrapper.appendChild(button)
+            this.form.appendChild(buttonWrapper)
 
             // Build the form and render to the viewport
-            formContainer.appendChild(this.form);
-            this.container.appendChild(formContainer);
+            formContainer.appendChild(this.form)
+            this.container.appendChild(formContainer)
 
             // Form has been renderd to the stage, call
             // the post render hooks
             for(let fieldset of this.fieldsets) {
-                fieldset.postRender();
+                fieldset.postRender()
             }
 
-            fulfill(this);
-        });
+            resolve(this)
+        })
     }
 
     /**
     * Remove the form from the stage
     */
     destroy() {
-        let form = this.container.querySelector('form');
-        this.container.removeChild(form);
+        let form = this.container.querySelector('form')
+        this.container.removeChild(form)
     }
 
     /**
@@ -202,21 +200,21 @@ export default class Pug {
     * @returns {bool} response to the validation request
     */
     validate() {
-        let valid = true;
-        let errors = [];
+        let valid = true
+        let errors = []
 
         for(let fieldset of this.fieldsets) {
             if(!fieldset.validate()) {
-                errors.push(fieldset.errors);
-                valid = false;
+                errors.push(fieldset.errors)
+                valid = false
             }
         }
 
         this.log(
             `Validation Complete -> Status: ${valid} -> ${JSON.stringify(errors)}`
-        );
+        )
 
-        return valid;
+        return valid
     }
 
     /**
@@ -224,7 +222,7 @@ export default class Pug {
     */
     refreshValidationState() {
         for(let fieldset of this.fieldsets) {
-            fieldset.refreshValidationState();
+            fieldset.refreshValidationState()
         }
     }
 
@@ -234,39 +232,38 @@ export default class Pug {
     */
     submit(event) {
         // We always validate prior to validateion
-        let valid = false;
+        let valid = false
 
         try {
-            valid = this.validate();
+            valid = this.validate()
         } catch (e) {
-            this.log('Unable to validate prior to submit!', e);
-            return false;
+            this.log('Unable to validate prior to submit!', e)
+            return false
         }
 
         if(valid) {
-            this.log('Submit form');
+            this.log('Submit form')
 
             if(this.callback) {
-                this.callback(this.data(), event);
-            }
-            else {
-                this.form.submit();
+                this.callback(this.data(), event)
+            } else {
+                this.form.submit()
             }
 
-            return true;
+            return true
         }
 
-        return false;
+        return false
     }
 
     /**
     * Lock a form, this changes all of the fields to a read only state
     */
     lock() {
-        this.log('Locking form');
+        this.log('Locking form')
 
         for(let fieldset of this.fieldsets) {
-            fieldset.lock();
+            fieldset.lock()
         }
     }
 
@@ -275,10 +272,10 @@ export default class Pug {
     * editable state
     */
     unlock() {
-        this.log('Unlocking form');
+        this.log('Unlocking form')
 
         for(let fieldset of this.fieldsets) {
-            fieldset.unlock();
+            fieldset.unlock()
         }
     }
 
@@ -287,27 +284,26 @@ export default class Pug {
     * @param {string} ID for a form
     */
     setFormId(formId) {
-        this.id = formId;
+        this.id = formId
     }
 
     /**
     * Set the callback for the submission
-    * @param {function} Callback function for form submission 
+    * @param {function} Callback function for form submission
     */
     setSubmitCallback(callback) {
-        this.callback = callback;
+        this.callback = callback
     }
-
 
     /**
     * Get the form ID
     * @returns {string} ID for a form
     */
     getFormId() {
-        return this.id;
+        return this.id
     }
 
-    /*
+    /**
     * Set field errors in bulk, this is typically used to
     * show errors from a server side response
     * @param {object} a hash of errors
@@ -319,7 +315,22 @@ export default class Pug {
         // supported. Errors are added to both fields in this
         // instance.
         for(let fieldset of this.fieldsets) {
-            fieldset.setFieldErrors(errors);
+            fieldset.setFieldErrors(errors)
+        }
+    }
+
+    /**
+    * Get a field in the form by it's path. Paths should be
+    * provided in 'dot' notation - i.e "some.example.path"
+    */
+    getFieldByPath(path) {
+        // To find a field we need to inspect each fieldset
+        for(let fieldset of this.fieldsets) {
+            let field = fieldset.getFieldByPath(path)
+
+            if(field) {
+                return field
+            }
         }
     }
 
@@ -329,7 +340,7 @@ export default class Pug {
     */
     log(message) {
         if(this.debug) {
-            window.console.log('Pug ->', message);
+            window.console.log('Pug ->', message)
         }
     }
 }

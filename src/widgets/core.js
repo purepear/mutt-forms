@@ -1,12 +1,11 @@
 /**
-* @file Base widget interface 
+* @file Base widget interface
 * @copyright Bought By Many 2016
 */
 
-'use strict';
+'use strict'
 
-import {displayReadonlyValue} from './text';
-
+import {displayReadonlyValue} from './text'
 
 /**
 * Base Widget interface
@@ -25,19 +24,19 @@ export class Widget {
     * @param [string] label - optional label for the field
     * @param [object] attribs - optional HTML attributes for the field
     * @param [object] options - optional values to configure the widget
-    * @param [string] value - initial value for the widget 
+    * @param [string] value - initial value for the widget
     */
     constructor(field, type, id, name, label, attribs, options, initial) {
-        this._field = field;
-        this.type = type;
-        this.id = id;
-        this.name = name;
-        this.label = label;
-        this.attribs = attribs;
-        this.options = options;
-        this.value = initial;
-        this.locked = false;
-        this.errors = [];
+        this._field = field
+        this.type = type
+        this.id = id
+        this.name = name
+        this.label = label
+        this.attribs = attribs
+        this.options = options
+        this.value = initial
+        this.locked = false
+        this.errors = []
     }
 
     /**
@@ -46,26 +45,26 @@ export class Widget {
     */
     render() {
         // Create a fragment for our widget
-        let widgetFragment = document.createDocumentFragment();
+        let widgetFragment = document.createDocumentFragment()
 
-        let wrapper = this.renderWrapper();
-        let label = this.renderLabel();
-        let field = this.renderField();
-        let errors = this.renderErrors();
+        let wrapper = this.renderWrapper()
+        let label = this.renderLabel()
+        let field = this.renderField()
+        let errors = this.renderErrors()
 
         if(label) {
-            wrapper.appendChild(label);
+            wrapper.appendChild(label)
         }
 
-        wrapper.appendChild(field);
+        wrapper.appendChild(field)
 
         if(errors) {
-            wrapper.appendChild(errors);
+            wrapper.appendChild(errors)
         }
 
-        widgetFragment.appendChild(wrapper);
+        widgetFragment.appendChild(wrapper)
 
-        return widgetFragment;
+        return widgetFragment
     }
 
     /**
@@ -75,8 +74,8 @@ export class Widget {
     */
     postRender() {
         // Default is to do nothing...
-        return;
-    }   
+        return
+    }
 
     /**
     * Lock the widget - this places it in a read only state
@@ -84,23 +83,23 @@ export class Widget {
     */
     lock() {
         if(this.locked) {
-            return false;
+            return false
         }
 
-        let lockedValue = this.getValue();
-        let wrapper = this.getElementWrapper();
-        let element = this.getElement();
+        let lockedValue = this.getValue()
+        let wrapper = this.getElementWrapper()
+        let element = this.getElement()
 
         // Clear the existing field...
-        wrapper.removeChild(element);
+        wrapper.removeChild(element)
 
         // Add the display only field
-        let displayElement = displayReadonlyValue(lockedValue);
-        wrapper.appendChild(displayElement);
+        let displayElement = displayReadonlyValue(lockedValue)
+        wrapper.appendChild(displayElement)
 
-        this.locked = true;
+        this.locked = true
 
-        return true;
+        return true
     }
 
     /**
@@ -110,21 +109,21 @@ export class Widget {
     */
     unlock() {
         if(!this.locked) {
-            return false;
+            return false
         }
 
-        let wrapper = this.getElementWrapper();
-        let element = this.getElement();
+        let wrapper = this.getElementWrapper()
+        let element = this.getElement()
 
         // Clear the display field
-        wrapper.removeChild(element);
+        wrapper.removeChild(element)
 
-        let field = this.renderField();
-        wrapper.appendChild(field);
+        let field = this.renderField()
+        wrapper.appendChild(field)
 
-        this.locked = false;
+        this.locked = false
 
-        return true;
+        return true
     }
 
     /**
@@ -141,49 +140,49 @@ export class Widget {
     * @returns {HTMLElement} HTML element used for wrapping widget
     */
     renderWrapper() {
-        let wrapper = document.createElement('div');
-        wrapper.setAttribute('id', this.id);
-        wrapper.className = this.getFieldWrapperClass();
-        return wrapper;
+        let wrapper = document.createElement('div')
+        wrapper.setAttribute('id', this.id)
+        wrapper.className = this.getFieldWrapperClass()
+        return wrapper
     }
 
     /**
     * Render the field label
-    * @returns {HTMLElement} returns a HTML label element or null if no 
+    * @returns {HTMLElement} returns a HTML label element or null if no
     * label is configured for the widget
     */
     renderLabel() {
         if(this.label) {
-            let label = document.createElement('label');
-            label.setAttribute('for', this.name);
-            label.setAttribute('class', 'pug-label');
-            label.textContent = this.label;
-            return label;
+            let label = document.createElement('label')
+            label.setAttribute('for', this.name)
+            label.setAttribute('class', 'pug-label')
+            label.textContent = this.label
+            return label
         }
 
-        return null;
+        return null
     }
 
     /**
     * Render the field error information
     * @returns {HTMLElement} returns a HTML list element with error
-    * information of null if no errors are present 
+    * information of null if no errors are present
     */
     renderErrors() {
         if(this.errors.length > 0) {
-            let errorList = document.createElement('ul');
-            errorList.className = this.getErrorClass();
+            let errorList = document.createElement('ul')
+            errorList.className = this.getErrorClass()
 
             for(let error of this.errors) {
-                let errorItem = document.createElement('li');
-                errorItem.textContent = error;
-                errorList.appendChild(errorItem);
+                let errorItem = document.createElement('li')
+                errorItem.textContent = error
+                errorList.appendChild(errorItem)
             }
 
-            return errorList;
+            return errorList
         }
 
-        return null;
+        return null
     }
 
     /**
@@ -193,25 +192,25 @@ export class Widget {
     * @params {array} errors - a list of errors to be displayed
     */
     refreshErrorState(errors) {
-        this.errors = errors;
+        this.errors = errors
 
-        let elementWrapper = this.getElementWrapper();
-        let errorElement = this.getElementError();
-        let errorWrapperClass = this.getErrorWrapperClass();
-        
+        let elementWrapper = this.getElementWrapper()
+        let errorElement = this.getElementError()
+        let errorWrapperClass = this.getErrorWrapperClass()
+
         // Remove existing errors
         if(errorElement) {
-            elementWrapper.classList.remove(errorWrapperClass);
-            elementWrapper.removeChild(errorElement);
+            elementWrapper.classList.remove(errorWrapperClass)
+            elementWrapper.removeChild(errorElement)
         }
 
         // Add errors if present
         if(this.errors.length > 0) {
-            elementWrapper.classList.add(errorWrapperClass);
-            let errors = this.renderErrors();
+            elementWrapper.classList.add(errorWrapperClass)
+            let errors = this.renderErrors()
 
             if(errors) {
-                elementWrapper.appendChild(errors);
+                elementWrapper.appendChild(errors)
             }
         }
     }
@@ -221,7 +220,7 @@ export class Widget {
     * @return {HTMLElement} the element's wrapper on the stage
     */
     getElementWrapper() {
-        return document.querySelector(`#${this.id}`);
+        return document.querySelector(`#${this.id}`)
     }
 
     /**
@@ -229,7 +228,7 @@ export class Widget {
     * @return {HTMLElement} the element on the stage
     */
     getElement() {
-        return this.getElementWrapper().querySelector('.pug-field');
+        return this.getElementWrapper().querySelector('.pug-field')
     }
 
     /**
@@ -237,7 +236,7 @@ export class Widget {
     * @return {HTMLElement} the error element on the stage
     */
     getElementError() {
-        return this.getElementWrapper().querySelector('.pug-error');
+        return this.getElementWrapper().querySelector('.pug-error')
     }
 
     /**
@@ -246,13 +245,15 @@ export class Widget {
     * @returns {string} value of the element on the stage
     */
     getValue() {
-        let element = this.getElement();
+        let element = this.getElement()
 
         if(!element) {
-            throw new Error('Unable to get element!');
+            throw new Error('Unable to get element!')
         }
 
-        return this.value = element.value;
+        this.value = element.value
+
+        return this.value
     }
 
     /**
@@ -260,12 +261,12 @@ export class Widget {
     * @param {string} value - value to set the HTML element too
     */
     setValue(value) {
-        this.value = value;
+        this.value = value
 
-        let element = this.getElement();
+        let element = this.getElement()
 
         if(element) {
-            element.value = this.value;
+            element.value = this.value
         }
     }
 
@@ -273,30 +274,29 @@ export class Widget {
     * Get the class name for the widget element
     * @returns {string} the class to use for the field element
     */
-    getFieldClass() { 
+    getFieldClass() {
         if(this.attribs.hasOwnProperty('class')) {
-            return `pug-field ${this.attribs.class}`;
+            return `pug-field ${this.attribs.class}`
         }
 
-        return 'pug-field';
+        return 'pug-field'
     }
 
     /**
     * Get the class name for the widget wrapper
     * @returns {string} the class to use for the wrapper element
     */
-    getFieldWrapperClass() { return 'pug-field-wrapper'; }
+    getFieldWrapperClass() { return 'pug-field-wrapper' }
 
     /**
     * Get the class name for the error
     * @returns {string} the class to use for the error element
     */
-    getErrorClass() { return 'pug-error'; }
+    getErrorClass() { return 'pug-error' }
 
     /**
     * Get the class name for the error wrapper
     * @returns {string} the class to use for the error wrapper element
     */
-    getErrorWrapperClass() { return 'pug-error-wrapper'; }
-
+    getErrorWrapperClass() { return 'pug-error-wrapper' }
 }

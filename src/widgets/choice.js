@@ -3,10 +3,9 @@
 * @copyright Bought By Many 2016
 */
 
+'use strict'
 
-'use strict';
-
-import {Widget} from './core';
+import {Widget} from './core'
 
 /**
 * BaseChoiceWidget - Abstract input for choice fields
@@ -26,19 +25,19 @@ export class BaseChoiceWidget extends Widget {
     * @param [string] label - optional label for the field
     * @param [object] attribs - optional HTML attributes for the field
     * @param [object] options - optional values to configure the widget
-    * @param [string] value - initial value for the widget 
+    * @param [string] value - initial value for the widget
     */
     constructor(field, type, id, name, label, attribs, options, value) {
-        super(field, type, id, name, label, attribs, options, value);
-        this.choices = [];
+        super(field, type, id, name, label, attribs, options, value)
+        this.choices = []
     }
 
     /**
-    * 
+    *
     * @params {array}
     */
     setChoices(choices) {
-        this.choices = choices;
+        this.choices = choices
     }
 
     /**
@@ -46,7 +45,7 @@ export class BaseChoiceWidget extends Widget {
     * @returns {array} choice pair array
     */
     getChoices() {
-        return this.choices;
+        return this.choices
     }
 
     /**
@@ -55,17 +54,17 @@ export class BaseChoiceWidget extends Widget {
     */
     formatLabel(label) {
         if(label) {
-            label = label.toLowerCase().replace('_', ' ');
-            return `${label.charAt(0).toUpperCase()}${label.slice(1)}`;
+            label = label.toLowerCase().replace('_', ' ')
+            return `${label.charAt(0).toUpperCase()}${label.slice(1)}`
         }
 
-        return label;
+        return label
     }
 
     /**
     * @throws Unable to render the field, must be overidden by a subclass
     */
     renderField() {
-        throw new Error('Unable to render abstract widget BaseChoiceInput!');
+        throw new Error('Unable to render abstract widget BaseChoiceInput!')
     }
 }

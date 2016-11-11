@@ -588,7 +588,7 @@ module.exports =
 	            return this.id;
 	        }
 
-	        /*
+	        /**
 	        * Set field errors in bulk, this is typically used to
 	        * show errors from a server side response
 	        * @param {object} a hash of errors
@@ -623,6 +623,45 @@ module.exports =
 	                } finally {
 	                    if (_didIteratorError9) {
 	                        throw _iteratorError9;
+	                    }
+	                }
+	            }
+	        }
+
+	        /**
+	        * Get a field in the form by it's path. Paths should be 
+	        * provided in 'dot' notation - i.e "some.example.path"
+	        */
+
+	    }, {
+	        key: 'getFieldByPath',
+	        value: function getFieldByPath(path) {
+	            // To find a field we need to inspect each fieldset
+	            var _iteratorNormalCompletion10 = true;
+	            var _didIteratorError10 = false;
+	            var _iteratorError10 = undefined;
+
+	            try {
+	                for (var _iterator10 = this.fieldsets[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+	                    var fieldset = _step10.value;
+
+	                    var field = fieldset.getFieldByPath(path);
+
+	                    if (field) {
+	                        return field;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError10 = true;
+	                _iteratorError10 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion10 && _iterator10.return) {
+	                        _iterator10.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError10) {
+	                        throw _iteratorError10;
 	                    }
 	                }
 	            }
@@ -722,7 +761,7 @@ module.exports =
 	        key: 'hasField',
 	        value: function hasField(fieldName) {
 	            for (var field in this.fields) {
-	                if (field.name == fieldName) {
+	                if (field.name === fieldName) {
 	                    return true;
 	                }
 	            }
@@ -1035,6 +1074,30 @@ module.exports =
 	                    }
 	                }
 	            }
+	        }
+
+	        /**
+	        * Get a field in the form by it's path. Paths should be 
+	        * provided in 'dot' notation - i.e "some.example.path"
+	        */
+
+	    }, {
+	        key: 'getFieldByPath',
+	        value: function getFieldByPath(path) {
+	            var pathParts = path.split('.');
+	            var searchName = pathParts.shift();
+
+	            for (var field in this.fields) {
+	                if (field.name === searchName) {
+	                    if (pathParts.length === 0) {
+	                        return field;
+	                    } else if (field.hasOwnProperty('getFieldByPath')) {
+	                        return field.getFieldByPath(pathParts.join('.'));
+	                    }
+	                }
+	            }
+
+	            return null;
 	        }
 
 	        /**
@@ -3707,8 +3770,10 @@ module.exports =
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*
-	    pug - fields/object.js
+	/**
+	* @file Object Field
+	* @version 0.0.1
+	* @copyright Bought By Many 2016
 	*/
 
 	'use strict';
@@ -3911,6 +3976,11 @@ module.exports =
 	        value: function getWidget() {
 	            return _object.ObjectInput;
 	        }
+
+	        /**
+	        *
+	        */
+
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -3918,14 +3988,14 @@ module.exports =
 	        }
 
 	        /**
-	        * Property - get/set errors
-	        * @param {string} Error string
+	        *
 	        */
 
 	    }, {
-	        key: 'value',
-	        get: function get() {
-	            var values = {};
+	        key: 'getFieldByPath',
+	        value: function getFieldByPath(path) {
+	            var pathParts = path.split('.');
+	            var searchName = pathParts.shift();
 
 	            var _iteratorNormalCompletion4 = true;
 	            var _didIteratorError4 = false;
@@ -3935,7 +4005,15 @@ module.exports =
 	                for (var _iterator4 = Object.keys(this.object)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
 	                    var key = _step4.value;
 
-	                    values[key] = this.object[key].value;
+	                    var field = this.object[key];
+
+	                    if (field.name === searchName) {
+	                        if (pathParts.length === 0) {
+	                            return field;
+	                        } else if (field.hasOwnProperty('getFieldByPath')) {
+	                            return field.getFieldByPath(pathParts.join('.'));
+	                        }
+	                    }
 	                }
 	            } catch (err) {
 	                _didIteratorError4 = true;
@@ -3952,27 +4030,28 @@ module.exports =
 	                }
 	            }
 
-	            return values;
-	        },
-	        set: function set(values) {
-	            // Wo ist mein Object.isObject()??
-	            if (!(typeof values === 'undefined' ? 'undefined' : _typeof(values)) === 'object') {
-	                throw new Error('Unable to set object field value(s) from non-object!');
-	            }
+	            return null;
+	        }
+
+	        /**
+	        * Property - get/set errors
+	        * @param {string} Error string
+	        */
+
+	    }, {
+	        key: 'value',
+	        get: function get() {
+	            var values = {};
 
 	            var _iteratorNormalCompletion5 = true;
 	            var _didIteratorError5 = false;
 	            var _iteratorError5 = undefined;
 
 	            try {
-	                for (var _iterator5 = Object.keys(values)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                for (var _iterator5 = Object.keys(this.object)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
 	                    var key = _step5.value;
 
-	                    // TODO: Should we warn/error if we set keys that aren't
-	                    // in field object?
-	                    if (this.object.hasOwnProperty(key)) {
-	                        this.object[key].value = values[key];
-	                    }
+	                    values[key] = this.object[key].value;
 	                }
 	            } catch (err) {
 	                _didIteratorError5 = true;
@@ -3985,6 +4064,43 @@ module.exports =
 	                } finally {
 	                    if (_didIteratorError5) {
 	                        throw _iteratorError5;
+	                    }
+	                }
+	            }
+
+	            return values;
+	        },
+	        set: function set(values) {
+	            // Wo ist mein Object.isObject()??
+	            if (!(typeof values === 'undefined' ? 'undefined' : _typeof(values)) === 'object') {
+	                throw new Error('Unable to set object field value(s) from non-object!');
+	            }
+
+	            var _iteratorNormalCompletion6 = true;
+	            var _didIteratorError6 = false;
+	            var _iteratorError6 = undefined;
+
+	            try {
+	                for (var _iterator6 = Object.keys(values)[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+	                    var key = _step6.value;
+
+	                    // TODO: Should we warn/error if we set keys that aren't
+	                    // in field object?
+	                    if (this.object.hasOwnProperty(key)) {
+	                        this.object[key].value = values[key];
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError6 = true;
+	                _iteratorError6 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+	                        _iterator6.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError6) {
+	                        throw _iteratorError6;
 	                    }
 	                }
 	            }
