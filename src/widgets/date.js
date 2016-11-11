@@ -247,5 +247,5 @@ export class DateSelectionInput extends Widget {
     }
 }
 
-PugRegistry.registerWidget('dateselect', DateInput)
+PugRegistry.registerWidget('dateselect', DateSelectionInput)
 
