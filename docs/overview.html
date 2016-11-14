@@ -29,6 +29,18 @@
         pugForm.setFormId('demo-form');
         pugForm.render().then((form) => {
             window.console.log('Rendered -> ' + form.id);
+
+            pugForm.populate({
+                string: 'This is a test',
+                email: 'example@foo.com',
+                object: {
+                    property1: 'Testing 123456'
+                },
+                array: [
+                    'Example 1 - **',
+                    'Example 2 - !!'
+                ]
+            })
         });
 
         var pugFormLocking = new Pug(

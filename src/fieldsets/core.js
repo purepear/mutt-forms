@@ -72,6 +72,18 @@ export class Fieldset {
     }
 
     /**
+    * Populate the fieldset with selected values
+    * @param {object} Data object with form values
+    */
+    populate(data) {
+        for(let field of this.fields) {
+            if(data.hasOwnProperty(field.name)) {
+                field.value = data[field.name]
+            }
+        }
+    }
+
+    /**
     * Validate the fields in the fieldset. Stores an object
     * of error information field name -> error.
     * @returns {boolean}

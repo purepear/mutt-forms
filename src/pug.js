@@ -117,8 +117,18 @@ export default class Pug {
     }
 
     /**
+    * Populate the form field with selected values
+    * @param {object} Data object with form values
+    */
+    populate(data) {
+        for(let fieldset of this.fieldsets) {
+            fieldset.populate(data)
+        }
+    }
+
+    /**
     * Render the form
-    * @returns {promise} a promise to be resolved once rendering
+    * @returns {Promise} a promise to be resolved once rendering
     * is complete
     */
     render() {
@@ -228,6 +238,7 @@ export default class Pug {
 
     /**
     * Submit handler for the form
+    * @param {Event} Event triggering the submission
     * @returns {bool} success or failure of submission
     */
     submit(event) {
@@ -322,6 +333,7 @@ export default class Pug {
     /**
     * Get a field in the form by it's path. Paths should be
     * provided in 'dot' notation - i.e "some.example.path"
+    * @param {string} path to the field using dot notation
     */
     getFieldByPath(path) {
         // To find a field we need to inspect each fieldset

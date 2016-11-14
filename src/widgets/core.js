@@ -28,6 +28,7 @@ export class Widget {
     */
     constructor(field, type, id, name, label, attribs, options, initial) {
         this._field = field
+        this._rendered = false
         this.type = type
         this.id = id
         this.name = name
@@ -63,6 +64,11 @@ export class Widget {
         }
 
         widgetFragment.appendChild(wrapper)
+
+        // Set the internal notification flag so
+        // we know the field has now been rendered
+        // to the stage
+        this._rendered = true
 
         return widgetFragment
     }
@@ -245,6 +251,10 @@ export class Widget {
     * @returns {string} value of the element on the stage
     */
     getValue() {
+        if(!this._rendered) {
+            return this.value
+        }
+
         let element = this.getElement()
 
         if(!element) {
@@ -262,6 +272,10 @@ export class Widget {
     */
     setValue(value) {
         this.value = value
+
+        if(!this._rendered) {
+            return
+        }
 
         let element = this.getElement()
 

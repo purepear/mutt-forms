@@ -67,6 +67,37 @@ export class ArrayField extends Field {
     }
 
     /**
+    * Add a new slot to the array field
+    */
+    addSlot() {
+        let position = this.slots.length
+        let fieldId = `${this.id}_item_${position}`
+        let fieldName = `${this.name}_${position}`
+        let field = this.constructor.new(
+            fieldId,
+            fieldName,
+            this.itemSchema,
+            this.itemOptions
+        )
+
+        this.slots.push(field)
+    }
+
+    /**
+    * Remove slot
+    * @returns {bool} success of the removal of a slot
+    */
+    removeSlot() {
+        if(this.slots.length == 0) {
+            return false
+        }
+
+        this.slots.pop()
+
+        return true
+    }
+
+    /**
     * Property - get/set value
     */
     get value() {
@@ -88,7 +119,7 @@ export class ArrayField extends Field {
             return [field, value[index]]
         })
 
-        for(let [field, value] in fieldValueMap) {
+        for(let [field, value] of fieldValueMap) {
             field.value = value
         }
     }
