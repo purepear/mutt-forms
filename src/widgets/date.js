@@ -217,6 +217,10 @@ export class DateSelectionInput extends Widget {
 
         this.value = value
 
+        if(!this._rendered) {
+            return
+        }
+
         let elementDay = this.getElementDay()
         let elementMonth = this.getElementMonth()
         let elementYear = this.getElementYear()
