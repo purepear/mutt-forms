@@ -1,8 +1,4 @@
-/**
-* @file Fields package
-* @version 0.0.1
-* @copyright Bought By Many 2016
-*/
+// Index of fields
 
 export {Field} from './core'
 

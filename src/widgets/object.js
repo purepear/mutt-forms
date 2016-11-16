@@ -1,5 +1,5 @@
-/*
-    pug - widgets/object.js
+/**
+* @file Object input widget
 */
 
 'use strict'
@@ -9,6 +9,7 @@ import {Widget} from './core'
 
 /**
 * ObjectInput - Render a list of fields
+* @class
 */
 export class ObjectInput extends Widget {
 

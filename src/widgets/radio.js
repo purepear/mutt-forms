@@ -1,6 +1,5 @@
 /**
 * @file HTML Radio widget
-* @copyright Bought By Many 2016
 */
 
 'use strict'

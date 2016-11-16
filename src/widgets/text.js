@@ -1,6 +1,5 @@
 /**
 * @file Text input widget interface
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -11,7 +10,6 @@ import {Widget} from './core'
 /**
 * TextInput - Standard HTML text input
 * @class
-* @namespace Widgets
 */
 export class TextInput extends Widget {
 
@@ -44,7 +42,6 @@ PugRegistry.registerWidget('text', TextInput)
 /**
 * TextAreaInput - Standard HTML textarea input
 * @class
-* @namespace Widgets
 */
 export class TextAreaInput extends Widget {
 
@@ -75,7 +72,6 @@ PugRegistry.registerWidget('textarea', TextAreaInput)
 /**
 * EmailInput - Standard HTML text input
 * @class
-* @namespace Widgets
 */
 export class EmailInput extends TextInput {
 
@@ -107,7 +103,6 @@ PugRegistry.registerWidget('email', EmailInput)
 /**
 * HiddenInput - Standard HTML hidden input
 * @class
-* @namespace Widgets
 */
 export class HiddenInput extends Widget {
 
@@ -148,7 +143,6 @@ PugRegistry.registerWidget('hidden', HiddenInput)
 /**
 * PasswordInput - Standard HTML password input
 * @class
-* @namespace Widgets
 */
 export class PasswordInput extends TextInput {
 
@@ -194,7 +188,6 @@ export function displayReadonlyValue(value) {
 /**
 * DisplayWidget - Widget to display field as plain text
 * @class
-* @namespace Widgets
 */
 export class DisplayWidget extends Widget {
 

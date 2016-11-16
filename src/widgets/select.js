@@ -1,5 +1,5 @@
-/*
-    pug - widgets/select.js
+/**
+* @file Select input widget
 */
 
 'use strict'
@@ -9,6 +9,7 @@ import {BaseChoiceWidget} from './choice'
 
 /**
 * SelectInput - Standard HTML select input
+* @class
 */
 export class SelectInput extends BaseChoiceWidget {
 

@@ -1,8 +1,4 @@
-/**
-* @file Validators package
-* @version 0.0.1
-* @copyright Bought By Many 2016
-*/
+// Index for Validators
 
 export {Validator} from './core'
 

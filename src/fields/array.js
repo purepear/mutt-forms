@@ -1,6 +1,5 @@
 /**
 * @file Array field
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -13,7 +12,6 @@ import {ArrayInput} from '../widgets/array'
 * Array is a complex field type, which is essentially a list
 * of other fields.
 * @class
-* @namespace Fields
 */
 export class ArrayField extends Field {
 

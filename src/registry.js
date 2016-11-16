@@ -1,10 +1,16 @@
 /**
 * @file Registry of pug config and plugins
-* @copyright Bought By Many 2016
 */
 
 'use strict'
 
+/**
+* Internal registry for Pug fields & widgets. This is used 
+* internally to register default fields & widgets, and can
+* also be used as a hook to install new fields & widgets
+* via plugins.
+* @class
+*/
 class PugRegistry {
 
     /**

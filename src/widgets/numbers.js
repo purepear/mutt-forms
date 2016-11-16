@@ -1,5 +1,5 @@
-/*
-    pug - widgets/text.js
+/**
+* @file Number input widget
 */
 
 'use strict'
@@ -9,6 +9,7 @@ import {Widget} from './core'
 
 /**
 * NumberInput - Standard HTML number input
+* @class
 */
 export class NumberInput extends Widget {
 

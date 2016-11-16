@@ -1,6 +1,5 @@
 /**
 * @file Choice Widgets
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -11,7 +10,6 @@ import {Widget} from './core'
 * BaseChoiceWidget - Abstract input for choice fields
 * @class
 * @abstract
-* @namespace Widgets
 */
 export class BaseChoiceWidget extends Widget {
 

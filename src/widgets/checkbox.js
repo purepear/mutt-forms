@@ -1,6 +1,5 @@
 /**
 * @file Checkbox Widgets
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -11,7 +10,6 @@ import {Widget} from './core'
 /**
 * CheckboxInput - Standard HTML checkbox
 * @class
-* @namespace Widgets
 */
 export class CheckboxInput extends Widget {
 

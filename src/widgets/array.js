@@ -1,6 +1,5 @@
 /**
 * @file Array Widgets
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -11,7 +10,6 @@ import {Widget} from './core'
 /**
 * ArrayInput - Render a list of fields
 * @class
-* @namespace Widgets
 */
 export class ArrayInput extends Widget {
 

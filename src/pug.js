@@ -1,7 +1,7 @@
 /**
-* A simple HTML form interface, with a squishy face.
-* @file Standalone Pug build
+* @file A simple HTML form interface, with a squishy face.
 * @version 0.0.1
+* @author Nick Snell <nick@boughtbymany.com>
 * @copyright Bought By Many 2016
 */
 
@@ -17,6 +17,11 @@ import PugRegistry from './registry'
 
 export {fields, widgets, validators, utils, PugRegistry}
 
+/**
+* Main Pug form interface. This instance is used to build, 
+* control & render the form
+* @class
+*/
 export default class Pug {
 
     /**
@@ -24,9 +29,9 @@ export default class Pug {
     * @constructor
     * @param {HTMLElement} container Containing element for the Pug Form
     * @param {object} schema JSON Schema containing Form & Field Configuration
-    * @param {object} options optional form configuration options
-    * @param {function} callback optional callback for form submission
-    * @param {boolean} debug debugging flag
+    * @param {object} [options={}] form configuration options
+    * @param {function} [callback=null] callback function for form submission
+    * @param {boolean} [debug=false] debugging flag
     */
     constructor(container, schema, options = {}, callback = null,
         debug = false) {
@@ -59,8 +64,8 @@ export default class Pug {
     * Build the form fieldsets from the config. The default is
     * always to use one, however groups can be specified in the
     * from options
-    * @param {object} JSON schema of form
-    * @param {object} Optional options object for the form
+    * @param {object} schema JSON schema of form
+    * @param {object} [options=null] options object for the form
     */
     build(schema, options = null) {
         // TODO: Allow build options override
@@ -72,6 +77,7 @@ export default class Pug {
 
             for(let fieldsetSpec of options.fieldsets) {
                 let fieldsetFields = null
+                let fieldsetLabel = null
 
                 if(fieldsetSpec.hasOwnProperty('fields')) {
                     fieldsetFields = fieldsetSpec.fields
@@ -81,11 +87,17 @@ export default class Pug {
                     options.fieldsets = fieldsetSpec.fieldsets
                 }
 
+                if(fieldsetSpec.options && 
+                    fieldsetSpec.options.label) {
+                    fieldsetLabel = fieldsetSpec.options.label
+                }
+
                 let fieldset = Fieldset.new(
                     schema,
                     options,
                     fieldsetFields,
-                    `pug-fieldset-${fieldsetIndex}`
+                    `pug-fieldset-${fieldsetIndex}`,
+                    fieldsetLabel
                 )
 
                 this.fieldsets.push(fieldset)
@@ -99,7 +111,7 @@ export default class Pug {
 
     /**
     * Get the data from the form
-    * @returns {object} data object for the form
+    * @returns {object} key/value data object for the form
     */
     data() {
         let data = []
@@ -118,7 +130,7 @@ export default class Pug {
 
     /**
     * Populate the form field with selected values
-    * @param {object} Data object with form values
+    * @param {object} data Data object with form values
     */
     populate(data) {
         for(let fieldset of this.fieldsets) {
@@ -238,7 +250,7 @@ export default class Pug {
 
     /**
     * Submit handler for the form
-    * @param {Event} Event triggering the submission
+    * @param {Event} event Event triggering the submission
     * @returns {bool} success or failure of submission
     */
     submit(event) {
@@ -292,7 +304,7 @@ export default class Pug {
 
     /**
     * Set the ID for the form - this is used for rendering
-    * @param {string} ID for a form
+    * @param {string} formId ID for a form
     */
     setFormId(formId) {
         this.id = formId
@@ -300,7 +312,7 @@ export default class Pug {
 
     /**
     * Set the callback for the submission
-    * @param {function} Callback function for form submission
+    * @param {function} callback Callback function for form submission
     */
     setSubmitCallback(callback) {
         this.callback = callback
@@ -317,7 +329,7 @@ export default class Pug {
     /**
     * Set field errors in bulk, this is typically used to
     * show errors from a server side response
-    * @param {object} a hash of errors
+    * @param {object} errors a hash of errors
     */
     setFieldErrors(errors) {
         // TODO: Known limitation. Errors are not provided
@@ -333,7 +345,7 @@ export default class Pug {
     /**
     * Get a field in the form by it's path. Paths should be
     * provided in 'dot' notation - i.e "some.example.path"
-    * @param {string} path to the field using dot notation
+    * @param {string} path path to the field using dot notation
     */
     getFieldByPath(path) {
         // To find a field we need to inspect each fieldset
@@ -348,7 +360,7 @@ export default class Pug {
 
     /**
     * Log a message
-    * @param {string} Message to log
+    * @param {string} message Message to log
     */
     log(message) {
         if(this.debug) {

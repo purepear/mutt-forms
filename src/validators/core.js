@@ -4,6 +4,7 @@
 
 /**
 * Base Validation Interface
+* @class
 */
 export class Validator {
 
@@ -19,6 +20,7 @@ export class Validator {
 
 /**
 * RequiredValidator - Validate the existance of a value
+* @class
 */
 export class RequiredValidator extends Validator {
 
@@ -34,7 +36,7 @@ export class RequiredValidator extends Validator {
 
 /**
 * BooleanRequiredValidator - Validate the existance of a value
-
+* @class
 */
 export class BooleanRequiredValidator extends Validator {
 
@@ -50,6 +52,7 @@ export class BooleanRequiredValidator extends Validator {
 
 /**
 * LengthValidator - Validate the length of a string
+* @class
 */
 export class LengthValidator extends Validator {
 
@@ -81,6 +84,7 @@ export class LengthValidator extends Validator {
 
 /**
 * IntegerValidator - Validate the integer is of a correct type
+* @class
 */
 export class IntegerValidator extends Validator {
 

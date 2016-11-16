@@ -1,6 +1,5 @@
 /**
 * @file Base widget interface
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -10,7 +9,6 @@ import {displayReadonlyValue} from './text'
 /**
 * Base Widget interface
 * @class
-* @namespace Widgets
 */
 export class Widget {
 

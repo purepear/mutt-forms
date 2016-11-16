@@ -25,6 +25,7 @@
     "babel-preset-stage-2": "^6.0.0",
     "babel-register": "^6.0.0",
     "chai": "^3.5.0",
+    "documentation": "^4.0.0-beta13",
     "eslint": "^3.7.1",
     "eslint-config-standard": "^6.1.0",
     "eslint-friendly-formatter": "^2.0.5",
@@ -45,7 +46,8 @@
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "mocha": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require test/unit/helper.js --recursive test/unit/specs; exit 0",
     "test": "npm run mocha",
-    "lint": "eslint --ext .js src; exit 0"
+    "lint": "eslint --ext .js src; exit 0",
+    "docs": "./node_modules/documentation/bin/documentation.js build -g -f html -o docs/ --name='Pug Forms' --project-version 0.0.1 src/*.js"
   },
   "license": "ISC"
 }

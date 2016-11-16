@@ -1,7 +1,8 @@
 /**
 * @file Fieldset Interface
-* @copyright Bought By Many 2016
 */
+
+// (c) Bought By Many 2016
 
 'use strict'
 
@@ -16,8 +17,9 @@ export class Fieldset {
     /**
     * Setup the fieldset class
     * @constructor
-    * @param {string} label set the label of the fieldset, typically
+    * @param {string} label the label of the fieldset, typically
     * used for legends
+    * @param {string} name the name of the fieldset
     */
     constructor({label = null, name = null}) {
         this.name = name
@@ -36,7 +38,7 @@ export class Fieldset {
 
     /**
     * Check if a fieldset contains a field
-    * @param {string} A Field name
+    * @param {string} fieldName A Field name
     */
     hasField(fieldName) {
         for(let field in this.fields) {
@@ -46,14 +48,6 @@ export class Fieldset {
         }
 
         return false
-    }
-
-    /**
-    * Get a field from the fieldset
-    * @param {string} A Field name
-    */
-    getField(fieldName) {
-
     }
 
     /**
@@ -73,7 +67,7 @@ export class Fieldset {
 
     /**
     * Populate the fieldset with selected values
-    * @param {object} Data object with form values
+    * @param {object} data Data object with form values
     */
     populate(data) {
         for(let field of this.fields) {
@@ -102,7 +96,8 @@ export class Fieldset {
     }
 
     /**
-    *
+    * Set errors on the fields
+    * @param {object} errors Object with error information
     */
     setFieldErrors(errors) {
         for(let errorField in errors) {
@@ -113,15 +108,15 @@ export class Fieldset {
     }
 
     /**
-    *
-    * @param {string} text to be used for the fieldset legend
+    * Set the legend on the form
+    * @param {string} legend text to be used for the fieldset legend
     */
     setLegend(legend) {
         this.label = legend
     }
 
     /**
-    *
+    * Refresh the validation state on all of the fields in the fieldset
     */
     refreshValidationState() {
         this.errors = {}
@@ -132,7 +127,7 @@ export class Fieldset {
     }
 
     /**
-    *
+    * Render the fieldset and return a document fragment
     * @returns {HTMLFragment}
     */
     render() {
@@ -175,7 +170,7 @@ export class Fieldset {
     }
 
     /**
-    *
+    * Lock all of the fields in the fieldset
     */
     lock() {
         for(let field of this.fields) {
@@ -184,7 +179,7 @@ export class Fieldset {
     }
 
     /**
-    *
+    * Unlock all the fields in the fieldset
     */
     unlock() {
         for(let field of this.fields) {
@@ -195,6 +190,8 @@ export class Fieldset {
     /**
     * Get a field in the form by it's path. Paths should be
     * provided in 'dot' notation - i.e "some.example.path"
+    * @params {string} path dot notation path to field to search for
+    * @returns {Field} field returns a field class
     */
     getFieldByPath(path) {
         let pathParts = path.split('.')
@@ -215,14 +212,17 @@ export class Fieldset {
     }
 
     /**
-    * Create a new fieldset. Th
+    * Create a new fieldset class from a JSON Schema
     * @staticmethod
-    * @params {object} schema - JSON schema for the fieldset spec
-    * @params [object] options - options for fields and the fieldset
-    * @params [string] name - optional name for the fieldset (added as class)
+    * @params {object} schema JSON schema for the fieldset spec
+    * @params [object] options options for fields and the fieldset
+    * @params [string] name of the fieldset(added as class)
+    * @params [string] label optional label for the fieldset
     */
-    static new(schema, options = {}, fields = null, name = null) {
-        let fieldsetSpec = {}
+    static new(schema, options = {}, fields = null, name = null, label = null) {
+        let fieldsetSpec = {
+            name: name
+        }
 
         if(schema.hasOwnProperty('title')) {
             fieldsetSpec.label = schema.title
@@ -231,6 +231,9 @@ export class Fieldset {
             if(options.form.hasOwnProperty('label')) {
                 fieldsetSpec.label = options.form.label
             }
+        }
+        if(label) {
+            fieldsetSpec.label = label
         }
 
         Object.assign(fieldsetSpec, options)

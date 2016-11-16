@@ -1,7 +1,5 @@
 /**
 * @file Object Field
-* @version 0.0.1
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -53,6 +51,10 @@ export class ObjectField extends Field {
                 properties[fieldName],
                 fieldOptions
             )
+
+            if(!field) {
+                throw new Error('Unable to create Field on ObjectField!')
+            }
 
             if(!field.getSortOrder()) {
                 field.setSortOrder(fieldIndex)

@@ -8,6 +8,11 @@ import PugRegistry from '../registry'
 import {Field} from './core'
 import {SelectInput} from '../widgets/select'
 
+/**
+* Choice Field, used as a base to capture inputs from
+* a range of values
+* @class
+*/
 export class ChoiceField extends Field {
 
     constructor({id, name, label = null, initial = null, widget = null,
@@ -35,6 +40,10 @@ export class ChoiceField extends Field {
         this.widget.setChoices(this.choices)
     }
 
+    /**
+    * Get the widget used to display the field
+    * @returns {SelectInput} widget to display
+    */
     getWidget() {
         return SelectInput
     }

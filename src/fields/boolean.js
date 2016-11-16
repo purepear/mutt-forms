@@ -1,7 +1,5 @@
 /**
 * @file Boolean Field
-* @version 0.0.1
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -32,6 +30,10 @@ function toBool(value) {
     }
 }
 
+/**
+* Boolean field, used to capture true/false inputs
+* @class
+*/
 export class BooleanField extends Field {
 
     /**
@@ -52,6 +54,7 @@ export class BooleanField extends Field {
 
     /**
     * Get the widget for the field
+    * @returns {Widget}
     */
     getWidget() {
         return CheckboxInput

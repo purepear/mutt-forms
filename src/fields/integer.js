@@ -1,5 +1,5 @@
-/*
-    pug - fields/integer.js
+/**
+* @file Integer Field
 */
 
 'use strict'
@@ -9,6 +9,10 @@ import {Field} from './core'
 import {NumberInput} from '../widgets/numbers'
 import {IntegerValidator} from '../validators/core'
 
+/**
+* Integer Field, used to input integer values
+* @class
+*/
 export class IntegerField extends Field {
 
     constructor({id, name, label = null, initial = null, widget = null,

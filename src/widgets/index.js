@@ -1,8 +1,4 @@
-/**
-* @file Widget package
-* @version 0.0.1
-* @copyright Bought By Many 2016
-*/
+// Index of Widgets
 
 export {Widget} from './core'
 

@@ -1,7 +1,8 @@
 /**
-* @file Field Core
-* @copyright Bought By Many 2016
+* @file Main Core Field class
 */
+
+// (c) Bought By Many 2016
 
 'use strict'
 
@@ -14,24 +15,24 @@ import {
 } from '../validators/core'
 
 /**
-*
+* Base Field class, this is used as a base interface for
+* all other Fields
 * @class
-* @property {mixed} value - the value of the field
 */
 export class Field {
 
     /**
     * Initialise the field - this will initalise the assocaited widget
     * @param {string} id the ID of the field
-    * @param {string} name - the HTML name of the field
-    * @param [string] label - the HTML label linked ot the field
-    * @param [mixed] initial - the initial value for the field
-    * @param [Widget] widget - widget class to use when rendering field
-    * @param [array] validators - List of validators to use when validating field
-    * @param [object] attribs - HTML attributes for the field
-    * @param [string] description - Help text for the field
-    * @param [object] options - rendering options for the field
-    * @param [integer] order - order flag for sorting multiple fields
+    * @param {string} name the HTML name of the field
+    * @param {string} [label] the HTML label linked ot the field
+    * @param {mixed} [initial] the initial value for the field
+    * @param {Widget} [widget] widget class to use when rendering field
+    * @param {array} [validators] List of validators to use when validating field
+    * @param {object} [attribs] HTML attributes for the field
+    * @param {string} [description] Help text for the field
+    * @param {object} [options] rendering options for the field
+    * @param {integer} [order] order flag for sorting multiple fields
     */
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},

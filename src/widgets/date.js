@@ -1,6 +1,5 @@
 /**
 * @file Date input widget
-* @copyright Bought By Many 2016
 */
 
 'use strict'
@@ -11,7 +10,6 @@ import {Widget} from './core'
 /**
 * DateInput - Input for date
 * @class
-* @namespace Widgets
 */
 export class DateInput extends Widget {
 
@@ -56,7 +54,6 @@ PugRegistry.registerWidget('date', DateInput)
 /**
 * DateSelectionInput - Selection Input for date
 * @class
-* @namespace Widgets
 */
 export class DateSelectionInput extends Widget {
 

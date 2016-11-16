@@ -1,6 +1,5 @@
 /**
 * @file Pug Utilities
-* @copyright Bought By Many 2016
 */
 
 'use strict'
