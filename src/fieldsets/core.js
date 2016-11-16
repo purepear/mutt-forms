@@ -232,7 +232,7 @@ export class Fieldset {
                 fieldsetSpec.label = options.form.label
             }
         }
-        if(label) {
+        if(label !== null) {
             fieldsetSpec.label = label
         }
 

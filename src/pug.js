@@ -88,7 +88,7 @@ export default class Pug {
                 }
 
                 if(fieldsetSpec.options && 
-                    fieldsetSpec.options.label) {
+                    fieldsetSpec.options.hasOwnProperty('label')) {
                     fieldsetLabel = fieldsetSpec.options.label
                 }
 
