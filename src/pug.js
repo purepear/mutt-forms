@@ -18,7 +18,7 @@ import PugRegistry from './registry'
 export {fields, widgets, validators, utils, PugRegistry}
 
 /**
-* Main Pug form interface. This instance is used to build, 
+* Main Pug form interface. This instance is used to build,
 * control & render the form
 * @class
 */
@@ -87,7 +87,7 @@ export default class Pug {
                     options.fieldsets = fieldsetSpec.fieldsets
                 }
 
-                if(fieldsetSpec.options && 
+                if(fieldsetSpec.options &&
                     fieldsetSpec.options.hasOwnProperty('label')) {
                     fieldsetLabel = fieldsetSpec.options.label
                 }
@@ -110,19 +110,28 @@ export default class Pug {
     }
 
     /**
-    * Get the data from the form
+    * Get the data from the form - this can be returned as a list
+    * of objects, each object being a fieldsets data set. Or, by
+    * default, as a merged object of all the data
+    * @param {bool} [asList] Boolean to indicate if a list of fieldset
+    * data is required. Default is to return a merged object.
     * @returns {object} key/value data object for the form
     */
-    data() {
-        let data = []
+    data(asList = false) {
+        if(asList) {
+            let data = []
 
-        for(let fieldset of this.fieldsets) {
-            data.push(fieldset.data())
+            for(let fieldset of this.fieldsets) {
+                data.push(fieldset.data())
+            }
+
+            return data
         }
 
-        // TODO: Yuck - fix.
-        if(data.length === 1) {
-            return data[0]
+        let data = {}
+
+        for(let fieldset of this.fieldsets) {
+            data = Object.assign(data, fieldset.data())
         }
 
         return data
