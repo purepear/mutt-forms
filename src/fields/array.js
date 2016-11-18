@@ -86,7 +86,7 @@ export class ArrayField extends Field {
     * @returns {bool} success of the removal of a slot
     */
     removeSlot() {
-        if(this.slots.length == 0) {
+        if(this.slots.length === 0) {
             return false
         }
 
@@ -167,6 +167,35 @@ export class ArrayField extends Field {
     */
     render() {
         return this.widget.renderList(this.slots)
+    }
+
+    /**
+    *
+    */
+    getFieldByPath(path) {
+        let pathParts = path.split('.')
+
+        // It's expected that the search name is an integer as
+        // it should be an index to an field in the array
+        let searchIndex = parseInt(pathParts.shift())
+
+        if(isNaN(searchIndex)) {
+            return null
+        } else if(searchIndex > this.slots.length) {
+            return null
+        }
+
+        let field = this.slots[searchIndex]
+
+        if(pathParts.length === 0) {
+            return field
+        }
+
+        if(field.constructor.prototype.hasOwnProperty('getFieldByPath')) {
+            return field.getFieldByPath(pathParts.join('.'))
+        }
+
+        return null
     }
 
     /**
