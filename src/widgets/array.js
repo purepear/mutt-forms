@@ -58,6 +58,40 @@ export class ArrayInput extends Widget {
     * @returns {string} the class to use for the field element
     */
     getFieldClass() { return 'pug-field pug-field-array' }
+
+    /**
+    *
+    */
+    getElement() {
+        throw new Error('Unable to get element on an array field!')
+    }
+
+    /**
+    *
+    */
+    getElementByIndex(index) {
+        return this
+            .getElementWrapper()
+            .querySelector(`#${this.id}_item_${index}`)
+    }
+
+    /**
+    *
+    */
+    addSlot(field) {
+        let renderedField = field.render()
+        let wrapper = this.getElementWrapper()
+        wrapper.appendChild(renderedField)
+    }
+
+    /**
+    *
+    */
+    removeSlot() {
+        let lastFieldIndex = this._field.slots.length
+        let lastField = this.getElementByIndex(lastFieldIndex)
+        this.getElementWrapper().removeChild(lastField)
+    }
 }
 
 PugRegistry.registerWidget('array', ArrayInput)

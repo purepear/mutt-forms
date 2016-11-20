@@ -66,9 +66,10 @@ export class ArrayField extends Field {
 
     /**
     * Add a new slot to the array field
+    * @param [updateWidget] Update the widget attached to the field
     */
-    addSlot() {
-        let position = this.slots.length
+    addSlot(updateWidget = true) {
+        let position = this.slots.length + 1
         let fieldId = `${this.id}_item_${position}`
         let fieldName = `${this.name}_${position}`
         let field = this.constructor.new(
@@ -79,18 +80,27 @@ export class ArrayField extends Field {
         )
 
         this.slots.push(field)
+
+        if(updateWidget) {
+            this.widget.addSlot(field)
+        }
     }
 
     /**
     * Remove slot
+    * @param [updateWidget] Update the widget attached to the field
     * @returns {bool} success of the removal of a slot
     */
-    removeSlot() {
+    removeSlot(updateWidget = true) {
         if(this.slots.length === 0) {
             return false
         }
 
         this.slots.pop()
+
+        if(updateWidget) {
+            this.widget.removeSlot()
+        }
 
         return true
     }
