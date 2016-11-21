@@ -106,6 +106,11 @@ PugRegistry.registerWidget('email', EmailInput)
 */
 export class HiddenInput extends Widget {
 
+    constructor(field, type, id, name, label, attribs, options, value) {
+        super(field, type, id, name, label, attribs, options, value)
+        this.choices = []
+    }
+
     /**
     * Render the text input field
     */
@@ -135,6 +140,22 @@ export class HiddenInput extends Widget {
     */
     renderErrors() {
         return null
+    }
+
+    /**
+    *
+    * @params {array}
+    */
+    setChoices(choices) {
+        this.choices = choices
+    }
+
+    /**
+    * Get the choices used by the widget
+    * @returns {array} choice pair array
+    */
+    getChoices() {
+        return this.choices
     }
 }
 
