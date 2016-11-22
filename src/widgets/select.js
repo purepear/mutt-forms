@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {BaseChoiceWidget} from './choice'
 
 /**
@@ -44,7 +44,7 @@ export class SelectInput extends BaseChoiceWidget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-select' }
+    getFieldClass() { return 'mutt-field mutt-field-select' }
 }
 
-PugRegistry.registerWidget('select', SelectInput)
+MuttRegistry.registerWidget('select', SelectInput)

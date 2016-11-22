@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {ObjectInput} from '../widgets/object'
 
@@ -177,4 +177,4 @@ export class ObjectField extends Field {
     }
 }
 
-PugRegistry.registerField('object', ObjectField)
+MuttRegistry.registerField('object', ObjectField)

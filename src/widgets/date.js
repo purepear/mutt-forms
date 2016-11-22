@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -46,10 +46,10 @@ export class DateInput extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-date' }
+    getFieldClass() { return 'mutt-field mutt-field-date' }
 }
 
-PugRegistry.registerWidget('date', DateInput)
+MuttRegistry.registerWidget('date', DateInput)
 
 /**
 * DateSelectionInput - Selection Input for date
@@ -63,7 +63,7 @@ export class DateSelectionInput extends Widget {
     */
     renderField() {
         let dateWrapper = document.createElement('div')
-        dateWrapper.setAttribute('class', 'pug-date-selector')
+        dateWrapper.setAttribute('class', 'mutt-date-selector')
 
         // Value store
         let dateInput = document.createElement('input')
@@ -125,7 +125,7 @@ export class DateSelectionInput extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-date-selector' }
+    getFieldClass() { return 'mutt-field mutt-field-date-selector' }
 
     /**
     *
@@ -248,5 +248,5 @@ export class DateSelectionInput extends Widget {
     }
 }
 
-PugRegistry.registerWidget('dateselect', DateSelectionInput)
+MuttRegistry.registerWidget('dateselect', DateSelectionInput)
 

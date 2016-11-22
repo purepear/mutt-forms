@@ -159,7 +159,7 @@ export class Widget {
         if(this.label) {
             let label = document.createElement('label')
             label.setAttribute('for', this.name)
-            label.setAttribute('class', 'pug-label')
+            label.setAttribute('class', 'mutt-label')
             label.textContent = this.label
             return label
         }
@@ -232,7 +232,7 @@ export class Widget {
     * @return {HTMLElement} the element on the stage
     */
     getElement() {
-        return this.getElementWrapper().querySelector('.pug-field')
+        return this.getElementWrapper().querySelector('.mutt-field')
     }
 
     /**
@@ -240,7 +240,7 @@ export class Widget {
     * @return {HTMLElement} the error element on the stage
     */
     getElementError() {
-        return this.getElementWrapper().querySelector('.pug-error')
+        return this.getElementWrapper().querySelector('.mutt-error')
     }
 
     /**
@@ -288,27 +288,27 @@ export class Widget {
     */
     getFieldClass() {
         if(this.attribs.hasOwnProperty('class')) {
-            return `pug-field ${this.attribs.class}`
+            return `mutt-field ${this.attribs.class}`
         }
 
-        return 'pug-field'
+        return 'mutt-field'
     }
 
     /**
     * Get the class name for the widget wrapper
     * @returns {string} the class to use for the wrapper element
     */
-    getFieldWrapperClass() { return 'pug-field-wrapper' }
+    getFieldWrapperClass() { return 'mutt-field-wrapper' }
 
     /**
     * Get the class name for the error
     * @returns {string} the class to use for the error element
     */
-    getErrorClass() { return 'pug-error' }
+    getErrorClass() { return 'mutt-error' }
 
     /**
     * Get the class name for the error wrapper
     * @returns {string} the class to use for the error wrapper element
     */
-    getErrorWrapperClass() { return 'pug-error-wrapper' }
+    getErrorWrapperClass() { return 'mutt-error-wrapper' }
 }

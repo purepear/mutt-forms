@@ -1,10 +1,10 @@
-/*
-    pug - fields/choice.js
+/**
+* @file Choice Field
 */
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {SelectInput} from '../widgets/select'
 
@@ -49,4 +49,4 @@ export class ChoiceField extends Field {
     }
 }
 
-PugRegistry.registerField('enum', ChoiceField)
+MuttRegistry.registerField('enum', ChoiceField)

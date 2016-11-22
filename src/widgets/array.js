@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -57,7 +57,7 @@ export class ArrayInput extends Widget {
     * Get the class name for the widget element
     * @returns {string} the class to use for the field element
     */
-    getFieldClass() { return 'pug-field pug-field-array' }
+    getFieldClass() { return 'mutt-field mutt-field-array' }
 
     /**
     *
@@ -94,4 +94,4 @@ export class ArrayInput extends Widget {
     }
 }
 
-PugRegistry.registerWidget('array', ArrayInput)
+MuttRegistry.registerWidget('array', ArrayInput)

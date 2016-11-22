@@ -2,6 +2,6 @@
 
 'use strict'
 
-import Pug from './pug'
+import Mutt from './mutt'
 
-module.exports = Pug
+module.exports = Mutt

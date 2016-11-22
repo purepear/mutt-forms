@@ -6,7 +6,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {TextInput} from '../widgets/text'
 import {
     RequiredValidator,
@@ -264,26 +264,26 @@ export class Field {
             }
 
             fieldSpec.choices = choices
-            FieldKlass = PugRegistry.getField('enum')
+            FieldKlass = MuttRegistry.getField('enum')
         }
 
         // This is awkward as we are trying to support the
         // legacy/Alpaca option format
         if(options.hasOwnProperty('hidden')) {
             if(options.hidden) {
-                fieldSpec.widget = PugRegistry.getWidget('hidden')
+                fieldSpec.widget = MuttRegistry.getWidget('hidden')
             }
         }
 
         if(schema.format) {
-            if(PugRegistry.hasWidget(schema.format)) {
-                fieldSpec.widget = PugRegistry.getWidget(schema.format)
+            if(MuttRegistry.hasWidget(schema.format)) {
+                fieldSpec.widget = MuttRegistry.getWidget(schema.format)
             }
         }
 
         if(options.widget) {
-            if(PugRegistry.hasWidget(options.widget)) {
-                fieldSpec.widget = PugRegistry.getWidget(options.widget)
+            if(MuttRegistry.hasWidget(options.widget)) {
+                fieldSpec.widget = MuttRegistry.getWidget(options.widget)
             }
         }
 
@@ -330,11 +330,11 @@ export class Field {
 
         if(!FieldKlass) {
             // Attempt to get the field spec
-            if(!PugRegistry.hasField(schema.type)) {
+            if(!MuttRegistry.hasField(schema.type)) {
                 return null
             }
 
-            FieldKlass = PugRegistry.getField(schema.type)
+            FieldKlass = MuttRegistry.getField(schema.type)
         }
 
         let field = new FieldKlass(fieldSpec)

@@ -133,7 +133,7 @@ export class Fieldset {
     render() {
         let fieldsetContainer = document.createDocumentFragment()
         let fieldset = document.createElement('fieldset')
-        fieldset.classList.add('pug-fieldset')
+        fieldset.classList.add('mutt-fieldset')
 
         if(this.name) {
             fieldset.setAttribute('name', this.name)

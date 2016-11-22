@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {CheckboxInput} from '../widgets/checkbox'
 
@@ -61,4 +61,4 @@ export class BooleanField extends Field {
     }
 }
 
-PugRegistry.registerField('boolean', BooleanField)
+MuttRegistry.registerField('boolean', BooleanField)

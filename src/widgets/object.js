@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -55,7 +55,7 @@ export class ObjectInput extends Widget {
             let fieldsetIndex = 0
             for(let fieldset of this.options.fieldsets) {
                 let fieldsetElement = document.createElement('fieldset')
-                fieldsetElement.classList.add('pug-fieldset')
+                fieldsetElement.classList.add('mutt-fieldset')
                 fieldsetElement.setAttribute(
                     'name',
                     `${this.name}-fieldset-${fieldsetIndex}`
@@ -100,7 +100,7 @@ export class ObjectInput extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-object' }
+    getFieldClass() { return 'mutt-field mutt-field-object' }
 }
 
-PugRegistry.registerWidget('object', ObjectInput)
+MuttRegistry.registerWidget('object', ObjectInput)

@@ -1,10 +1,10 @@
-/*
-    pug - fields/text.js
+/**
+* @file Text Field
 */
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {TextInput} from '../widgets/text'
 
@@ -19,6 +19,6 @@ export class StringField extends Field {
     }
 }
 
-PugRegistry.registerField('string', StringField)
-PugRegistry.registerField('date', StringField)
-PugRegistry.registerField('datetime', StringField)
+MuttRegistry.registerField('string', StringField)
+MuttRegistry.registerField('date', StringField)
+MuttRegistry.registerField('datetime', StringField)

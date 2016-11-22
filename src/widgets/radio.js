@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {BaseChoiceWidget} from './choice'
 
 /**
@@ -42,7 +42,7 @@ export class RadioInput extends BaseChoiceWidget {
             let fieldId = `${this.name}_${index}`
 
             let radioInputWrapper = document.createElement('div')
-            radioInputWrapper.setAttribute('class', 'pug-field-radio-item')
+            radioInputWrapper.setAttribute('class', 'mutt-field-radio-item')
 
             let radioInput = document.createElement('input')
             radioInput.setAttribute('id', fieldId)
@@ -91,7 +91,7 @@ export class RadioInput extends BaseChoiceWidget {
     * the selected one
     */
     getRadioValue() {
-        let selectedElement = this.getElementWrapper().querySelector('.pug-field:checked')
+        let selectedElement = this.getElementWrapper().querySelector('.mutt-field:checked')
 
         if(!selectedElement) {
             return null
@@ -109,7 +109,7 @@ export class RadioInput extends BaseChoiceWidget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-radio' }
+    getFieldClass() { return 'mutt-field mutt-field-radio' }
 }
 
-PugRegistry.registerWidget('radio', RadioInput)
+MuttRegistry.registerWidget('radio', RadioInput)

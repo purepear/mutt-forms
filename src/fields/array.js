@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {ArrayInput} from '../widgets/array'
 
@@ -221,4 +221,4 @@ export class ArrayField extends Field {
     }
 }
 
-PugRegistry.registerField('array', ArrayField)
+MuttRegistry.registerField('array', ArrayField)

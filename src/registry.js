@@ -1,20 +1,20 @@
 /**
-* @file Registry of pug config and plugins
+* @file Registry of config and plugins
 */
 
 'use strict'
 
 /**
-* Internal registry for Pug fields & widgets. This is used 
+* Internal registry for Mutt fields & widgets. This is used 
 * internally to register default fields & widgets, and can
 * also be used as a hook to install new fields & widgets
 * via plugins.
 * @class
 */
-class PugRegistry {
+class MuttRegistry {
 
     /**
-    * Pug Registry is used a singleton class that contains
+    * Mutt Registry is used a singleton class that contains
     * configuration information. It's used by the builder
     * utility to decide field mappings and by the plugins
     * to extend the core functionality.
@@ -91,6 +91,6 @@ class PugRegistry {
 
 }
 
-const registry = new PugRegistry()
+const registry = new MuttRegistry()
 
 export default registry

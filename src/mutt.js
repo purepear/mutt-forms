@@ -13,21 +13,21 @@ import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 import * as utils from './utils'
-import PugRegistry from './registry'
+import MuttRegistry from './registry'
 
-export {fields, widgets, validators, utils, PugRegistry}
+export {fields, widgets, validators, utils, MuttRegistry}
 
 /**
-* Main Pug form interface. This instance is used to build,
+* Main Mutt form interface. This instance is used to build,
 * control & render the form
 * @class
 */
-export default class Pug {
+export default class Mutt {
 
     /**
-    * Initialisation of a Pug form
+    * Initialisation of a Mutt form
     * @constructor
-    * @param {HTMLElement} container Containing element for the Pug Form
+    * @param {HTMLElement} container Containing element for the Mutt Form
     * @param {object} schema JSON Schema containing Form & Field Configuration
     * @param {object} [options={}] form configuration options
     * @param {function} [callback=null] callback function for form submission
@@ -37,7 +37,7 @@ export default class Pug {
         debug = false) {
         if(container === null) {
             throw new Error(
-                'You must pass a valid container to create a Pug form!'
+                'You must pass a valid container to create a Mutt form!'
             )
         }
 
@@ -96,7 +96,7 @@ export default class Pug {
                     schema,
                     options,
                     fieldsetFields,
-                    `pug-fieldset-${fieldsetIndex}`,
+                    `mutt-fieldset-${fieldsetIndex}`,
                     fieldsetLabel
                 )
 
@@ -163,7 +163,7 @@ export default class Pug {
 
             this.form.setAttribute('method', 'POST')
             this.form.setAttribute('action', '')
-            this.form.setAttribute('class', 'pug-form')
+            this.form.setAttribute('class', 'mutt-form')
 
             if(this.mulipart) {
                 this.form.setAttribute('enctype', 'multipart/form-data')
@@ -175,7 +175,7 @@ export default class Pug {
             }
 
             // Add form controls
-            let buttonClass = 'pug-button'
+            let buttonClass = 'mutt-button'
             let buttonText = 'Submit'
 
             // Check for button overide options
@@ -190,7 +190,7 @@ export default class Pug {
             }
 
             let buttonWrapper = document.createElement('div')
-            buttonWrapper.setAttribute('class', 'pug-button-wrapper')
+            buttonWrapper.setAttribute('class', 'mutt-button-wrapper')
 
             let button = document.createElement('button')
             button.setAttribute('class', buttonClass)
@@ -373,7 +373,7 @@ export default class Pug {
     */
     log(message) {
         if(this.debug) {
-            window.console.log('Pug ->', message)
+            window.console.log('Mutt ->', message)
         }
     }
 }

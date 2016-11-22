@@ -1,19 +1,19 @@
 {
-  "name": "pug-forms",
-  "version": "0.0.1",
+  "name": "mutt-forms",
+  "version": "0.0.2",
   "author": {
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
   },
-  "main": "dist/pug.js",
+  "main": "dist/mutt.js",
   "description": "HTML Forms with a squishy face.",
-  "homepage": "https://github.com/boughtbymany/pug-forms",
+  "homepage": "https://github.com/boughtbymany/mutt-forms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boughtbymany/pug-forms.git"
+    "url": "https://github.com/boughtbymany/mutt-forms.git"
   },
   "bugs": {
-    "url": "https://github.com/boughtbymany/pug-forms/issues"
+    "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
   "dependencies": {},
   "devDependencies": {
@@ -47,7 +47,7 @@
     "mocha": "./node_modules/mocha/bin/mocha --compilers js:babel-register --require test/unit/helper.js --recursive test/unit/specs; exit 0",
     "test": "npm run mocha",
     "lint": "eslint --ext .js src; exit 0",
-    "docs": "./node_modules/documentation/bin/documentation.js build -g -f html -o docs/ --name='Pug Forms' --project-version 0.0.1 src/*.js"
+    "docs": "./node_modules/documentation/bin/documentation.js build -g -f html -o docs/ --name='Mutt Forms' --project-version 0.0.1 src/*.js"
   },
   "license": "ISC"
 }

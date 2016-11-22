@@ -1,5 +1,5 @@
-/*
-    pug - validators/core.js
+/**
+* @file Core Validators
 */
 
 /**

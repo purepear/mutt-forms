@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -39,7 +39,7 @@ export class CheckboxInput extends Widget {
     * Get the class name for the widget element
     * @returns {string} the class to use for the field element
     */
-    getFieldClass() { return 'pug-field pug-field-checkbox' }
+    getFieldClass() { return 'mutt-field mutt-field-checkbox' }
 }
 
-PugRegistry.registerWidget('checkbox', CheckboxInput)
+MuttRegistry.registerWidget('checkbox', CheckboxInput)

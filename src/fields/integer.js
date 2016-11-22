@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Field} from './core'
 import {NumberInput} from '../widgets/numbers'
 import {IntegerValidator} from '../validators/core'
@@ -59,4 +59,4 @@ export class IntegerField extends Field {
     }
 }
 
-PugRegistry.registerField('integer', IntegerField)
+MuttRegistry.registerField('integer', IntegerField)

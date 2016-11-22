@@ -4,7 +4,7 @@
 
 'use strict'
 
-import PugRegistry from '../registry'
+import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -34,10 +34,10 @@ export class TextInput extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-text' }
+    getFieldClass() { return 'mutt-field mutt-field-text' }
 }
 
-PugRegistry.registerWidget('text', TextInput)
+MuttRegistry.registerWidget('text', TextInput)
 
 /**
 * TextAreaInput - Standard HTML textarea input
@@ -64,10 +64,10 @@ export class TextAreaInput extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-text' }
+    getFieldClass() { return 'mutt-field mutt-field-text' }
 }
 
-PugRegistry.registerWidget('textarea', TextAreaInput)
+MuttRegistry.registerWidget('textarea', TextAreaInput)
 
 /**
 * EmailInput - Standard HTML text input
@@ -95,10 +95,10 @@ export class EmailInput extends TextInput {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-email' }
+    getFieldClass() { return 'mutt-field mutt-field-email' }
 }
 
-PugRegistry.registerWidget('email', EmailInput)
+MuttRegistry.registerWidget('email', EmailInput)
 
 /**
 * HiddenInput - Standard HTML hidden input
@@ -159,7 +159,7 @@ export class HiddenInput extends Widget {
     }
 }
 
-PugRegistry.registerWidget('hidden', HiddenInput)
+MuttRegistry.registerWidget('hidden', HiddenInput)
 
 /**
 * PasswordInput - Standard HTML password input
@@ -187,10 +187,10 @@ export class PasswordInput extends TextInput {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-password' }
+    getFieldClass() { return 'mutt-field mutt-field-password' }
 }
 
-PugRegistry.registerWidget('password', PasswordInput)
+MuttRegistry.registerWidget('password', PasswordInput)
 
 /**
 * DisplayWidget - Display only widget, this just shows the field as
@@ -200,7 +200,7 @@ export function displayReadonlyValue(value) {
     let display = document.createElement('span')
 
     // TODO: Support for the class being set dynamically
-    display.setAttribute('class', 'pug-field pug-field-display')
+    display.setAttribute('class', 'mutt-field mutt-field-display')
     display.textContent = value
 
     return display
@@ -222,7 +222,7 @@ export class DisplayWidget extends Widget {
     /**
     * Get the class name for the widget element
     */
-    getFieldClass() { return 'pug-field pug-field-display' }
+    getFieldClass() { return 'mutt-field mutt-field-display' }
 }
 
-PugRegistry.registerWidget('display', DisplayWidget)
+MuttRegistry.registerWidget('display', DisplayWidget)

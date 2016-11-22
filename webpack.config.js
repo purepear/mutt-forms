@@ -1,14 +1,14 @@
-// Builder for Pug & Pug Tests
+// Builder for Mutt
 
 const webpack = require('webpack')
 
 module.exports = [
     {
-        entry: './src/pug.js',
+        entry: './src/mutt.js',
         output: {
             path: './dist',
-            filename: 'pug.js',
-            library: ['Pug'],
+            filename: 'mutt.js',
+            library: ['Mutt'],
             libraryTarget: 'commonjs2'
         },
         module: {
@@ -32,8 +32,8 @@ module.exports = [
         entry: './src/standalone.js',
         output: {
             path: './dist',
-            filename: 'pug-standalone.js',
-            library: ['Pug'],
+            filename: 'mutt-standalone.js',
+            library: ['Mutt'],
             libraryTarget: 'var'
         },
         module: {

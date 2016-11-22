@@ -1,5 +1,5 @@
 /**
-* @file Pug Utilities
+* @file Utilities
 */
 
 'use strict'
