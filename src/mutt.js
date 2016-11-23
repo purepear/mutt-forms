@@ -51,6 +51,7 @@ export default class Mutt {
         this.form = null
         this.fieldsets = []
         this.options = {}
+        this.buttons = {submit: null}
 
         if(options && options.hasOwnProperty('form')) {
             this.options = options.form
@@ -192,16 +193,18 @@ export default class Mutt {
             let buttonWrapper = document.createElement('div')
             buttonWrapper.setAttribute('class', 'mutt-button-wrapper')
 
-            let button = document.createElement('button')
-            button.setAttribute('class', buttonClass)
-            button.setAttribute('type', 'submit')
-            button.textContent = buttonText
-            button.onclick = (e) => {
+            let submitButton = document.createElement('button')
+            submitButton.setAttribute('class', buttonClass)
+            submitButton.setAttribute('type', 'submit')
+            submitButton.textContent = buttonText
+            submitButton.onclick = (e) => {
                 this.submit(e)
                 return false
             }
 
-            buttonWrapper.appendChild(button)
+            this.buttons.submit = submitButton
+
+            buttonWrapper.appendChild(submitButton)
             this.form.appendChild(buttonWrapper)
 
             // Build the form and render to the viewport
