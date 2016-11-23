@@ -181,12 +181,14 @@ export default class Mutt {
 
             // Check for button overide options
             if(this.options.hasOwnProperty('buttons')) {
-                if(this.options.buttons.hasOwnProperty('class')) {
-                    buttonClass = buttonClass + ' ' + this.options.buttons.class
-                }
+                if(this.options.buttons.hasOwnProperty('submit')) {
+                    if(this.options.buttons.submit.hasOwnProperty('class')) {
+                        buttonClass = buttonClass + ' ' + this.options.buttons.submit.class
+                    }
 
-                if(this.options.buttons.hasOwnProperty('text')) {
-                    buttonText = this.options.buttons.text
+                    if(this.options.buttons.submit.hasOwnProperty('text')) {
+                        buttonText = this.options.buttons.submit.text
+                    }
                 }
             }
 
@@ -203,8 +205,32 @@ export default class Mutt {
             }
 
             this.buttons.submit = submitButton
-
             buttonWrapper.appendChild(submitButton)
+
+            // Add any aditional buttons specified in the options
+            if(this.options.hasOwnProperty('buttons')) {
+                for(let buttonName of Object.keys(this.options.buttons)) {
+                    if(buttonName == 'submit') {
+                        // We always default this
+                        continue
+                    }
+
+                    let buttonSpec = this.options.buttons[buttonName]
+
+                    // Setup a new button
+                    let button = document.createElement('button')
+                    button.setAttribute('name', buttonName)
+                    button.setAttribute('class', buttonSpec.class)
+                    button.setAttribute('type', 'button')
+                    button.textContent = buttonSpec.text
+                    button.onclick = buttonSpec.callback
+
+                    this.buttons[buttonName] = button
+
+                    buttonWrapper.appendChild(button)
+                }
+            }
+
             this.form.appendChild(buttonWrapper)
 
             // Build the form and render to the viewport
