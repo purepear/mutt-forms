@@ -82,6 +82,7 @@ export class ArrayInput extends Widget {
         let renderedField = field.render()
         let wrapper = this.getElementWrapper()
         wrapper.appendChild(renderedField)
+        field.postRender()
     }
 
     /**
