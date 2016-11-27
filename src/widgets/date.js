@@ -79,7 +79,10 @@ export class DateSelectionInput extends Widget {
         for(let index of Array.from(Array(31).keys())) {
             let day = index + 1
             let dayNumberOption = document.createElement('option')
-            dayNumberOption.setAttribute('value', day)
+            dayNumberOption.setAttribute(
+                'value',
+                ('0' + day).slice(-2)
+            )
             dayNumberOption.textContent = day
             dayInput.appendChild(dayNumberOption)
         }
@@ -93,10 +96,15 @@ export class DateSelectionInput extends Widget {
         for(let monthIndex in months) {
             let month = months[monthIndex]
             let monthNameOption = document.createElement('option')
-            monthNameOption.setAttribute(
-                'value',
-                (parseInt(monthIndex) + 1)
-            )
+
+            // Get the month number
+            let monthNumber = parseInt(monthIndex) + 1
+
+            // Zero pad the number (Safari/iOS need the zero to
+            // parse the date)
+            monthNumber = ('0' + monthNumber).slice(-2)
+
+            monthNameOption.setAttribute('value', monthNumber)
             monthNameOption.textContent = month
             monthInput.appendChild(monthNameOption)
         }
