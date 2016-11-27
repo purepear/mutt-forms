@@ -93,7 +93,10 @@ export class DateSelectionInput extends Widget {
         for(let monthIndex in months) {
             let month = months[monthIndex]
             let monthNameOption = document.createElement('option')
-            monthNameOption.setAttribute('value', monthIndex + 1)
+            monthNameOption.setAttribute(
+                'value',
+                parseInt(monthIndex) + 1
+            )
             monthNameOption.textContent = month
             monthInput.appendChild(monthNameOption)
         }
