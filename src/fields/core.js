@@ -33,10 +33,11 @@ export class Field {
     * @param {string} [description] Help text for the field
     * @param {object} [options] rendering options for the field
     * @param {integer} [order] order flag for sorting multiple fields
+    * @param {Field} [parent] parent a parent field
     */
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null}) {
+        order = null, parent = null}) {
         this.id = id
         this.name = name
         this.label = label
@@ -46,6 +47,7 @@ export class Field {
         this.validators = validators
         this.sortOrder = order
         this.locked = false
+        this.parent = null
 
         if(!this.label) {
             this.label = this.name
@@ -195,10 +197,13 @@ export class Field {
     /**
     * Refresh the validation state
     */
-    refreshValidationState() {
+    refreshValidationState(update = true) {
         this._errors = []
         this.widget.errors = []
-        this.widget.refreshErrorState([])
+
+        if(update) {
+            this.widget.refreshErrorState([])
+        }
     }
 
     /**
@@ -233,12 +238,13 @@ export class Field {
     /**
     *
     */
-    static new(id, name, schema, options = {}) {
+    static new(id, name, schema, options = {}, parent = null) {
         let fieldSpec = {
             id: id,
             name: name,
             options: options,
-            attribs: {}
+            attribs: {},
+            parent: parent,
         }
 
         let FieldKlass = null

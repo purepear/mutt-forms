@@ -2,6 +2,8 @@
 * ArrayField Tests
 */
 
+'use strict'
+
 import {assert} from 'chai'
 import {ArrayField} from '../../../../src/fields/array'
 import {TextField} from '../../../../src/fields/text'
@@ -25,9 +27,9 @@ describe('ArrayField', function() {
     describe('#addSlot()', function() {
         it('should add a new slot to the array field', function() {
             assert.equal(1, TestArrayField.slots.length)
-            TestArrayField.addSlot()
+            TestArrayField.addSlot(false)
             assert.equal(2, TestArrayField.slots.length)
-            TestArrayField.addSlot()
+            TestArrayField.addSlot(false)
             assert.equal(3, TestArrayField.slots.length)
         })
     })
@@ -35,16 +37,16 @@ describe('ArrayField', function() {
     describe('#removeSlot()', function() {
         it('should remove a slot from the array field', function() {
             assert.equal(1, TestArrayField.slots.length)
-            let success = TestArrayField.removeSlot()
+            let success = TestArrayField.removeSlot(false)
             assert.equal(0, TestArrayField.slots.length)
             assert.equal(true, success)
         })
 
         it('should return false when unable to remove a slot', function() {
             assert.equal(1, TestArrayField.slots.length)
-            TestArrayField.removeSlot()
+            TestArrayField.removeSlot(false)
             assert.equal(0, TestArrayField.slots.length)
-            let success = TestArrayField.removeSlot()
+            let success = TestArrayField.removeSlot(false)
             assert.equal(false, success)
         })
     })
@@ -65,9 +67,9 @@ describe('ArrayField', function() {
 
         it('should set the correct value for the array field', function() { 
             // Add some empty slots
-            TestArrayField.addSlot()
-            TestArrayField.addSlot()
-            TestArrayField.addSlot()
+            TestArrayField.addSlot(false)
+            TestArrayField.addSlot(false)
+            TestArrayField.addSlot(false)
             assert.equal(4, TestArrayField.slots.length)
 
             let testArray = ['This', 'is', 'a', 'Test']

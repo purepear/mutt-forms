@@ -24,7 +24,8 @@ export class Widget {
     * @param [object] options - optional values to configure the widget
     * @param [string] value - initial value for the widget
     */
-    constructor(field, type, id, name, label, attribs, options, initial) {
+    constructor(field, type, id, name, label, 
+        attribs = {}, options = {}, initial = null) {
         this._field = field
         this._rendered = false
         this.type = type

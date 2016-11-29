@@ -15,7 +15,6 @@ const win = doc.defaultView
 
 global.document = doc
 global.window = win
-global.TEST = 123
 
 Object.keys(window).forEach((key) => {
     if(!(key in global)) {

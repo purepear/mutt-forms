@@ -49,7 +49,8 @@ export class ObjectField extends Field {
                 fieldId,
                 fieldName,
                 properties[fieldName],
-                fieldOptions
+                fieldOptions,
+                this // parent
             )
 
             if(!field) {

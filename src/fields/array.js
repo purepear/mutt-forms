@@ -45,24 +45,7 @@ export class ArrayField extends Field {
         this.slots = []
 
         for(let i in Array.from(Array(this.minItems).keys())) {
-            let position = parseInt(i) + 1
-            let fieldId = `${id}_item_${position}`
-            let fieldName = `${name}_${position}`
-
-            // FIXME: This is a workaround, really should
-            // get the correct option structure to this class
-            let fieldOptions = Object.assign({
-                order: position
-            }, this.itemOptions)
-
-            let field = this.constructor.new(
-                fieldId,
-                fieldName,
-                this.itemSchema,
-                fieldOptions
-            )
-
-            this.slots.push(field)
+            this.addSlot(false)   
         }
 
         // Store errors as an object
@@ -77,6 +60,9 @@ export class ArrayField extends Field {
         let position = this.slots.length + 1
         let fieldId = `${this.id}_item_${position}`
         let fieldName = `${this.name}_${position}`
+
+        // FIXME: This is a workaround, really should
+        // get the correct option structure to this class
         let fieldOptions = Object.assign({
             order: position
         }, this.itemOptions)
@@ -85,7 +71,8 @@ export class ArrayField extends Field {
             fieldId,
             fieldName,
             this.itemSchema,
-            fieldOptions
+            fieldOptions,
+            this // parent
         )
 
         this.slots.push(field)
