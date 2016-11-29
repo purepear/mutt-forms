@@ -47,7 +47,7 @@ export class Field {
         this.validators = validators
         this.sortOrder = order
         this.locked = false
-        this.parent = null
+        this.parent = parent
 
         if(!this.label) {
             this.label = this.name
