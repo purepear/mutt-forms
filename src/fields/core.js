@@ -89,6 +89,11 @@ export class Field {
         if(this.options.hasOwnProperty('description')) {
             this.description = this.options.description
         }
+         if(this.options.hasOwnProperty('validators')) {
+            for(let validator of Array.from(this.options.validators)) {
+               this.validators.push(validator)
+            }
+       }
     }
 
     /**

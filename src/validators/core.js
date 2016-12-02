@@ -25,7 +25,7 @@ export class Validator {
 export class RequiredValidator extends Validator {
 
     validate(value) {
-        if(!value) {
+        if(!value && (value !== 0)) {
             this.error = 'This field is required.'
             return false
         }
