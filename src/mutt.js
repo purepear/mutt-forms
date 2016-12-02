@@ -195,18 +195,6 @@ export default class Mutt {
             let buttonWrapper = document.createElement('div')
             buttonWrapper.setAttribute('class', 'mutt-button-wrapper')
 
-            let submitButton = document.createElement('button')
-            submitButton.setAttribute('class', buttonClass)
-            submitButton.setAttribute('type', 'submit')
-            submitButton.textContent = buttonText
-            submitButton.onclick = (e) => {
-                this.submit(e)
-                return false
-            }
-
-            this.buttons.submit = submitButton
-            buttonWrapper.appendChild(submitButton)
-
             // Add any aditional buttons specified in the options
             if(this.options.hasOwnProperty('buttons')) {
                 for(let buttonName of Object.keys(this.options.buttons)) {
@@ -230,6 +218,18 @@ export default class Mutt {
                     buttonWrapper.appendChild(button)
                 }
             }
+
+            let submitButton = document.createElement('button')
+            submitButton.setAttribute('class', buttonClass)
+            submitButton.setAttribute('type', 'submit')
+            submitButton.textContent = buttonText
+            submitButton.onclick = (e) => {
+                this.submit(e)
+                return false
+            }
+
+            this.buttons.submit = submitButton
+            buttonWrapper.appendChild(submitButton)
 
             this.form.appendChild(buttonWrapper)
 
