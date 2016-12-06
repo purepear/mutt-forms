@@ -236,9 +236,19 @@ export class DateSelectionInput extends Widget {
         let elementYear = this.getElementYear()
         let months = this.getMonthNames()
 
+        let date = value.getDate()
+        if(date.toString().length === 1) {
+            date = `0${date}`
+        }
+
+        let month = value.getMonth() + 1
+        if(month.toString().length === 1) {
+            month = `0${month}`
+        }
+
         if(elementDay && elementMonth && elementYear) {
-            elementDay.value = this.value.getDate()
-            elementMonth.value = months[this.value.getMonth() - 1]
+            elementDay.value = date
+            elementMonth.value = month
             elementYear.value = this.value.getFullYear()
         }
     }
