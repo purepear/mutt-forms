@@ -39,7 +39,7 @@ export class RadioInput extends BaseChoiceWidget {
 
         for(let choice of this.choices) {
             let [value, label] = choice
-            let fieldId = `${this.name}_${index}`
+            let fieldId = `${this.id}_${index}`
 
             let radioInputWrapper = document.createElement('div')
             radioInputWrapper.setAttribute('class', 'mutt-field-radio-item')
@@ -47,7 +47,7 @@ export class RadioInput extends BaseChoiceWidget {
             let radioInput = document.createElement('input')
             radioInput.setAttribute('id', fieldId)
             radioInput.setAttribute('type', 'radio')
-            radioInput.setAttribute('name', this.name)
+            radioInput.setAttribute('name', this.id)
             radioInput.setAttribute('value', value)
             radioInput.setAttribute('class', this.getFieldClass())
 
