@@ -7,12 +7,13 @@
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
 import {Widget} from '../../../../src/widgets/core'
-import {StringField} from '../../../../src/fields/date'
+import {StringField} from '../../../../src/fields/text'
+import {DateSelectionInput} from '../../../../src/widgets/date'
 
-describe('Widget', function() {
+describe('DateSelectionInputWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an TestWidget instance', function() {
+    beforeEach('create an DateSelectionInputWidget instance', function() {
         jsdom()
 
         TestField = new StringField({

@@ -243,7 +243,7 @@ export class Field {
     /**
     *
     */
-    static new(id, name, schema, options = {}, parent = null) {
+    static new(id, name, schema, options = {}, parent = null, required = false, dependancies = null) {
         let fieldSpec = {
             id: id,
             name: name,
@@ -305,9 +305,9 @@ export class Field {
         if(schema.properties) {
             fieldSpec.properties = schema.properties
         }
-
+        
         // Build validator list
-        if(schema.required) {
+        if(required || (options.hasOwnProperty('required') && options.required)) {
             if(schema.type === 'boolean') {
                 validators.push(new BooleanRequiredValidator())
             } else {
@@ -315,6 +315,12 @@ export class Field {
             }
 
             fieldSpec.attribs.required = 'true'
+        }
+
+        // If the schema contains a required attribute this should be
+        // a list of required descendants - not the item itself
+        if(schema.required) {
+            fieldSpec.required = schema.required
         }
 
         if(schema.minLength) {
