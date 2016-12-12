@@ -18,8 +18,8 @@ describe('ArrayField', function() {
             name: 'TestArray', 
             label: 'Test Array Field',
             items: {
-                type: "string",
-                title: "Array Item"
+                type: 'string',
+                title: 'Array Item'
             }
         })
     })    

@@ -20,7 +20,7 @@ export class ObjectField extends Field {
 
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null, properties = {}}) {
+        order = null, properties = {}, required = []}) {
         super({
             id,
             name,
@@ -40,9 +40,15 @@ export class ObjectField extends Field {
         for(let fieldName of Object.keys(properties)) {
             let fieldId = `${name}_${fieldName}`
             let fieldOptions = {}
+            let fieldRequired = false
 
             if(this.options.hasOwnProperty(fieldName)) {
                 fieldOptions = options[fieldName]
+            }
+
+            // Check if the field is required
+            if(required && required.includes(fieldName)) {
+                fieldRequired = true
             }
 
             let field = this.constructor.new(
@@ -50,7 +56,8 @@ export class ObjectField extends Field {
                 fieldName,
                 properties[fieldName],
                 fieldOptions,
-                this // parent
+                this, // parent
+                fieldRequired
             )
 
             if(!field) {
