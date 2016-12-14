@@ -47,8 +47,10 @@ export class ObjectField extends Field {
             }
 
             // Check if the field is required
-            if(required && required.includes(fieldName)) {
-                fieldRequired = true
+            if(required.length > 0) {
+                if(required.indexOf(fieldName) !== -1) {
+                    fieldRequired = true
+                }
             }
 
             let field = this.constructor.new(
