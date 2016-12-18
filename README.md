@@ -1,4 +1,4 @@
-![Mutt](https://github.com/boughtbymany/mutt-forms/blob/development/docs/index.html)
+![Mutt](https://raw.githubusercontent.com/boughtbymany/mutt-forms/master/docs/mutt-logo.jpg)
 
 # Mutt Forms
 
