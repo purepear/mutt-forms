@@ -1,11 +1,11 @@
 {
   "name": "mutt-forms",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
   },
-  "main": "dist/mutt.js",
+  "main": "src/mutt.js",
   "description": "HTML Forms with a squishy face.",
   "homepage": "https://github.com/boughtbymany/mutt-forms",
   "repository": {
