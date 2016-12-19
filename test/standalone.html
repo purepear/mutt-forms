@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Mutt Forms</title>
+    <script src="../dist/mutt-standalone.js"></script>
+</head>
+<body>
+    <h1>Playground</h1>
+    <p>A place to play around with the standalone version.</p>
+    <div id="form"></div>
+    <script>
+        var schema = {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                },
+                number: {
+                    type: 'integer'
+                }
+            }
+        };
+
+        var options = {};
+
+        var form = new Mutt(
+            document.getElementById('form'),
+            schema,
+            options,
+            function(data) {
+
+            }
+        );
+
+        form.render()
+    </script>
+</body>
+</html>
