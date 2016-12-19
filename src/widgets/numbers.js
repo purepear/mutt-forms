@@ -20,8 +20,14 @@ export class NumberInput extends Widget {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
         textInput.setAttribute('type', 'number')
+        textInput.setAttribute('inputmode', 'numeric')
         textInput.setAttribute('class', this.getFieldClass())
         textInput.setAttribute('value', (this.value) ? this.value : '')
+
+        // iOS doesn't fire the numerical keyboard for an type="number"
+        // by default, adding the pattern forces the numerical keyboard
+        // to be fired over the alpha one
+        textInput.setAttribute('pattern', '[0-9]*')
 
         for(let attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
@@ -62,7 +68,8 @@ export class CurrencyInput extends Widget {
     }
 
     /**
-    * Remove currency symbol and round to two decimal places
+    * Get the value of the field. This will remove a currency 
+    * symbol and round to two decimal places.
     */
     getValue() {        
         let value = super.getValue()

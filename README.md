@@ -54,6 +54,17 @@ let form = new Mutt(
 form.render()
 ```
 
+#### Standalone Playground
+
+A standalone version of mutt is available, you can use this either 
+directly or by firing up a simple python server:
+
+`python -m SimpleHTTPServer`
+
+and navigating to:
+
+`http://localhost:8000/test/standalone.html`
+
 
 ---
 
