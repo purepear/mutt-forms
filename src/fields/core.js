@@ -335,6 +335,10 @@ export class Field {
             )
         }
 
+        if(options.validators) {
+            validators.push(...options.validators)
+        }
+
         if(schema.minItems) {
             fieldSpec.minItems = schema.minItems
         }
