@@ -4,7 +4,7 @@
 
 'use strict'
 
-import {assert} from 'chai'
+import {assert, expect} from 'chai'
 import {ArrayField} from '../../../../src/fields/array'
 import {TextField} from '../../../../src/fields/text'
 import {ArrayInput} from '../../../../src/widgets/array'
@@ -46,14 +46,39 @@ describe('ArrayField', function() {
             assert.equal(1, TestArrayField.slots.length)
             TestArrayField.removeSlot(false)
             assert.equal(0, TestArrayField.slots.length)
-            let success = TestArrayField.removeSlot(false)
-            assert.equal(false, success)
+            let result = TestArrayField.removeSlot(false)
+            assert.equal(false, result)
+        })
+    })
+
+    describe('#spliceSlot()', function() {
+        it('should splice a slot from the array field', function() {
+            expect(TestArrayField.slots.length).to.equal(1)
+
+            TestArrayField.addSlot(false)
+            TestArrayField.addSlot(false)
+
+            expect(TestArrayField.slots.length).to.equal(3)
+
+            TestArrayField.value = [
+                'Test 1',
+                'Test 2',
+                'Test 3',
+            ]
+
+            let success = TestArrayField.spliceSlot(1, false)
+
+            expect(TestArrayField.slots.length).to.equal(2)
+            expect(success).to.equal(true)
+
+            expect(TestArrayField.slots[0].value).to.equal('Test 1')
+            expect(TestArrayField.slots[1].value).to.equal('Test 3')
         })
     })
 
     describe('#getWidget()', function() {
         it('should return ArrayInput widget', function() {
-            assert.equal(ArrayInput, TestArrayField.getWidget())
+            expect(TestArrayField.getWidget()).to.equal(ArrayInput)
         })
     })
 

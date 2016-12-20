@@ -93,6 +93,14 @@ export class ArrayInput extends Widget {
         let lastField = this.getElementByIndex(lastFieldIndex)
         this.getElementWrapper().removeChild(lastField)
     }
+
+    /**
+    *
+    */
+    spliceSlot(fieldIndex) {
+        let splicedField = this.getElementByIndex(fieldIndex)
+        this.getElementWrapper().removeChild(splicedField)
+    }
 }
 
 MuttRegistry.registerWidget('array', ArrayInput)

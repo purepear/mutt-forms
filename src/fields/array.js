@@ -102,6 +102,26 @@ export class ArrayField extends Field {
     }
 
     /**
+    * Remove a slot from inside the slot array
+    * @param index Index of slot to remove from array
+    * @param [updateWidget] Update the widget attached to the field
+    * @returns {bool} success of the removal of a slot
+    */
+    spliceSlot(index, updateWidget = true) {
+        if(this.slots.length === 0) {
+            return false
+        }
+
+        this.slots.splice(index, 1)
+
+        if(updateWidget) {
+            this.widget.spliceSlot(index)
+        }
+
+        return true
+    }
+
+    /**
     * Property - get/set value
     */
     get value() {
