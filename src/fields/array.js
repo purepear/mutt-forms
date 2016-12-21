@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {ArrayInput} from '../widgets/array'
 
@@ -18,10 +17,11 @@ export class ArrayField extends Field {
     /**
     *
     */
-    constructor({id, name, label = null, initial = null, widget = null,
+    constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, items = {}, minItems = 1, maxItems = null}) {
         super({
+            config,
             id,
             name,
             label,
@@ -68,6 +68,7 @@ export class ArrayField extends Field {
         }, this.itemOptions)
 
         let field = this.constructor.new(
+            this.config,
             fieldId,
             fieldName,
             this.itemSchema,
@@ -236,5 +237,3 @@ export class ArrayField extends Field {
         this._errors = error
     }
 }
-
-MuttRegistry.registerField('array', ArrayField)

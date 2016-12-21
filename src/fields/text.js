@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {TextInput} from '../widgets/text'
 
@@ -18,7 +17,3 @@ export class StringField extends Field {
         return TextInput
     }
 }
-
-MuttRegistry.registerField('string', StringField)
-MuttRegistry.registerField('date', StringField)
-MuttRegistry.registerField('datetime', StringField)

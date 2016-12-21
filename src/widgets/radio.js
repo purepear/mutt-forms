@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {BaseChoiceWidget} from './choice'
 
 /**
@@ -91,7 +90,9 @@ export class RadioInput extends BaseChoiceWidget {
     * the selected one
     */
     getRadioValue() {
-        let selectedElement = this.getElementWrapper().querySelector('.mutt-field:checked')
+        let selectedElement = this.getElementWrapper().querySelector(
+            '.mutt-field:checked'
+        )
 
         if(!selectedElement) {
             return null
@@ -111,5 +112,3 @@ export class RadioInput extends BaseChoiceWidget {
     */
     getFieldClass() { return 'mutt-field mutt-field-radio' }
 }
-
-MuttRegistry.registerWidget('radio', RadioInput)

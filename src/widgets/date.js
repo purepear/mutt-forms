@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -48,8 +47,6 @@ export class DateInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-date' }
 }
-
-MuttRegistry.registerWidget('date', DateInput)
 
 /**
 * DateSelectionInput - Selection Input for date
@@ -270,6 +267,3 @@ export class DateSelectionInput extends Widget {
         this.setDateValue(value)
     }
 }
-
-MuttRegistry.registerWidget('dateselect', DateSelectionInput)
-

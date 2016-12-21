@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {CheckboxInput} from '../widgets/checkbox'
 
@@ -60,5 +59,3 @@ export class BooleanField extends Field {
         return CheckboxInput
     }
 }
-
-MuttRegistry.registerField('boolean', BooleanField)

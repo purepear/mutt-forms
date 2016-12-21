@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {ObjectInput} from '../widgets/object'
 
@@ -18,10 +17,11 @@ import {ObjectInput} from '../widgets/object'
 */
 export class ObjectField extends Field {
 
-    constructor({id, name, label = null, initial = null, widget = null,
+    constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, properties = {}, required = []}) {
         super({
+            config,
             id,
             name,
             label,
@@ -54,6 +54,7 @@ export class ObjectField extends Field {
             }
 
             let field = this.constructor.new(
+                this.config,
                 fieldId,
                 fieldName,
                 properties[fieldName],
@@ -186,5 +187,3 @@ export class ObjectField extends Field {
         this._errors = error
     }
 }
-
-MuttRegistry.registerField('object', ObjectField)

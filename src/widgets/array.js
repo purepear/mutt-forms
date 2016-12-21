@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -102,5 +101,3 @@ export class ArrayInput extends Widget {
         this.getElementWrapper().removeChild(splicedField)
     }
 }
-
-MuttRegistry.registerWidget('array', ArrayInput)
