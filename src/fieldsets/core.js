@@ -21,7 +21,8 @@ export class Fieldset {
     * used for legends
     * @param {string} name the name of the fieldset
     */
-    constructor({label = null, name = null}) {
+    constructor({config, label = null, name = null}) {
+        this.config = config
         this.name = name
         this.label = label
         this.fields = []
@@ -219,19 +220,23 @@ export class Fieldset {
     * @params [string] name of the fieldset(added as class)
     * @params [string] label optional label for the fieldset
     */
-    static new(schema, options = {}, fields = null, name = null, label = null) {
+    static new(config, schema, options = {}, fields = null, 
+        name = null, label = null) {
         let fieldsetSpec = {
-            name: name
+            config: config,
+            name: name,
         }
 
         if(schema.hasOwnProperty('title')) {
             fieldsetSpec.label = schema.title
         }
+
         if(options.hasOwnProperty('form')) {
             if(options.form.hasOwnProperty('label')) {
                 fieldsetSpec.label = options.form.label
             }
         }
+
         if(label !== null) {
             fieldsetSpec.label = label
         }
@@ -269,6 +274,7 @@ export class Fieldset {
             }
 
             let field = Field.new(
+                config,
                 fieldId,
                 fieldName,
                 fieldSchema,

@@ -5,6 +5,7 @@
 'use strict'
 
 import {expect} from 'chai'
+import MuttConfig from '../../../../src/config'
 import {ObjectField} from '../../../../src/fields/object'
 import {TextField} from '../../../../src/fields/text'
 import {ObjectInput} from '../../../../src/widgets/object'
@@ -15,6 +16,7 @@ describe('ObjectField', function() {
 
     beforeEach('create an ObjectField instance', function() {
         TestObjectField = new ObjectField({
+            config: new MuttConfig(),
             id: 'test-object', 
             name: 'TestObject', 
             label: 'Test Object Field',

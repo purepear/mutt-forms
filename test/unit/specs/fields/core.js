@@ -5,6 +5,7 @@
 'use strict'
 
 import {assert, expect} from 'chai'
+import MuttConfig from '../../../../src/config'
 import {Field} from '../../../../src/fields/core'
 import {TextInput, HiddenInput} from '../../../../src/widgets/text'
 import {RequiredValidator} from '../../../../src/validators/core'
@@ -14,6 +15,7 @@ describe('Field', function() {
 
     beforeEach('create an Field instance', function() {
         TestField = new Field({
+            config: new MuttConfig(),
             id: 'test-field', 
             name: 'TestField', 
             label: 'Test Field'
@@ -37,6 +39,7 @@ describe('Field', function() {
             assert.equal(TextInput, TestField.getWidget())
             
             let AnotherTestField = new Field({
+                config: new MuttConfig(),
                 id: 'test-field', 
                 name: 'TestField', 
                 label: 'Test Field',
@@ -75,7 +78,12 @@ describe('Field', function() {
     describe('#new()', function() {
         it('return a field with configured attributes', function() {
             let schema = {type: 'string'}
-            let field = Field.new('test-id', 'test-name', schema)
+            let field = Field.new(
+                new MuttConfig(),
+                'test-id', 
+                'test-name', 
+                schema
+            )
 
             expect(field.id).to.equal('test-id')
             expect(field.name).to.equal('test-name')
@@ -86,15 +94,27 @@ describe('Field', function() {
         it('return a field as required', function() {
             let schema = {type: 'string'}
             let requiredField = Field.new(
-                'test-id', 'test-name', schema, {}, null, true
+                new MuttConfig(),
+                'test-id', 
+                'test-name', 
+                schema, 
+                {}, 
+                null, 
+                true
             )
 
             expect(requiredField.validators.length).to.equal(1)
-            expect(requiredField.validators[0].constructor).to.equal(RequiredValidator)
+            expect(requiredField.validators[0].constructor).to.equal(
+                RequiredValidator
+            )
 
             // Check the option config
             let optionsRequiredField = Field.new(
-                'test-id', 'test-name', schema, {required: true}
+                new MuttConfig(),
+                'test-id', 
+                'test-name', 
+                schema, 
+                {required: true}
             )
 
             expect(optionsRequiredField.validators.length).to.equal(1)

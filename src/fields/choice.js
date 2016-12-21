@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {SelectInput} from '../widgets/select'
 
@@ -15,10 +14,11 @@ import {SelectInput} from '../widgets/select'
 */
 export class ChoiceField extends Field {
 
-    constructor({id, name, label = null, initial = null, widget = null,
+    constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, choices = []}) {
         super({
+            config,
             id,
             name,
             label,
@@ -48,5 +48,3 @@ export class ChoiceField extends Field {
         return SelectInput
     }
 }
-
-MuttRegistry.registerField('enum', ChoiceField)
