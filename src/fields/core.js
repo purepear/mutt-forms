@@ -2,11 +2,8 @@
 * @file Main Core Field class
 */
 
-// (c) Bought By Many 2016
-
 'use strict'
 
-import MuttRegistry from '../registry'
 import {TextInput} from '../widgets/text'
 import {
     RequiredValidator,
@@ -23,6 +20,7 @@ export class Field {
 
     /**
     * Initialise the field - this will initalise the assocaited widget
+    * @param {MuttConfig} config the Mutt Form instance
     * @param {string} id the ID of the field
     * @param {string} name the HTML name of the field
     * @param {string} [label] the HTML label linked ot the field
@@ -35,9 +33,10 @@ export class Field {
     * @param {integer} [order] order flag for sorting multiple fields
     * @param {Field} [parent] parent a parent field
     */
-    constructor({id, name, label = null, initial = null, widget = null,
+    constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null}) {
+        this.config = config
         this.id = id
         this.name = name
         this.label = label
@@ -243,8 +242,10 @@ export class Field {
     /**
     *
     */
-    static new(id, name, schema, options = {}, parent = null, required = false, dependancies = null) {
+    static new(config, id, name, schema, options = {}, 
+        parent = null, required = false, dependancies = null) {
         let fieldSpec = {
+            config: config,
             id: id,
             name: name,
             options: options,
@@ -275,26 +276,26 @@ export class Field {
             }
 
             fieldSpec.choices = choices
-            FieldKlass = MuttRegistry.getField('enum')
+            FieldKlass = config.getField('enum')
         }
 
         // This is awkward as we are trying to support the
         // legacy/Alpaca option format
         if(options.hasOwnProperty('hidden')) {
             if(options.hidden) {
-                fieldSpec.widget = MuttRegistry.getWidget('hidden')
+                fieldSpec.widget = config.getWidget('hidden')
             }
         }
 
         if(schema.format) {
-            if(MuttRegistry.hasWidget(schema.format)) {
-                fieldSpec.widget = MuttRegistry.getWidget(schema.format)
+            if(config.hasWidget(schema.format)) {
+                fieldSpec.widget = config.getWidget(schema.format)
             }
         }
 
         if(options.widget) {
-            if(MuttRegistry.hasWidget(options.widget)) {
-                fieldSpec.widget = MuttRegistry.getWidget(options.widget)
+            if(config.hasWidget(options.widget)) {
+                fieldSpec.widget = config.getWidget(options.widget)
             }
         }
 
@@ -351,11 +352,11 @@ export class Field {
 
         if(!FieldKlass) {
             // Attempt to get the field spec
-            if(!MuttRegistry.hasField(schema.type)) {
+            if(!config.hasField(schema.type)) {
                 return null
             }
 
-            FieldKlass = MuttRegistry.getField(schema.type)
+            FieldKlass = config.getField(schema.type)
         }
 
         let field = new FieldKlass(fieldSpec)

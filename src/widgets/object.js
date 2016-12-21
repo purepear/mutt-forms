@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -102,5 +101,3 @@ export class ObjectInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-object' }
 }
-
-MuttRegistry.registerWidget('object', ObjectInput)

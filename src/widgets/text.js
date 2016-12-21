@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -37,8 +36,6 @@ export class TextInput extends Widget {
     getFieldClass() { return 'mutt-field mutt-field-text' }
 }
 
-MuttRegistry.registerWidget('text', TextInput)
-
 /**
 * TextAreaInput - Standard HTML textarea input
 * @class
@@ -66,8 +63,6 @@ export class TextAreaInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-text' }
 }
-
-MuttRegistry.registerWidget('textarea', TextAreaInput)
 
 /**
 * EmailInput - Standard HTML text input
@@ -97,8 +92,6 @@ export class EmailInput extends TextInput {
     */
     getFieldClass() { return 'mutt-field mutt-field-email' }
 }
-
-MuttRegistry.registerWidget('email', EmailInput)
 
 /**
 * HiddenInput - Standard HTML hidden input
@@ -159,8 +152,6 @@ export class HiddenInput extends Widget {
     }
 }
 
-MuttRegistry.registerWidget('hidden', HiddenInput)
-
 /**
 * PasswordInput - Standard HTML password input
 * @class
@@ -189,8 +180,6 @@ export class PasswordInput extends TextInput {
     */
     getFieldClass() { return 'mutt-field mutt-field-password' }
 }
-
-MuttRegistry.registerWidget('password', PasswordInput)
 
 /**
 * DisplayWidget - Display only widget, this just shows the field as
@@ -224,5 +213,3 @@ export class DisplayWidget extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-display' }
 }
-
-MuttRegistry.registerWidget('display', DisplayWidget)

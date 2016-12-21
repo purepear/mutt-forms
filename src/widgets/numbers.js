@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -41,8 +40,6 @@ export class NumberInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-number' }
 }
-
-MuttRegistry.registerWidget('number', NumberInput)
 
 /**
 * CurrencyInput
@@ -86,5 +83,3 @@ export class CurrencyInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-currency' }
 }
-
-MuttRegistry.registerWidget('currency', CurrencyInput)

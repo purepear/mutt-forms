@@ -13,9 +13,9 @@ import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 import * as utils from './utils'
-import MuttRegistry from './registry'
+import MuttConfig from './config'
 
-export {fields, widgets, validators, utils, MuttRegistry}
+export {fields, widgets, validators, utils}
 
 /**
 * Main Mutt form interface. This instance is used to build,
@@ -34,7 +34,7 @@ export default class Mutt {
     * @param {boolean} [debug=false] debugging flag
     */
     constructor(container, schema, options = {}, callback = null,
-        debug = false) {
+        debug = false, plugins = []) {
         if(container === null) {
             throw new Error(
                 'You must pass a valid container to create a Mutt form!'
@@ -52,6 +52,12 @@ export default class Mutt {
         this.fieldsets = []
         this.options = {}
         this.buttons = {submit: null}
+
+        this.config = new MuttConfig()
+
+        for(let plugin of plugins) {
+            this.config.use(plugin)
+        }
 
         if(options && options.hasOwnProperty('form')) {
             this.options = options.form
@@ -94,6 +100,7 @@ export default class Mutt {
                 }
 
                 let fieldset = Fieldset.new(
+                    this.config,
                     schema,
                     options,
                     fieldsetFields,
@@ -105,7 +112,12 @@ export default class Mutt {
                 fieldsetIndex++
             }
         } else {
-            let fieldset = Fieldset.new(schema, options)
+            let fieldset = Fieldset.new(
+                this.config, 
+                schema, 
+                options
+            )
+
             this.fieldsets.push(fieldset)
         }
     }

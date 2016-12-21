@@ -5,6 +5,7 @@
 'use strict'
 
 import {assert, expect} from 'chai'
+import MuttConfig from '../../../../src/config'
 import {ArrayField} from '../../../../src/fields/array'
 import {TextField} from '../../../../src/fields/text'
 import {ArrayInput} from '../../../../src/widgets/array'
@@ -14,6 +15,7 @@ describe('ArrayField', function() {
 
     beforeEach('create an ArrayField instance', function() {
         TestArrayField = new ArrayField({
+            config: new MuttConfig(),
             id: 'test-array', 
             name: 'TestArray', 
             label: 'Test Array Field',

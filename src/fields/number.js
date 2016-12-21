@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Field} from './core'
 import {NumberInput} from '../widgets/numbers'
 import {IntegerValidator} from '../validators/core'
@@ -15,10 +14,11 @@ import {IntegerValidator} from '../validators/core'
 */
 export class IntegerField extends Field {
 
-    constructor({id, name, label = null, initial = null, widget = null,
+    constructor({form, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null}) {
         super({
+            form,
             id,
             name,
             label,
@@ -58,5 +58,3 @@ export class IntegerField extends Field {
         return NumberInput
     }
 }
-
-MuttRegistry.registerField('integer', IntegerField)

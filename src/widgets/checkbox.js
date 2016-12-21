@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {Widget} from './core'
 
 /**
@@ -41,5 +40,3 @@ export class CheckboxInput extends Widget {
     */
     getFieldClass() { return 'mutt-field mutt-field-checkbox' }
 }
-
-MuttRegistry.registerWidget('checkbox', CheckboxInput)

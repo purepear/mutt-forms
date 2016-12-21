@@ -4,7 +4,6 @@
 
 'use strict'
 
-import MuttRegistry from '../registry'
 import {BaseChoiceWidget} from './choice'
 
 /**
@@ -46,5 +45,3 @@ export class SelectInput extends BaseChoiceWidget {
     */
     getFieldClass() { return 'mutt-field mutt-field-select' }
 }
-
-MuttRegistry.registerWidget('select', SelectInput)
