@@ -35,6 +35,8 @@ export class ArrayInput extends Widget {
 
         widgetFragment.appendChild(wrapper)
 
+        this._rendered = true
+
         return widgetFragment
     }
 
@@ -94,7 +96,11 @@ export class ArrayInput extends Widget {
     }
 
     /**
-    *
+    * Remove a slot by splicing from the array.
+    * NOTE: Using this directly does NOT update other widgets,
+    * this may be desired if for example you are using an ArrayField
+    * where you want other slots to update their id automatically.
+    * In this case use the ArrayField#spliceSlot()
     */
     spliceSlot(fieldIndex) {
         let splicedField = this.getElementByIndex(fieldIndex)

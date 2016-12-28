@@ -58,8 +58,8 @@ export class ArrayField extends Field {
     */
     addSlot(updateWidget = true) {
         let position = this.slots.length + 1
-        let fieldId = `${this.id}_item_${position}`
-        let fieldName = `${this.name}_${position}`
+        let fieldId = this.getSlotId(position)
+        let fieldName = this.getSlotName(position)
 
         // FIXME: This is a workaround, really should
         // get the correct option structure to this class
@@ -113,13 +113,42 @@ export class ArrayField extends Field {
             return false
         }
 
+        for(let slotIndex in this.slots) {
+            // ??
+            slotIndex = parseInt(slotIndex)
+
+            if(updateWidget && slotIndex == index) {
+                this.slots[slotIndex].destroy()
+            }
+        }
+
         this.slots.splice(index, 1)
 
-        if(updateWidget) {
-            this.widget.spliceSlot(index)
+        for(let slotIndex in this.slots) {
+            let position = parseInt(slotIndex) + 1
+            let newId = this.getSlotId(position)
+            let newName = this.getSlotName(position)
+            let slot = this.slots[slotIndex]
+            
+            slot.updateId(newId, updateWidget)
+            slot.updateName(newName, updateWidget)
         }
 
         return true
+    }
+
+    /**
+    *
+    */
+    getSlotId(index) {
+        return `${this.id}_item_${index}`
+    }
+
+    /**
+    *
+    */
+    getSlotName(index) {
+        return `${this.name}_${index}`
     }
 
     /**

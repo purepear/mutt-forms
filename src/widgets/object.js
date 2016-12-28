@@ -85,6 +85,8 @@ export class ObjectInput extends Widget {
 
         widgetFragment.appendChild(wrapper)
 
+        this._rendered = true
+
         return widgetFragment
     }
 

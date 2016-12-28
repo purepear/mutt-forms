@@ -6,6 +6,7 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
+import MuttConfig from '../../../../src/config'
 import {Widget} from '../../../../src/widgets/core'
 import {StringField} from '../../../../src/fields/text'
 import {DateSelectionInput} from '../../../../src/widgets/date'
@@ -17,6 +18,7 @@ describe('DateSelectionInputWidget', function() {
         jsdom()
 
         TestField = new StringField({
+            config: new MuttConfig(),
             id: 'test-string', 
             name: 'TestString', 
             label: 'Test String Field'
