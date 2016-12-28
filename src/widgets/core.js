@@ -73,6 +73,16 @@ export class Widget {
     }
 
     /**
+    * Remove the widget from the stage
+    * @returns true on success
+    */
+    destroy() {
+        let wrapper = this.getElementWrapper()
+        wrapper.parentNode.removeChild(wrapper)
+        return true
+    }
+
+    /**
     * Callback to the widget after the widget has been rendered
     * to the stage
     * @returns by default, nothing is returned.
@@ -129,6 +139,25 @@ export class Widget {
         this.locked = false
 
         return true
+    }
+
+    /**
+    * Update the ID of the wrapper element
+    */
+    updateId(oldId, newId) {
+        // Pass the old ID to ensure we can fetch it as expected
+        let wrapper = this.getElementWrapper(oldId)
+        wrapper.id = newId
+        this.id = newId
+    }
+
+    /**
+    * Update the name of the element
+    */
+    updateName(newName) {
+        let element = this.getElement()
+        element.name = newName
+        this.name = newName
     }
 
     /**
@@ -222,10 +251,15 @@ export class Widget {
 
     /**
     * Get a handle on the elements wrapper on the stage
+    * @params [string] id optional id overide to search DOM
     * @return {HTMLElement} the element's wrapper on the stage
     */
-    getElementWrapper() {
-        return document.querySelector(`#${this.id}`)
+    getElementWrapper(id = null) {
+        if(!id) {
+            id = this.id
+        }
+
+        return document.querySelector(`#${id}`)
     }
 
     /**

@@ -133,10 +133,18 @@ export class Field {
     
     /**
     * Render the form field using it's widget interface
-    * @returns
+    * @returns {DocumentFragment} rendered HTML widget
     */
     render() {
         return this.widget.render()
+    }
+
+    /**
+    * Destroy the rendered widget
+    * @returns the success or failure response
+    */
+    destroy() {
+        return this.widget.destroy()
     }
 
     /**
@@ -237,6 +245,30 @@ export class Field {
     */
     toString() {
         return `Field <${this.name} ${this.type}>`
+    }
+
+    /**
+    *
+    */
+    updateId(newId, updateWidget = true) {
+        let oldId = this.id
+        this.id = newId
+
+        if(updateWidget) {
+            this.widget.updateId(oldId, newId)
+        }
+    }
+
+    /**
+    *
+    */
+    updateName(newName, updateWidget = true) {
+        let oldName = this.name
+        this.name = newName
+
+        if(updateWidget) {
+            this.widget.updateName(newName)
+        }
     }
 
     /**
