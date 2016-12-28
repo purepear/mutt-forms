@@ -5,25 +5,30 @@
 'use strict'
 
 import {assert, expect} from 'chai'
+import jsdom from 'mocha-jsdom'
 import MuttConfig from '../../../../src/config'
 import {ArrayField} from '../../../../src/fields/array'
 import {TextField} from '../../../../src/fields/text'
 import {ArrayInput} from '../../../../src/widgets/array'
 
 describe('ArrayField', function() {
-    var TestArrayField
+    var FieldSpec, TestArrayField
 
     beforeEach('create an ArrayField instance', function() {
-        TestArrayField = new ArrayField({
+        jsdom()
+
+        FieldSpec = {
             config: new MuttConfig(),
             id: 'test-array', 
             name: 'TestArray', 
             label: 'Test Array Field',
             items: {
                 type: 'string',
-                title: 'Array Item'
+                title: 'Name'
             }
-        })
+        }
+
+        TestArrayField = new ArrayField(FieldSpec)
     })    
 
     describe('#addSlot()', function() {
@@ -76,6 +81,49 @@ describe('ArrayField', function() {
             expect(TestArrayField.slots[0].value).to.equal('Test 1')
             expect(TestArrayField.slots[1].value).to.equal('Test 3')
         })
+
+        it('removes a slot from the rendered widgets and rename remaining', 
+            function() {
+                let NewFieldSpec = Object.assign({}, FieldSpec)
+                NewFieldSpec.minItems = 3
+
+                // Use a field to drive the widget interface
+                let SpliceTestField = new ArrayField(NewFieldSpec)
+                let element = SpliceTestField.render()
+
+                let body = document.querySelector('body')
+                body.appendChild(element)
+
+                // Check there are 3 nodes in the parent
+                expect(document.querySelector('#test-array').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_1').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_2').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_3').constructor)
+                    .to.equal(window.HTMLDivElement)
+
+                // Splice the middle slot
+                SpliceTestField.spliceSlot(2, true)
+
+                expect(document.querySelector('#test-array').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_1').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_2').constructor)
+                    .to.equal(window.HTMLDivElement)
+                expect(document.querySelector('#test-array_item_3'))
+                    .to.equal(null)
+
+                // Check the names are as expected
+                let field1 = document.querySelector('#test-array_item_1 .mutt-field')
+                expect(field1.name).to.equal('TestArray_1')
+
+                let field2 = document.querySelector('#test-array_item_2 .mutt-field')
+                expect(field2.name).to.equal('TestArray_2')
+            }
+        )
     })
 
     describe('#getWidget()', function() {
