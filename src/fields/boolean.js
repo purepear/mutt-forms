@@ -8,7 +8,7 @@ import {Field} from './core'
 import {CheckboxInput} from '../widgets/checkbox'
 
 function toBool(value) {
-    if(value === undefined) {
+    if((value === undefined) || (value === null)) {
         return null
     }
 
