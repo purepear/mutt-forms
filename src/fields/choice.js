@@ -16,7 +16,7 @@ export class ChoiceField extends Field {
 
     constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null, choices = []}) {
+        order = null, parent = null, choices = []}) {
         super({
             config,
             id,
@@ -28,7 +28,8 @@ export class ChoiceField extends Field {
             attribs,
             description,
             options,
-            order
+            order,
+            parent
         })
 
         this.choices = choices

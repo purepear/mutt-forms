@@ -19,7 +19,7 @@ export class ObjectField extends Field {
 
     constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null, properties = {}, required = []}) {
+        order = null, parent = null, properties = {}, required = []}) {
         super({
             config,
             id,
@@ -31,7 +31,8 @@ export class ObjectField extends Field {
             attribs,
             description,
             options,
-            order
+            order,
+            parent
         })
 
         this.object = {}

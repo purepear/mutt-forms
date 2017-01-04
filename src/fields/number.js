@@ -16,7 +16,7 @@ export class IntegerField extends Field {
 
     constructor({form, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null}) {
+        order = null, parent = null}) {
         super({
             form,
             id,
@@ -28,7 +28,8 @@ export class IntegerField extends Field {
             attribs,
             description,
             options,
-            order
+            order,
+            parent
         })
 
         // Always append an integer validator
