@@ -41,5 +41,38 @@ describe('ObjectField', function() {
                 TestObjectField.object.item1.validators[0].constructor
             ).to.equal(RequiredValidator)
         })
+
+        it('sets parent on basic child fields', function() {
+            let testParent = new ObjectField({
+                config: new MuttConfig(),
+                id: 'test-object', 
+                name: 'TestObject', 
+                label: 'Test Object Field',
+                properties: {
+                    item1: {
+                        type: 'string',
+                        title: 'Item 1'
+                    },
+                    item2: {
+                        type: 'integer',
+                        title: 'Item 2'
+                    },
+                    item3: {
+                        type: 'boolean',
+                        title: 'Item 3'
+                    },
+                    item4: {
+                        type: 'enum',
+                        title: 'Item 4'
+                    }
+                },
+                required: ['item1']
+            })
+            
+            expect(testParent.getFieldByPath('item1').parent.id).to.equal(testParent.id)
+            expect(testParent.getFieldByPath('item2').parent.id).to.equal(testParent.id)
+            expect(testParent.getFieldByPath('item3').parent.id).to.equal(testParent.id)
+            expect(testParent.getFieldByPath('item4').parent.id).to.equal(testParent.id)
+        })
     })
 })

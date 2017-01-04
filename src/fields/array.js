@@ -19,7 +19,7 @@ export class ArrayField extends Field {
     */
     constructor({config, id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null, items = {}, minItems = 1, maxItems = null}) {
+        order = null, parent = null, items = {}, minItems = 1, maxItems = null}) {
         super({
             config,
             id,
@@ -31,7 +31,8 @@ export class ArrayField extends Field {
             attribs,
             description,
             options,
-            order
+            order,
+            parent
         })
 
         // TODO: Sanity check min/max items
