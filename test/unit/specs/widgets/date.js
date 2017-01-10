@@ -102,6 +102,43 @@ describe('DateSelectionInputWidget', function() {
 
             expect(yearSelect.value).to.equal('2005')
         })
+
+        it('renders the correctly when inital value is none', function() {
+            let TestInitialWidget = new DateSelectionInput(
+                TestField, 
+                'string', 
+                'test-widget', 
+                'TestWidget', 
+                'Test Widget',
+                {}, {},
+                null
+            )
+
+            let dateSelectionNode = TestInitialWidget.render()
+            let now = new Date()
+
+            expect(
+                dateSelectionNode.querySelectorAll('select').length
+            ).to.equal(3)
+
+            let daySelect = dateSelectionNode.querySelector(
+                'select[name="TestWidget-day"]'
+            )
+
+            expect(daySelect.value).to.equal('01')
+
+            let monthSelect = dateSelectionNode.querySelector(
+                'select[name="TestWidget-month"]'
+            )
+
+            expect(monthSelect.value).to.equal('01')
+
+            let yearSelect = dateSelectionNode.querySelector(
+                'select[name="TestWidget-year"]'
+            )
+
+            expect(yearSelect.value).to.equal(now.getFullYear().toString())
+        })
     })
 
     /* describe('#getDateValue()', function() {
