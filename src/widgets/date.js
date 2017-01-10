@@ -97,7 +97,7 @@ export class DateSelectionInput extends Widget {
 
             dayNumberOption.textContent = day
 
-            if(currentValue.getDate() === day) {
+            if(currentValue !== null && currentValue.getDate() === day) {
                 dayNumberOption.selected = 'selected'
             }
 
@@ -124,7 +124,8 @@ export class DateSelectionInput extends Widget {
             monthNameOption.setAttribute('value', monthNumber)
             monthNameOption.textContent = month
 
-            if(currentValue.getMonth() === parseInt(monthIndex)) {
+            if(currentValue !== null && 
+                currentValue.getMonth() === parseInt(monthIndex)) {
                 monthNameOption.selected = 'selected'
             }
 
@@ -149,7 +150,7 @@ export class DateSelectionInput extends Widget {
             yearOption.setAttribute('value', thisYear)
             yearOption.textContent = thisYear
 
-            if(currentValue.getFullYear() === thisYear) {
+            if(currentValue !== null && currentValue.getFullYear() === thisYear) {
                 yearOption.selected = 'selected'
             }
             
