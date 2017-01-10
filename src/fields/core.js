@@ -88,11 +88,6 @@ export class Field {
         if(this.options.hasOwnProperty('description')) {
             this.description = this.options.description
         }
-         if(this.options.hasOwnProperty('validators')) {
-            for(let validator of Array.from(this.options.validators)) {
-               this.validators.push(validator)
-            }
-       }
     }
 
     /**
@@ -163,7 +158,6 @@ export class Field {
         this.refreshValidationState()
 
         let value = this.value
-
         for(let validator of this.validators) {
             if(!validator.validate(value)) {
                 this.errors = validator.error
@@ -369,7 +363,7 @@ export class Field {
         }
 
         if(options.validators) {
-            validators.push(...options.validators)
+            validators.unshift(...options.validators)
         }
 
         if(schema.minItems) {
