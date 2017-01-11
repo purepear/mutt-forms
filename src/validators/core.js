@@ -102,7 +102,7 @@ export class IntegerValidator extends Validator {
 
 
 /**
-* LengthValidator - Validate the length of a string
+* RegexValidator - Validate the value against a regular expression
 * @class
 */
 export class RegexValidator extends Validator {
@@ -118,7 +118,7 @@ export class RegexValidator extends Validator {
             return false
         }
 
-        if(!value.match(this.patther)) {
+        if(!value.match(this.pattern)) {
             this.error = `Value must match the pattern: ${this.pattern}`
             return false
         }
