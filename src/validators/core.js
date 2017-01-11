@@ -99,3 +99,30 @@ export class IntegerValidator extends Validator {
         return true
     }
 }
+
+
+/**
+* LengthValidator - Validate the length of a string
+* @class
+*/
+export class RegexValidator extends Validator {
+
+    constructor(pattern) {
+        super()
+        this.pattern = pattern
+    }
+
+    validate(value) {
+        if(!value) {
+            this.error = 'This field is required.'
+            return false
+        }
+
+        if(!value.match(this.patther)) {
+            this.error = `Value must match the pattern: ${this.pattern}`
+            return false
+        }
+
+        return true
+    }
+}
