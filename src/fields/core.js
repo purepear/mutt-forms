@@ -161,6 +161,7 @@ export class Field {
         for(let validator of this.validators) {
             if(!validator.validate(value)) {
                 this.errors = validator.error
+                break
             }
         }
 
