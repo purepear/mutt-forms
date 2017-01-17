@@ -53,9 +53,13 @@ export class CurrencyInput extends Widget {
     renderField() {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
-        textInput.setAttribute('type', 'text')
+        textInput.setAttribute('type', 'number')
+        textInput.setAttribute('inputmode', 'numeric')
         textInput.setAttribute('class', this.getFieldClass())
         textInput.setAttribute('value', (this.value) ? this.value : '')
+
+        // See note for NumberInput....
+        textInput.setAttribute('pattern', '[0-9]*')
 
         for(let attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
@@ -71,9 +75,10 @@ export class CurrencyInput extends Widget {
     getValue() {        
         let value = super.getValue()
 
-        value = value.replace(/[£|$|€]/gi, '')
-        value = parseFloat(value)
-        value = value.toFixed(2)
+        if(value) {
+            value = parseFloat(value)
+            value = value.toFixed(2)
+        }
 
         return parseFloat(value)
     }

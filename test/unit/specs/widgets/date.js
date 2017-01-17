@@ -103,7 +103,7 @@ describe('DateSelectionInputWidget', function() {
             expect(yearSelect.value).to.equal('2005')
         })
 
-        it('renders the correctly when inital value is none', function() {
+        it('renders the correctly when initial value is none', function() {
             let TestInitialWidget = new DateSelectionInput(
                 TestField, 
                 'string', 
