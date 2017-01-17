@@ -81,3 +81,23 @@ describe('LengthValidator', function() {
         })
     })
 })
+
+describe('RegexValidator', function() {
+    describe('#validate()', function() {
+        it('returns true when a string value is present', function() {
+            let validator = new validators.RegexValidator()
+            expect(validator.validate('test')).to.equal(true)
+        })
+
+        it('returns true when passing a regular expression', function() {
+            let validator = new validators.RegexValidator(
+                /([0-9][0-9])(-)([0-9][0-9])(-)([0-9][0-9])/)
+            expect(validator.validate('00-00-00')).to.equal(true)
+        })
+
+        it('returns false when a value is not present', function() {
+            let validator = new validators.RegexValidator()
+            expect(validator.validate(null)).to.equal(false)
+        })   
+    })
+})
