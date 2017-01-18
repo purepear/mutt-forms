@@ -19,7 +19,7 @@ export class CheckboxInput extends Widget {
     */
     renderField() {
         let checkbox = document.createElement('input')
-        checkbox.setAttribute('name', this.name)
+        checkbox.setAttribute('name', this.name)    
         checkbox.setAttribute('type', 'checkbox')
         checkbox.setAttribute('class', this.getFieldClass())
 
@@ -32,6 +32,24 @@ export class CheckboxInput extends Widget {
         }
 
         return checkbox
+    }
+
+    /**
+    *
+    */
+    getValue() {
+        return this.getElement().getAttribute('checked')
+    }
+
+    /**
+    *
+    */
+    setValue(value) {
+        if(value) {
+            this.getElement().setAttribute('checked', 'checked')
+        } else {
+            this.getElement().removeAttribute('checked')
+        }
     }
 
     /**
