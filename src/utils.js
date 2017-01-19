@@ -4,6 +4,8 @@
 
 'use strict'
 
+import 'get-own-property-symbols'
+
 /**
 * Function to provide mixin support ot classes
 */
