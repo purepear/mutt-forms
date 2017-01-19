@@ -19,7 +19,8 @@ export class CheckboxInput extends Widget {
     */
     renderField() {
         let checkbox = document.createElement('input')
-        checkbox.setAttribute('name', this.name)    
+        checkbox.setAttribute('name', this.name)  
+        checkbox.setAttribute('id', this.name)     
         checkbox.setAttribute('type', 'checkbox')
         checkbox.setAttribute('class', this.getFieldClass())
 
