@@ -279,6 +279,14 @@ export class Widget {
     }
 
     /**
+    * Get a handle for the elements label
+    * @return {HTMLElement} the error element on the stage
+    */
+    getElementLabel() {
+        return this.getElementWrapper().querySelector('.mutt-label')
+    }
+
+    /**
     * Get the value of an element on the stage. This is the raw value
     * as specified in the HTML.
     * @returns {string} value of the element on the stage
