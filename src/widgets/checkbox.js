@@ -20,6 +20,7 @@ export class CheckboxInput extends Widget {
     renderField() {
         let checkbox = document.createElement('input')
         checkbox.setAttribute('name', this.name)
+        checkbox.setAttribute('id', this.id)
         checkbox.setAttribute('type', 'checkbox')
         checkbox.setAttribute('class', this.getFieldClass())
 
@@ -32,6 +33,57 @@ export class CheckboxInput extends Widget {
         }
 
         return checkbox
+    }
+
+    /**
+    * Get the value of an element on the stage. This is the raw value
+    * as specified in the HTML.
+    * @returns {string} value of the element on the stage
+    */
+    getValue() {
+        if(!this._rendered) {
+            return this.value
+        }
+        
+        if(this.getElement().hasAttribute('checked')) {
+            return true
+        }
+
+        return false
+    }
+
+    /**
+    * Set the value of an element on the stage. This can be a true
+    * of false value. Additionally this will also notify the label
+    * as the label is often used as a styling proxy.
+    * @param {boolean} value - turn the checkbos on/off
+    */
+    setValue(value) {
+        this.value = value
+
+        if(!this._rendered) {
+            return
+        }
+
+        let element = this.getElement()
+
+        if(element) {
+            let label = this.getElementLabel()
+
+            if(this.value) {
+                element.setAttribute('checked', 'checked')
+
+                if(label) {
+                    label.classList.add('mutt-field-checkbox-checked')
+                }
+            } else {
+                element.removeAttribute('checked')
+
+                if(label) {
+                    label.classList.remove('mutt-field-checkbox-checked')
+                }
+            }
+        }
     }
 
     /**
