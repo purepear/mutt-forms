@@ -23,6 +23,9 @@ export class CheckboxInput extends Widget {
         checkbox.setAttribute('id', this.id)
         checkbox.setAttribute('type', 'checkbox')
         checkbox.setAttribute('class', this.getFieldClass())
+        checkbox.onchange = () => {
+            this.setValue(!checkbox.hasAttribute('checked'))
+        }
 
         if(this.value) {
             checkbox.setAttribute('checked', 'checked')
@@ -31,6 +34,11 @@ export class CheckboxInput extends Widget {
         for(let attrib in this.attribs) {
             checkbox.setAttribute(attrib, this.attribs[attrib])
         }
+
+        // Set the internal notification flag so
+        // we know the field has now been rendered
+        // to the stage
+        this._rendered = true
 
         return checkbox
     }
@@ -56,7 +64,7 @@ export class CheckboxInput extends Widget {
     * Set the value of an element on the stage. This can be a true
     * of false value. Additionally this will also notify the label
     * as the label is often used as a styling proxy.
-    * @param {boolean} value - turn the checkbos on/off
+    * @param {boolean} value - turn the checkbox on/off
     */
     setValue(value) {
         this.value = value
