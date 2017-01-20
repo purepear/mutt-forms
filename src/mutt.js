@@ -7,8 +7,6 @@
 
 'use strict'
 
-import 'babel-polyfill'
-
 import {Fieldset} from './fieldsets/core'
 
 import * as fields from './fields'
