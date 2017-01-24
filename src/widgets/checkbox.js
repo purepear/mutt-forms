@@ -20,7 +20,7 @@ export class CheckboxInput extends Widget {
     renderField() {
         let checkbox = document.createElement('input')
         checkbox.setAttribute('name', this.name)
-        checkbox.setAttribute('id', this.id)
+        checkbox.setAttribute('id', this.getFieldId())
         checkbox.setAttribute('type', 'checkbox')
         checkbox.setAttribute('class', this.getFieldClass())
         checkbox.onchange = () => {
@@ -99,4 +99,11 @@ export class CheckboxInput extends Widget {
     * @returns {string} the class to use for the field element
     */
     getFieldClass() { return 'mutt-field mutt-field-checkbox' }
+
+    /**
+    * Get the checkbox ID
+    */
+    getFieldId() {
+        return `${this.id}-checkbox`
+    }
 }

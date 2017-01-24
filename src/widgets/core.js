@@ -188,7 +188,7 @@ export class Widget {
     renderLabel() {
         if(this.label) {
             let label = document.createElement('label')
-            label.setAttribute('for', this.name)
+            label.setAttribute('for', this.getFieldId())
             label.setAttribute('class', 'mutt-label')
             label.textContent = this.label
             return label
@@ -354,4 +354,11 @@ export class Widget {
     * @returns {string} the class to use for the error wrapper element
     */
     getErrorWrapperClass() { return 'mutt-error-wrapper' }
+
+    /**
+    * Get the field ID
+    */
+    getFieldId() {
+        return this.name
+    }
 }
