@@ -69,12 +69,12 @@ export class LengthValidator extends Validator {
         }
 
         if(this.min && value.length < this.min) {
-            this.error = `Length must be at least "${this.min}" characters`
+            this.error = `Length must be at least ${this.min} characters`
             return false
         }
 
         if(this.max && value.length > this.max) {
-            this.error = `Length must be no more than "${this.max}" characters`
+            this.error = `Length must be no more than ${this.max} characters`
             return false
         }
 
