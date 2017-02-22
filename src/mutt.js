@@ -7,10 +7,6 @@
 
 'use strict'
 
-// Internet explorer continues to be utterly useless, it's
-// missing Function.name, this fixes that
-import 'function.name-polyfill'
-
 import {Fieldset} from './fieldsets/core'
 
 import * as fields from './fields'

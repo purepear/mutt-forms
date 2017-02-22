@@ -44,7 +44,6 @@ export class ArrayField extends Field {
 
         // We store the array fields in the slot
         this.slots = []
-
         for(let i in Array.from(Array(this.minItems).keys())) {
             this.addSlot(false)   
         }
@@ -79,6 +78,7 @@ export class ArrayField extends Field {
 
         this.slots.push(field)
 
+        // FIXME: This shouldn't be at this level
         if(updateWidget) {
             this.widget.addSlot(field)
         }
@@ -168,6 +168,14 @@ export class ArrayField extends Field {
     set value(value) {
         if(!Array.isArray(value)) {
             throw new Error('Unable to set array field value(s) from non-array!')
+        }
+
+        // We may need to add or remove slots depending on the value
+        // sent through, reset the slots and add as needed
+        this.slots = []
+
+        for(let index in value) {
+            this.addSlot(false)
         }
 
         let fieldValueMap = this.slots.map(function(field, index) {

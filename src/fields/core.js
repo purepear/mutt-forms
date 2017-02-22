@@ -303,7 +303,12 @@ export class Field {
             }
 
             fieldSpec.choices = choices
-            FieldKlass = config.getField('enum')
+
+            if(schema.type === 'multichoice'){
+                FieldKlass = config.getField('multichoice')
+            } else {
+                FieldKlass = config.getField('enum')
+            }
         }
 
         // This is awkward as we are trying to support the
@@ -387,7 +392,6 @@ export class Field {
         }
 
         let field = new FieldKlass(fieldSpec)
-
         return field
     }
 }

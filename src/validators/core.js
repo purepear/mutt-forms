@@ -8,8 +8,13 @@
 */
 export class Validator {
 
-    constructor() {
+    constructor(messages) {
         this.error = null
+        this.messages = {
+            required: 'This field is required.'
+        }
+
+        Object.assign(this.messages, messages)
     }
 
     validate(value) {
@@ -26,7 +31,7 @@ export class RequiredValidator extends Validator {
 
     validate(value) {
         if(!value && (value !== 0)) {
-            this.error = 'This field is required.'
+            this.error = this.messages.required
             return false
         }
 
@@ -42,7 +47,23 @@ export class BooleanRequiredValidator extends Validator {
 
     validate(value) {
         if(!(value === true || value === false)) {
-            this.error = 'This field is required.'
+            this.error = this.messages.required
+            return false
+        }
+
+        return true
+    }
+}
+
+/**
+* BooleanTrueValidator - Validate the existance of a true value
+* @class
+*/
+export class BooleanTrueValidator extends Validator {
+
+    validate(value) {
+        if(value !== true) {
+            this.error = this.messages.required
             return false
         }
 
@@ -56,25 +77,33 @@ export class BooleanRequiredValidator extends Validator {
 */
 export class LengthValidator extends Validator {
 
-    constructor({min = null, max = null}) {
-        super()
+    constructor({min = null, max = null, messages = null}) {
+        super(messages)
         this.min = min
         this.max = max
+
+        if(!this.messages.hasOwnProperty('minLength')) {
+            this.messages.minLength = `Length must be at least "${this.min}" characters`
+        }
+
+        if(!this.messages.hasOwnProperty('maxLength')) {
+            this.messages.maxLength = `Length must be no more than "${this.max}" characters`
+        }
     }
 
     validate(value) {
         if(!value) {
-            this.error = 'This field is required.'
+            this.error = this.messages.required
             return false
         }
 
         if(this.min && value.length < this.min) {
-            this.error = `Length must be at least "${this.min}" characters`
+            this.error = this.messages.minLength
             return false
         }
 
         if(this.max && value.length > this.max) {
-            this.error = `Length must be no more than "${this.max}" characters`
+            this.error = this.messages.maxLength
             return false
         }
 
@@ -88,11 +117,19 @@ export class LengthValidator extends Validator {
 */
 export class IntegerValidator extends Validator {
 
+    constructor(messages) {
+        super(messages)
+
+        if(!this.messages.hasOwnProperty('intRequired')) {
+            this.messages.intRequired = `Value must be an integer`
+        }
+    }
+
     validate(value) {
         // NOTE: We only check it's an integer IF we
         // have a value.
         if(value && isNaN(value)) {
-            this.error = `Value must be an integer`
+            this.error = this.messages.intRequired
             return false
         }
 
@@ -107,19 +144,23 @@ export class IntegerValidator extends Validator {
 */
 export class RegexValidator extends Validator {
 
-    constructor(pattern) {
-        super()
+    constructor(pattern, messages) {
+        super(messages)
         this.pattern = pattern
+
+        if(!this.messages.hasOwnProperty('invalidPattern')) {
+            this.messages.invalidPattern = `Value must match the pattern: ${this.pattern}`
+        }
     }
 
     validate(value) {
         if(!value) {
-            this.error = 'This field is required.'
+            this.error = this.messages.required
             return false
         }
 
         if(!value.match(this.pattern)) {
-            this.error = `Value must match the pattern: ${this.pattern}`
+            this.error = this.messages.invalidPattern
             return false
         }
 

@@ -28,16 +28,19 @@ export default class MuttConfig {
             'array': fields.ArrayField,
             'boolean': fields.BooleanField,
             'enum': fields.ChoiceField,
+            'multichoice': fields.MultipleChoiceField,
             'integer': fields.IntegerField,
             'object': fields.ObjectField,
             'string': fields.StringField,
             'date': fields.StringField,
-            'datetime': fields.StringField
+            'datetime': fields.StringField,
+            'button': fields.ButtonField
         }
 
         this.widgets = {
             'array': widgets.ArrayInput,
             'checkbox': widgets.CheckboxInput,
+            'checkboxlist': widgets.CheckboxList,
             'date': widgets.DateInput,
             'dateselect': widgets.DateSelectionInput,
             'number': widgets.NumberInput,
@@ -50,7 +53,8 @@ export default class MuttConfig {
             'email': widgets.EmailInput,
             'hidden': widgets.HiddenInput,
             'password': widgets.PasswordInput,
-            'display': widgets.DisplayWidget
+            'display': widgets.DisplayWidget,
+            'button': widgets.ButtonWidget
         }
     }
 
