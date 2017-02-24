@@ -26,6 +26,7 @@ export class Widget {
     */
     constructor(field, type, id, name, label, 
         attribs = {}, options = {}, initial = null) {
+
         this._field = field
         this._rendered = false
         this.type = type
@@ -258,7 +259,6 @@ export class Widget {
         if(!id) {
             id = this.id
         }
-
         return document.querySelector(`#${id}`)
     }
 
@@ -268,6 +268,18 @@ export class Widget {
     */
     getElement() {
         return this.getElementWrapper().querySelector('.mutt-field')
+    }
+
+    getAllElements() {
+        return this.getElementWrapper().querySelectorAll('.mutt-field')
+    }
+
+    /**
+     * Get a handle for the element on the stage
+     * @return {HTMLElement} the element on the stage
+     */
+    getElementByIndex(index) {
+        return this.getElementWrapper().querySelectorAll('.mutt-field')[index]
     }
 
     /**
@@ -284,6 +296,10 @@ export class Widget {
     */
     getElementLabel() {
         return this.getElementWrapper().querySelector('.mutt-label')
+    }
+
+    getElementLabelByIndex(index) {
+        return this.getElementWrapper().querySelectorAll('.mutt-label')[index]
     }
 
     /**

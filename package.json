@@ -30,6 +30,7 @@
     "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "function.name-polyfill": "^1.0.5"
   },
   "devDependencies": {

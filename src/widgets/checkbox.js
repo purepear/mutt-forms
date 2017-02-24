@@ -117,67 +117,159 @@ export class CheckboxList extends CheckboxInput{
     constructor(field, type, id, name, label, attribs, options, value) {
         super(field, type, id, name, label, attribs, options, value)
         this.choices = []
+        this._rendered = false
+        if(!this.value){
+            this.value = []
+        }
     }
 
-// TODO: RenderField for normal HTML DOM Stuff
-    getValue() {
-        if(!this._rendered) {
-            return this.value
+    renderField() {
+
+        let list = document.createElement('ul')
+        list.setAttribute('id', this.getFieldId())
+
+        for(let choice in this.choices){
+            let listItem = document.createElement('li')
+            let checkbox = document.createElement('input')
+            let label = document.createElement('label')
+
+            checkbox.setAttribute('type', 'checkbox')
+            checkbox.setAttribute('name', this.name)
+            checkbox.setAttribute('class', this.getFieldClass())
+            checkbox.setAttribute('data-index', choice)
+
+            checkbox.setAttribute('id', this.id + choice)
+            label.setAttribute('for', this.id + choice)
+
+            checkbox.onchange = () => {
+                this.setValueByIndex(!checkbox.hasAttribute('checked'), checkbox.getAttribute('data-index'))
+            }
+
+            if(this.value[choice]) {
+                checkbox.setAttribute('checked', 'checked')
+            }
+
+            for(let attrib in this.attribs) {
+                checkbox.setAttribute(attrib, this.attribs[attrib])
+            }
+
+            listItem.appendChild(checkbox)
+            listItem.appendChild(label)
+            list.appendChild(listItem)
         }
 
-        let element = this.getElement()
+        this._rendered = true
+
+        return list
+    }
+
+    getValueByIndex(index) {
+
+        if(!this._rendered){
+            return this.value[index]
+        }
+
+        let element = this.getElementByIndex(index)
 
         if(!element) {
             throw new Error('Unable to get element!')
         }
 
-        this.value = element.value
+        if(element.hasAttribute('checked')){
+            this.value = true
+        } else {
+            this.value = false
+        }
 
         return this.value
     }
 
-    setValue(value) {
+    getValue(){
 
-        // This needs to get the element from
-        this.value = value
+        if(!this._rendered){
+            return this.value
+        }
 
-        if(!this._rendered) {
+        let elements = this.getAllElements()
+
+        if(!elements) {
+            throw new Error('Unable to get elements!')
+        }
+
+        for(let index in Array.from(elements)) {
+            if(elements[index].hasAttribute('checked')){
+                this.value[index] = true
+            } else {
+                this.value[index] = false
+            }
+        }
+
+        return this.value
+    }
+
+    //{string, int}
+    setValueByIndex(value, index) {
+
+        if(!this._rendered){
+            this.value[index] = value
             return
         }
 
-        let element = this.getElement()
-
+        this.value[index] = value
+        let element = this.getElementByIndex(index)
         if(element) {
-            let label = this.getElementLabel()
-
-            if(this.value) {
+            if(this.value[index]) {
                 element.setAttribute('checked', 'checked')
-
-                if(label) {
-                    label.classList.add('mutt-field-checkbox-checked')
-                }
             } else {
                 element.removeAttribute('checked')
-
-                if(label) {
-                    label.classList.remove('mutt-field-checkbox-checked')
-                }
             }
         }
     }
 
-    /**
-     *
-     * @params {array}
-     */
+    // {array}
+    setValue(value){
+
+        if(!this._rendered){
+            this.value = value
+            return
+        }
+
+        this.value = value
+        let elements = this.getAllElements()
+
+        if(value.length == elements.length){
+            if(elements){
+                elements[0].setAttribute('checked', 'checked')
+
+                for(let index in Array.from(elements)) {
+                    if(this.value[index]){
+                        elements[parseInt(index)].setAttribute('checked', 'checked')
+                    } else {
+                        elements[parseInt(index)].removeAttribute('checked')
+                    }
+                }
+            }
+        } else {
+            new Error('Array Length does not match number of Elements in CheckboxList')
+        }
+
+    }
+
     setChoices(choices) {
+        for(let index in choices){
+            if(typeof this.value[index] === 'undefined'){
+                console.log('HERE')
+                this.value[index] = false
+            }
+        }
+
         this.choices = choices
     }
 
-    /**
-     * Get the choices used by the widget
-     * @returns {array} choice pair array
-     */
+    getFieldId() {
+        return `${this.id}-checkbox`
+    }
+
     getChoices() {
         return this.choices
     }

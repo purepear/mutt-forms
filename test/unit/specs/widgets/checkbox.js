@@ -7,8 +7,9 @@
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
 import MuttConfig from '../../../../src/config'
-import {Widget} from '../../../../src/widgets/core'
 import {BooleanField} from '../../../../src/fields/boolean'
+import {MultipleChoiceField} from '../../../../src/fields/choice'
+import {CheckboxList} from '../../../../src/widgets/checkbox'
 import {CheckboxInput} from '../../../../src/widgets/checkbox'
 
 describe('CheckboxInputWidget', function() {
@@ -81,4 +82,111 @@ describe('CheckboxInputWidget', function() {
             expect(element.hasAttribute('checked')).to.equal(false)
         })
     })
+})
+
+describe('CheckboxListWidget', function() {
+    var TestField, TestWidget
+
+    beforeEach('create an CheckboxInput instance', function() {
+        jsdom()
+
+        TestField = new MultipleChoiceField({
+            config: new MuttConfig(),
+            id: 'test-multiple-choice',
+            name: 'TestChoice',
+            label: 'Test Boolean Field'
+        })
+
+        TestWidget = new CheckboxList(
+            TestField,
+            'checkboxlist',
+            'test-checkboxlist-widget',
+            'TestCheckboxListWidget',
+            'Test CheckboxList Widget'
+        )
+    })
+
+    describe('widget renders & clicking checkbox returns array', function(){
+        it('renders ok', function() {
+            TestWidget.setChoices(['test1', 'test2', 'test3'])
+            let node = TestWidget.render()
+            document.querySelector('body').appendChild(node)
+
+            expect(document.querySelector('#test-checkboxlist-widget-checkbox')).to.not.equal(null)
+            expect(document.querySelectorAll('#test-checkboxlist-widget-checkbox .mutt-field-checkbox').length).to.equal(3)
+
+            document.querySelector('#test-checkboxlist-widget-checkbox .mutt-field-checkbox').click()
+            document.querySelectorAll('#test-checkboxlist-widget-checkbox .mutt-field-checkbox')[1].click()
+
+            expect(TestWidget.getValue()).to.deep.equal([true, true, false])
+            console.log(document.querySelector('body').innerHTML)
+        })
+    })
+
+    describe('set & get value via js', function(){
+
+        it('sets & gets value', function(){
+
+            var myNode = document.querySelector('body');
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+
+            TestWidget.setChoices(['test1', 'test2', 'test3'])
+            let node = TestWidget.render()
+            document.querySelector('body').appendChild(node)
+
+
+            TestWidget.setValueByIndex(true, 2)
+            expect(TestWidget.getValueByIndex(2)).to.equal(true)
+        })
+    })
+
+    describe('set & get all values via js', function(){
+        it('sets & gets all values', function(){
+
+            var myNode = document.querySelector('body');
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+
+            TestWidget.setChoices(['test1', 'test2', 'test3'])
+            let node = TestWidget.render()
+            document.querySelector('body').appendChild(node)
+
+            TestWidget.setValue([false, true, false])
+            expect(TestWidget.getValue()).to.deep.equal([false, true, false])
+        })
+    })
+
+    describe('set and get values without rendering', function(){
+        it('sets and gets values without rendering', function(){
+            var myNode = document.querySelector('body');
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+
+            TestWidget.setChoices(['test1', 'test2', 'test3'])
+            TestWidget.setValue([false, true, false])
+            expect(TestWidget.getValue()).to.deep.equal([false, true, false])
+        })
+    })
+
+    describe('set and get values by index without rendering', function(){
+        it('sets and gets values by index without rendering', function(){
+            var myNode = document.querySelector('body');
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+
+            TestWidget.setChoices(['test1', 'test2', 'test3'])
+            TestWidget.setValueByIndex(true,2)
+
+
+            expect(TestWidget.getValueByIndex(0)).to.equal(false)
+            expect(TestWidget.getValueByIndex(1)).to.equal(false)
+            expect(TestWidget.getValueByIndex(2)).to.equal(true)
+        })
+    })
+
 })
