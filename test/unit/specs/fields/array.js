@@ -8,7 +8,7 @@ import {assert, expect} from 'chai'
 import jsdom from 'mocha-jsdom'
 import MuttConfig from '../../../../src/config'
 import {ArrayField} from '../../../../src/fields/array'
-import {TextField} from '../../../../src/fields/text'
+import {StringField} from '../../../../src/fields/text'
 import {ArrayInput} from '../../../../src/widgets/array'
 
 describe('ArrayField', function() {
@@ -29,7 +29,27 @@ describe('ArrayField', function() {
         }
 
         TestArrayField = new ArrayField(FieldSpec)
-    })    
+    })
+
+    describe('#constructor()', function() {
+        it('should return a valid set of slots', function() {
+            let spec = {
+                config: new MuttConfig(),
+                type: 'array',
+                name: 'TestArray',
+                items: {
+                    type: 'string',
+                    title: 'Testing'
+                }
+            }
+
+            let TestArrayConstruct = new ArrayField(spec)
+
+            expect(TestArrayConstruct.slots.length).to.equal(1)
+            expect(TestArrayConstruct.slots[0].constructor).to.equal(StringField)
+            expect(TestArrayConstruct.slots[0].label).to.equal('Testing')
+        })
+    })
 
     describe('#addSlot()', function() {
         it('should add a new slot to the array field', function() {
