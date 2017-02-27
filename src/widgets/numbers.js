@@ -21,7 +21,7 @@ export class NumberInput extends Widget {
         textInput.setAttribute('type', 'number')
         textInput.setAttribute('inputmode', 'numeric')
         textInput.setAttribute('class', this.getFieldClass())
-        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('value', (this.value !== null) ? this.value : '')
 
         // iOS doesn't fire the numerical keyboard for an type="number"
         // by default, adding the pattern forces the numerical keyboard
@@ -56,7 +56,7 @@ export class CurrencyInput extends Widget {
         textInput.setAttribute('type', 'number')
         textInput.setAttribute('inputmode', 'numeric')
         textInput.setAttribute('class', this.getFieldClass())
-        textInput.setAttribute('value', (this.value) ? this.value : '')
+        textInput.setAttribute('value', (this.value !== null) ? this.value : '')
 
         // See note for NumberInput....
         textInput.setAttribute('pattern', '[0-9]*')

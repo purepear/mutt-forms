@@ -61,11 +61,11 @@ export class CheckboxInput extends Widget {
     }
 
     /**
-     * Set the value of an element on the stage. This can be a true
-     * of false value. Additionally this will also notify the label
-     * as the label is often used as a styling proxy.
-     * @param {boolean} value - turn the checkbox on/off
-     */
+    * Set the value of an element on the stage. This can be a true
+    * of false value. Additionally this will also notify the label
+    * as the label is often used as a styling proxy.
+    * @param {boolean} value - turn the checkbox on/off
+    */
     setValue(value) {
         this.value = value
 
@@ -95,14 +95,14 @@ export class CheckboxInput extends Widget {
     }
 
     /**
-     * Get the class name for the widget element
-     * @returns {string} the class to use for the field element
-     */
+    * Get the class name for the widget element
+    * @returns {string} the class to use for the field element
+    */
     getFieldClass() { return 'mutt-field mutt-field-checkbox' }
 
     /**
-     * Get the checkbox ID
-     */
+    * Get the checkbox ID
+    */
     getFieldId() {
         return `${this.id}-checkbox`
     }
@@ -214,7 +214,7 @@ export class CheckboxList extends CheckboxInput{
         return this.value
     }
 
-    //{string, int}
+    // {string, int}
     setValueByIndex(value, index) {
 
         if(!this._rendered){

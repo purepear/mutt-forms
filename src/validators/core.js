@@ -83,11 +83,11 @@ export class LengthValidator extends Validator {
         this.max = max
 
         if(!this.messages.hasOwnProperty('minLength')) {
-            this.messages.minLength = `Length must be at least "${this.min}" characters`
+            this.messages.minLength = `Length must be at least ${this.min} characters`
         }
 
         if(!this.messages.hasOwnProperty('maxLength')) {
-            this.messages.maxLength = `Length must be no more than "${this.max}" characters`
+            this.messages.maxLength = `Length must be no more than ${this.max} characters`
         }
     }
 

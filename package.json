@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "0.0.17",
+  "version": "0.0.24",
   "author": {
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
@@ -30,8 +30,12 @@
     "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
   "dependencies": {
+<<<<<<< HEAD
     "babel-polyfill": "^6.23.0",
     "function.name-polyfill": "^1.0.5"
+=======
+    "babel-polyfill": "^6.22.0"
+>>>>>>> development
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
@@ -61,7 +65,7 @@
   "scripts": {
     "build": "webpack",
     "e2e": "",
-    "unit": "./node_modules/mocha/bin/mocha --require babel-register --require babel-polyfill --require test/unit/helper.js --recursive test/unit/specs; exit 0",
+    "unit": "./node_modules/mocha/bin/mocha --require babel-register --require test/unit/helper.js --recursive test/unit/specs; exit 0",
     "test": "npm run unit",
     "lint": "eslint --ext .js src; exit 0",
     "docs": "./node_modules/documentation/bin/documentation.js build -g -f html -o docs/ --name='Mutt Forms' --project-version 0.0.1 src/*.js"
