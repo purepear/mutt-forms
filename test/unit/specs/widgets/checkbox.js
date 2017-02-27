@@ -9,8 +9,7 @@ import jsdom from 'mocha-jsdom'
 import MuttConfig from '../../../../src/config'
 import {BooleanField} from '../../../../src/fields/boolean'
 import {MultipleChoiceField} from '../../../../src/fields/choice'
-import {CheckboxList} from '../../../../src/widgets/checkbox'
-import {CheckboxInput} from '../../../../src/widgets/checkbox'
+import {CheckboxList, CheckboxInput} from '../../../../src/widgets/checkbox'
 
 describe('CheckboxInputWidget', function() {
     var TestField, TestWidget
@@ -180,8 +179,7 @@ describe('CheckboxListWidget', function() {
             }
 
             TestWidget.setChoices(['test1', 'test2', 'test3'])
-            TestWidget.setValueByIndex(true,2)
-
+            TestWidget.setValueByIndex(true, 2)
 
             expect(TestWidget.getValueByIndex(0)).to.equal(false)
             expect(TestWidget.getValueByIndex(1)).to.equal(false)

@@ -121,6 +121,7 @@ export class CheckboxList extends CheckboxInput{
         if(!this.value){
             this.value = []
         }
+        this.options = options
     }
 
     renderField() {
@@ -140,6 +141,12 @@ export class CheckboxList extends CheckboxInput{
 
             checkbox.setAttribute('id', this.id + choice)
             label.setAttribute('for', this.id + choice)
+
+            if(this.options['choices']){
+                if(this.options['choices'][choice][1]){
+                    label.textContent = this.options['choices'][choice][1]
+                }
+            }
 
             checkbox.onchange = () => {
                 this.setValueByIndex(!checkbox.hasAttribute('checked'), checkbox.getAttribute('data-index'))
@@ -258,7 +265,6 @@ export class CheckboxList extends CheckboxInput{
     setChoices(choices) {
         for(let index in choices){
             if(typeof this.value[index] === 'undefined'){
-                console.log('HERE')
                 this.value[index] = false
             }
         }
