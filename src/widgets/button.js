@@ -1,5 +1,5 @@
 /**
- * @file Text input widget interface
+ * @file Button widget interface
  */
 
 'use strict'
@@ -14,12 +14,11 @@ export class Button extends Widget {
 
     /**
      * Render the button field
-     * @returns {HTMLElement} render the input widget
+     * @returns {HTMLElement} render the button widget
      */
     renderField() {
         let button = document.createElement('button')
         button.setAttribute('type', 'button')
-        button.setAttribute('value', 'false')
         button.setAttribute('class', this.getFieldClass())
 
         for(let attrib in this.attribs) {

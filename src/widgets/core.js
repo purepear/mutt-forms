@@ -270,20 +270,8 @@ export class Widget {
         return this.getElementWrapper().querySelector('.mutt-field')
     }
 
-    getAllElements() {
-        return this.getElementWrapper().querySelectorAll('.mutt-field')
-    }
-
     /**
-     * Get a handle for the element on the stage
-     * @return {HTMLElement} the element on the stage
-     */
-    getElementByIndex(index) {
-        return this.getElementWrapper().querySelectorAll('.mutt-field')[index]
-    }
-
-    /**
-    * Get a handle for the elemnet error informantion
+    * Get a handle for the element error information
     * @return {HTMLElement} the error element on the stage
     */
     getElementError() {
@@ -296,10 +284,6 @@ export class Widget {
     */
     getElementLabel() {
         return this.getElementWrapper().querySelector('.mutt-label')
-    }
-
-    getElementLabelByIndex(index) {
-        return this.getElementWrapper().querySelectorAll('.mutt-label')[index]
     }
 
     /**

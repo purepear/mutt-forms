@@ -28,7 +28,6 @@ export default class MuttConfig {
             'array': fields.ArrayField,
             'boolean': fields.BooleanField,
             'enum': fields.ChoiceField,
-            'multichoice': fields.MultipleChoiceField,
             'integer': fields.IntegerField,
             'object': fields.ObjectField,
             'string': fields.StringField,

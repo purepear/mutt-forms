@@ -12,11 +12,11 @@ import {Widget} from './core'
 */
 export class CheckboxInput extends Widget {
 
-    /**
-     * Render the text input field
-     * @returns {HTMLElement} returns the rendered HTML checkbox
-     * input field
-     */
+    /*
+    * Render the text input field
+    * @returns {HTMLElement} returns the rendered HTML checkbox
+    * input field
+    */
     renderField() {
         let checkbox = document.createElement('input')
         checkbox.setAttribute('name', this.name)
@@ -109,50 +109,48 @@ export class CheckboxInput extends Widget {
 }
 
 /**
- * CheckboxList
+ * CheckboxList - A list of checkboxes
  * @class
  */
-export class CheckboxList extends CheckboxInput{
+export class CheckboxList extends CheckboxInput {
 
     constructor(field, type, id, name, label, attribs, options, value) {
         super(field, type, id, name, label, attribs, options, value)
-        this.choices = []
-        this._rendered = false
-        if(!this.value){
+        if(!this.value) {
             this.value = []
         }
-        this.options = options
     }
 
+    /**
+     * Render the list of checkboxes
+     * @returns {HTMLElement} returns the rendered HTML checkbox list
+     */
     renderField() {
-
         let list = document.createElement('ul')
         list.setAttribute('id', this.getFieldId())
 
         for(let choice in this.choices){
             let listItem = document.createElement('li')
             let checkbox = document.createElement('input')
-            let label = document.createElement('label')
 
             checkbox.setAttribute('type', 'checkbox')
             checkbox.setAttribute('name', this.name)
             checkbox.setAttribute('class', this.getFieldClass())
             checkbox.setAttribute('data-index', choice)
-
             checkbox.setAttribute('id', this.id + choice)
-            label.setAttribute('for', this.id + choice)
 
-            if(this.options['choices']){
-                if(this.options['choices'][choice][1]){
-                    label.textContent = this.options['choices'][choice][1]
-                }
+            if(this.options.hasOwnProperty('choices') && this.options['choices'][choice][1]) {
+                let label = document.createElement('label')
+                label.setAttribute('for', this.id + choice)
+                label.textContent = this.options['choices'][choice][1]
+                listItem.appendChild(label)
             }
 
             checkbox.onchange = () => {
                 this.setValueByIndex(!checkbox.hasAttribute('checked'), checkbox.getAttribute('data-index'))
             }
 
-            if(this.value[choice]) {
+            if(this.value && this.value[choice]) {
                 checkbox.setAttribute('checked', 'checked')
             }
 
@@ -161,7 +159,6 @@ export class CheckboxList extends CheckboxInput{
             }
 
             listItem.appendChild(checkbox)
-            listItem.appendChild(label)
             list.appendChild(listItem)
         }
 
@@ -170,9 +167,13 @@ export class CheckboxList extends CheckboxInput{
         return list
     }
 
+    /**
+     * Get a handle for the element on the stage
+     * @params [integer] index of element list to search for
+     * @return {HTMLElement} the element on the stage
+     */
     getValueByIndex(index) {
-
-        if(!this._rendered){
+        if(!this._rendered) {
             return this.value[index]
         }
 
@@ -182,7 +183,7 @@ export class CheckboxList extends CheckboxInput{
             throw new Error('Unable to get element!')
         }
 
-        if(element.hasAttribute('checked')){
+        if(element.hasAttribute('checked')) {
             this.value = true
         } else {
             this.value = false
@@ -191,9 +192,13 @@ export class CheckboxList extends CheckboxInput{
         return this.value
     }
 
-    getValue(){
-
-        if(!this._rendered){
+    /**
+     * Get the value of an element on the stage. This is the raw value
+     * as specified in the HTML.
+     * @returns {boolean|*|string} value of the element on the stage
+     */
+    getValue() {
+        if(!this._rendered) {
             return this.value
         }
 
@@ -204,7 +209,7 @@ export class CheckboxList extends CheckboxInput{
         }
 
         for(let index in Array.from(elements)) {
-            if(elements[index].hasAttribute('checked')){
+            if(elements[index].hasAttribute('checked')) {
                 this.value[index] = true
             } else {
                 this.value[index] = false
@@ -214,15 +219,16 @@ export class CheckboxList extends CheckboxInput{
         return this.value
     }
 
-    //{string, int}
+    /**
+     * Set the value of an element on the stage.
+     * @param value [string|integer|boolean]
+     * @param index [integer]
+     */
     setValueByIndex(value, index) {
-
-        if(!this._rendered){
-            this.value[index] = value
+        this.value[index] = value
+        if(!this._rendered) {
             return
         }
-
-        this.value[index] = value
         let element = this.getElementByIndex(index)
         if(element) {
             if(this.value[index]) {
@@ -233,38 +239,38 @@ export class CheckboxList extends CheckboxInput{
         }
     }
 
-    // {array}
-    setValue(value){
-
-        if(!this._rendered){
-            this.value = value
+    /**
+     * Set the value of all of the elements on the stage
+     * @param value
+     */
+    setValue(value) {
+        this.value = value
+        if(!this._rendered) {
             return
         }
-
-        this.value = value
         let elements = this.getAllElements()
+        if(value.length === elements.length) {
+            elements[0].setAttribute('checked', 'checked')
 
-        if(value.length == elements.length){
-            if(elements){
-                elements[0].setAttribute('checked', 'checked')
-
-                for(let index in Array.from(elements)) {
-                    if(this.value[index]){
-                        elements[parseInt(index)].setAttribute('checked', 'checked')
-                    } else {
-                        elements[parseInt(index)].removeAttribute('checked')
-                    }
+            for(let index in Array.from(elements)) {
+                if(this.value[index]) {
+                    elements[parseInt(index)].setAttribute('checked', 'checked')
+                } else {
+                    elements[parseInt(index)].removeAttribute('checked')
                 }
             }
         } else {
-            new Error('Array Length does not match number of Elements in CheckboxList')
+            throw new Error('Array Length does not match number of Elements in CheckboxList')
         }
-
     }
 
+    /**
+     * set the choices as class variables
+     * @param choices
+     */
     setChoices(choices) {
-        for(let index in choices){
-            if(typeof this.value[index] === 'undefined'){
+        for(let index in choices) {
+            if(this.value && typeof this.value[index] === 'undefined') {
                 this.value[index] = false
             }
         }
@@ -272,11 +278,36 @@ export class CheckboxList extends CheckboxInput{
         this.choices = choices
     }
 
+    /**
+     * returns the field ID
+     * @returns {string}
+     */
     getFieldId() {
         return `${this.id}-checkbox`
     }
 
+    /**
+     * Gets all of this classes choices
+     * @returns {*}
+     */
     getChoices() {
         return this.choices
+    }
+
+    /**
+     * Gets all relevant field elements on the stage
+     * @returns {NodeList}
+     */
+    getAllElements() {
+        return this.getElementWrapper().querySelectorAll('.mutt-field')
+    }
+
+    /**
+     * Gets specific field by index from relevant field elements on stage
+     * @param index
+     * @returns {*}
+     */
+    getElementByIndex(index) {
+        return this.getElementWrapper().querySelectorAll('.mutt-field')[index]
     }
 }

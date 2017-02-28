@@ -8,7 +8,7 @@ import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
 import MuttConfig from '../../../../src/config'
 import {BooleanField} from '../../../../src/fields/boolean'
-import {MultipleChoiceField} from '../../../../src/fields/choice'
+import {ChoiceField} from '../../../../src/fields/choice'
 import {CheckboxList, CheckboxInput} from '../../../../src/widgets/checkbox'
 
 describe('CheckboxInputWidget', function() {
@@ -83,17 +83,20 @@ describe('CheckboxInputWidget', function() {
     })
 })
 
-describe('CheckboxListWidget', function() {
-    var TestField, TestWidget
 
-    beforeEach('create an CheckboxInput instance', function() {
+describe('CheckboxListWidget', function(){
+    var TestField, TestWidget
+    beforeEach('create mock objects', function(){
         jsdom()
 
-        TestField = new MultipleChoiceField({
+        TestField = new ChoiceField({
             config: new MuttConfig(),
             id: 'test-multiple-choice',
             name: 'TestChoice',
-            label: 'Test Boolean Field'
+            label: 'Test Choice Field',
+            options: {
+                'widget': 'checkboxlist'
+            }
         })
 
         TestWidget = new CheckboxList(
@@ -116,14 +119,11 @@ describe('CheckboxListWidget', function() {
 
             document.querySelector('#test-checkboxlist-widget-checkbox .mutt-field-checkbox').click()
             document.querySelectorAll('#test-checkboxlist-widget-checkbox .mutt-field-checkbox')[1].click()
-
             expect(TestWidget.getValue()).to.deep.equal([true, true, false])
-            console.log(document.querySelector('body').innerHTML)
         })
     })
 
     describe('set & get value via js', function(){
-
         it('sets & gets value', function(){
 
             var myNode = document.querySelector('body');
@@ -186,5 +186,4 @@ describe('CheckboxListWidget', function() {
             expect(TestWidget.getValueByIndex(2)).to.equal(true)
         })
     })
-
 })

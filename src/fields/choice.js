@@ -41,50 +41,15 @@ export class ChoiceField extends Field {
 
         this.widget.setChoices(this.choices)
     }
-
     /**
     * Get the widget used to display the field
     * @returns {SelectInput} widget to display
     */
     getWidget() {
-        return SelectInput
-    }
-}
-
-export class MultipleChoiceField extends ChoiceField {
-
-    constructor({config, id, name, label = null, initial = null, widget = null,
-        validators = [], attribs = {}, description = null, options = {},
-        order = null, parent = null, choices = []}) {
-        super({
-            config,
-            id,
-            name,
-            label,
-            initial,
-            widget,
-            validators,
-            attribs,
-            description,
-            options,
-            order,
-            parent
-        })
-
-        this.choices = choices
-
-        if(options.hasOwnProperty('choices')) {
-            this.choices = options.choices
+        if(this.options.hasOwnProperty('widget') && this.options.widget === 'checkboxlist') {
+            return CheckboxList
+        } else {
+            return SelectInput
         }
-
-        this.widget.setChoices(this.choices)
-    }
-
-    /**
-     * Get the widget used to display the field
-     * @returns {SelectInput} widget to display
-     */
-    getWidget() {
-        return CheckboxList
     }
 }

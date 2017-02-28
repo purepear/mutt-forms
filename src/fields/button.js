@@ -1,5 +1,5 @@
 /**
- * @file Boolean Field
+ * @file Button Field
  */
 
 'use strict'
@@ -8,7 +8,7 @@ import {Field} from './core'
 import {Button} from '../widgets/button'
 
 /**
- * Boolean field, used to capture true/false inputs
+ * Button field, used to add custom actions to form elements
  * @class
  */
 export class ButtonField extends Field {

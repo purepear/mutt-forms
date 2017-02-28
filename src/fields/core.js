@@ -125,7 +125,7 @@ export class Field {
     set errors(error) {
         this._errors.push(error)
     }
-    
+
     /**
     * Render the form field using it's widget interface
     * @returns {DocumentFragment} rendered HTML widget
@@ -269,7 +269,7 @@ export class Field {
     /**
     *
     */
-    static new(config, id, name, schema, options = {}, 
+    static new(config, id, name, schema, options = {},
         parent = null, required = false, dependancies = null) {
         let fieldSpec = {
             config: config,
@@ -303,12 +303,7 @@ export class Field {
             }
 
             fieldSpec.choices = choices
-
-            if(schema.type === 'multichoice'){
-                FieldKlass = config.getField('multichoice')
-            } else {
-                FieldKlass = config.getField('enum')
-            }
+            FieldKlass = config.getField('enum')
         }
 
         // This is awkward as we are trying to support the
@@ -338,7 +333,7 @@ export class Field {
         if(schema.properties) {
             fieldSpec.properties = schema.properties
         }
-        
+
         // Build validator list
         if(required || (options.hasOwnProperty('required') && options.required)) {
             if(schema.type === 'boolean') {
