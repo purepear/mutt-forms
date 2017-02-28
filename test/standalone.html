@@ -16,11 +16,22 @@
                 },
                 number: {
                     type: 'integer'
+                },
+                truefalse: {
+                    type: 'boolean'
                 }
             }
         };
 
         var options = {}
+
+        var options = {
+            fields: {
+                truefalse: {
+                    label: "True or False?"
+                }
+            }
+        };
 
         var form = new Mutt(
             document.getElementById('form'),
