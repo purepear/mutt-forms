@@ -30,7 +30,8 @@
     "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
   "dependencies": {
-    "babel-polyfill": "^6.22.0"
+    "babel-polyfill": "^6.23.0",
+    "function.name-polyfill": "^1.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
@@ -47,6 +48,7 @@
     "eslint-friendly-formatter": "^2.0.5",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-html": "^1.3.0",
+    "eslint-plugin-jasmine": "^2.2.0",
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-standard": "^2.0.1",
     "jsdom": "^9.8.3",

@@ -6,6 +6,7 @@
 
 import {Field} from './core'
 import {SelectInput} from '../widgets/select'
+import {CheckboxList} from '../widgets/checkbox'
 
 /**
 * Choice Field, used as a base to capture inputs from
@@ -40,12 +41,15 @@ export class ChoiceField extends Field {
 
         this.widget.setChoices(this.choices)
     }
-
     /**
     * Get the widget used to display the field
     * @returns {SelectInput} widget to display
     */
     getWidget() {
-        return SelectInput
+        if(this.options.hasOwnProperty('widget') && this.options.widget === 'checkboxlist') {
+            return CheckboxList
+        } else {
+            return SelectInput
+        }
     }
 }
