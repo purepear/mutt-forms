@@ -26,6 +26,7 @@ export class Widget {
     */
     constructor(field, type, id, name, label, 
         attribs = {}, options = {}, initial = null) {
+
         this._field = field
         this._rendered = false
         this.type = type
@@ -258,7 +259,6 @@ export class Widget {
         if(!id) {
             id = this.id
         }
-
         return document.querySelector(`#${id}`)
     }
 
@@ -271,7 +271,7 @@ export class Widget {
     }
 
     /**
-    * Get a handle for the elemnet error informantion
+    * Get a handle for the element error information
     * @return {HTMLElement} the error element on the stage
     */
     getElementError() {

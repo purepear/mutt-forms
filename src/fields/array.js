@@ -44,7 +44,6 @@ export class ArrayField extends Field {
 
         // We store the array fields in the slot
         this.slots = []
-
         for(let i in Array.from(Array(this.minItems).keys())) {
             this.addSlot(false)   
         }
