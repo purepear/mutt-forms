@@ -51,6 +51,7 @@ export class Widget {
         let wrapper = this.renderWrapper()
         let label = this.renderLabel()
         let field = this.renderField()
+        let help = this.renderHelp()
         let errors = this.renderErrors()
 
         if(label) {
@@ -58,6 +59,10 @@ export class Widget {
         }
 
         wrapper.appendChild(field)
+
+        if(help) {
+            wrapper.appendChild(help)
+        }
 
         if(errors) {
             wrapper.appendChild(errors)
@@ -193,6 +198,22 @@ export class Widget {
             label.setAttribute('class', 'mutt-label')
             label.textContent = this.label
             return label
+        }
+
+        return null
+    }
+
+    /**
+    * Render the help field
+    * @returns {HTMLElement} returns a HTML span element or null if no
+    * help text is configured for the widget
+    */
+    renderHelp() {
+        if(this.options.hasOwnProperty('help') && this.options.help) {
+            let help = document.createElement('span')
+            help.setAttribute('class', 'mutt-help')
+            help.textContent = this.options.help
+            return help
         }
 
         return null
