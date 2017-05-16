@@ -5,7 +5,7 @@
 'use strict'
 
 import {Field} from './core'
-import {Button} from '../widgets/button'
+import {ButtonWidget} from '../widgets/button'
 
 /**
  * Button field, used to add custom actions to form elements
@@ -17,6 +17,6 @@ export class ButtonField extends Field {
      * @returns {Widget}
      */
     getWidget() {
-        return Button
+        return ButtonWidget
     }
 }

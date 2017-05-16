@@ -10,7 +10,7 @@ import {Widget} from './core'
  * Button - Standard HTML Button
  * @class
  */
-export class Button extends Widget {
+export class ButtonWidget extends Widget {
 
     /**
      * Render the button field

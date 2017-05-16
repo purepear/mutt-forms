@@ -3,7 +3,7 @@
 export {Widget} from './core'
 
 export {ArrayInput} from './array'
-export {Button} from './button'
+export {ButtonWidget} from './button'
 export {CheckboxInput} from './checkbox'
 export {CheckboxList} from './checkbox'
 export {BaseChoiceWidget} from './choice'
