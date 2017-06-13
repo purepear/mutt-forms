@@ -27,21 +27,22 @@ export default class Mutt {
     /**
     * Initialisation of a Mutt form
     * @constructor
-    * @param {HTMLElement} container Containing element for the Mutt Form
     * @param {object} schema JSON Schema containing Form & Field Configuration
     * @param {object} [options={}] form configuration options
     * @param {function} [callback=null] callback function for form submission
     * @param {boolean} [debug=false] debugging flag
     */
-    constructor(container, schema, options = {}, callback = null,
-        debug = false, plugins = []) {
-        if(container === null) {
-            throw new Error(
-                'You must pass a valid container to create a Mutt form!'
-            )
+    constructor(schema, options = {}, callback = null, debug = false,
+        plugins = []) {
+
+        this.schema = schema
+        this.options = {}
+
+        if(options && options.hasOwnProperty('form')) {
+            this.options = options.form
         }
 
-        this.container = container
+        this.mount = false
         this.multipart = false
         this.callback = callback
         this.id = null
@@ -50,17 +51,12 @@ export default class Mutt {
 
         this.form = null
         this.fieldsets = []
-        this.options = {}
         this.buttons = {submit: null}
 
         this.config = new MuttConfig()
 
         for(let plugin of plugins) {
             this.config.use(plugin)
-        }
-
-        if(options && options.hasOwnProperty('form')) {
-            this.options = options.form
         }
 
         // Build the form from the config
@@ -113,8 +109,8 @@ export default class Mutt {
             }
         } else {
             let fieldset = Fieldset.new(
-                this.config, 
-                schema, 
+                this.config,
+                schema,
                 options
             )
 
@@ -162,10 +158,14 @@ export default class Mutt {
 
     /**
     * Render the form
+    * @param {HTMLElement} mount Containing element for the Mutt Form
     * @returns {Promise} a promise to be resolved once rendering
     * is complete
     */
-    render() {
+    render(mount) {
+        // Save the mount point...
+        this.mount = mount
+
         return new Promise((resolve, reject) => {
             let formContainer = document.createDocumentFragment()
             this.form = document.createElement('form')
@@ -247,7 +247,7 @@ export default class Mutt {
 
             // Build the form and render to the viewport
             formContainer.appendChild(this.form)
-            this.container.appendChild(formContainer)
+            this.mount.appendChild(formContainer)
 
             // Form has been renderd to the stage, call
             // the post render hooks
@@ -261,10 +261,16 @@ export default class Mutt {
 
     /**
     * Remove the form from the stage
+    * @returns {bool} Confirmation of destruction
     */
     destroy() {
-        let form = this.container.querySelector('form')
-        this.container.removeChild(form)
+        if(this.mount) {
+            let form = this.mount.querySelector('form')
+            this.mount.removeChild(form)
+            return true
+        }
+
+        return false
     }
 
     /**

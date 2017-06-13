@@ -34,7 +34,6 @@ describe('Mutt', function() {
             ]
 
             let form = new Mutt(
-                document.getElementsByTagName('body')[0],
                 {},
                 {},
                 null,

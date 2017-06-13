@@ -35,7 +35,6 @@
         };
 
         var form = new Mutt(
-            document.getElementById('form'),
             schema,
             options,
             function(data) {
@@ -43,7 +42,7 @@
             }
         );
 
-        form.render()
+        form.render(document.getElementById('form'))
     </script>
 </body>
 </html>
