@@ -1,6 +1,6 @@
 /**
-* @file Registry of config and plugins
-*/
+ * @file Config - Registry of settings
+ */
 
 'use strict'
 
@@ -8,87 +8,116 @@ import * as fields from './fields'
 import * as widgets from './widgets'
 
 /**
-* Internal registry for Mutt fields & widgets. This is used 
-* internally to register default fields & widgets, and can
-* also be used as a hook to install new fields & widgets
-* via plugins.
-* @class
-*/
-export default class MuttConfig {
+ * Internal registry for Mutt fields & widgets. This is used
+ * internally to register default fields & widgets, and can
+ * also be used as a hook to install new fields & widgets
+ * via plugins.
+ * @class
+ */
+class MuttConfig {
 
     /**
-    * Mutt Registry is used a singleton class that contains
-    * configuration information. It's used by the builder
-    * utility to decide field mappings and by the plugins
-    * to extend the core functionality.
-    * @constructor
-    */
+     * MuttConfig is used for configuration information.
+     * It's primarily used by the builder utility to decide
+     * field mappings and by the plugins to extend the core
+     * functionality.
+     * @constructor
+     */
     constructor() {
-        this.fields = {
-            'array': fields.ArrayField,
-            'boolean': fields.BooleanField,
-            'enum': fields.ChoiceField,
-            'integer': fields.IntegerField,
-            'object': fields.ObjectField,
-            'string': fields.StringField,
-            'date': fields.StringField,
-            'datetime': fields.StringField,
-            'button': fields.ButtonField
-        }
-
-        this.widgets = {
-            'array': widgets.ArrayInput,
-            'checkbox': widgets.CheckboxInput,
-            'checkboxlist': widgets.CheckboxList,
-            'date': widgets.DateInput,
-            'dateselect': widgets.DateSelectionInput,
-            'number': widgets.NumberInput,
-            'currency': widgets.CurrencyInput,
-            'object': widgets.ObjectInput,
-            'radio': widgets.RadioInput,
-            'select': widgets.SelectInput,
-            'text': widgets.TextInput,
-            'textarea': widgets.TextAreaInput,
-            'email': widgets.EmailInput,
-            'hidden': widgets.HiddenInput,
-            'password': widgets.PasswordInput,
-            'display': widgets.DisplayWidget,
-            'button': widgets.ButtonWidget
+        this._config = {
+            settings: {
+                debug: false
+            },
+            fields: {
+                array: fields.ArrayField,
+                boolean: fields.BooleanField,
+                enum: fields.ChoiceField,
+                integer: fields.IntegerField,
+                object: fields.ObjectField,
+                string: fields.StringField,
+                date: fields.StringField,
+                datetime: fields.StringField,
+                button: fields.ButtonField
+            },
+            widgets: {
+                array: widgets.ArrayInput,
+                checkbox: widgets.CheckboxInput,
+                checkboxlist: widgets.CheckboxList,
+                date: widgets.DateInput,
+                dateselect: widgets.DateSelectionInput,
+                number: widgets.NumberInput,
+                currency: widgets.CurrencyInput,
+                object: widgets.ObjectInput,
+                radio: widgets.RadioInput,
+                select: widgets.SelectInput,
+                text: widgets.TextInput,
+                textarea: widgets.TextAreaInput,
+                email: widgets.EmailInput,
+                hidden: widgets.HiddenInput,
+                password: widgets.PasswordInput,
+                display: widgets.DisplayWidget,
+                button: widgets.ButtonWidget
+            }
         }
     }
 
     /**
-    * Use a plugin in the registry
-    */
+     * Get a setting by name
+     * @param {string} name Name of setting
+     */
+    getSetting(name) {
+        if(!this._config.settings.hasOwnProperty(name)) {
+            return null
+        }
+
+        return this._config.settings[name]
+    }
+
+    /**
+     * Use a plugin in the registry
+     * @param {object} plugin a plugin to configure, requires install method.
+     */
     use(plugin) {
-        let fields = plugin.availableFields()
+        // Check we can install the plugin
+        if(!plugin.hasOwnProperty('install')) {
+            throw new Error(
+                'Unable to install plugin - missing install!'
+            )
+        }
+
+        let [fields, widgets, settings] = plugin.install()
 
         if(fields) {
             this.registerFields(fields)
         }
 
-        let widgets = plugin.availableWidgets()
-
         if(widgets) {
             this.registerWidgets(widgets)
+        }
+
+        if(settings) {
+            this._config.settings = Object.assign(
+                this._config.settings,
+                settings
+            )
         }
     }
 
     /**
-    * Register a new field type or overwrite an existing field
-    * type with a new field class.
-    * @param {string} type - field type
-    * @param {Field} fieldKlass - field class to be used for type
-    */
+     * Register a new field type or overwrite an existing field
+     * type with a new field class.
+     * @param {string} type - field type
+     * @param {Field} fieldKlass - field class to be used for type
+     */
     registerField(type, fieldKlass) {
-        this.fields[type] = fieldKlass
+        this._config.fields[type] = fieldKlass
     }
 
     /**
-    *
-    * @param {string}
-    * @param {Widget}
-    */
+     * Register a collection of fields
+     * @param {string}
+     * @param {Widget}
+     */
     registerFields(fields) {
         if(fields) {
             for(let fieldType of Object.keys(fields)) {
@@ -98,42 +127,41 @@ export default class MuttConfig {
     }
 
     /**
-    * Check if a field type exists in the registry
-    * @param {string} type - name of field type to check
-    * @returns {bool} returns true if field type exists in registry
-    */
+     * Check if a field type exists in the registry
+     * @param {string} type - name of field type to check
+     * @returns {bool} returns true if field type exists in registry
+     */
     hasField(type) {
-        if(this.fields.hasOwnProperty(type)) {
+        if(this._config.fields.hasOwnProperty(type)) {
             return true
         }
         return false
     }
 
     /**
-    *
-    * @param {string}
-    */
+     * Get a field class
+     * @param {string}
+     */
     getField(type) {
-        if(this.fields.hasOwnProperty(type)) {
-            return this.fields[type]
+        if(this._config.fields.hasOwnProperty(type)) {
+            return this._config.fields[type]
         }
         return null
     }
 
     /**
-    *
-    * @param {string}
-    * @param {Widget}
-    */
+     * Register a widget class with a key
+     * @param {string} name reference for widget
+     * @param {Widget} widgetKlass class of widget to be registered
+     */
     registerWidget(name, widgetKlass) {
-        this.widgets[name] = widgetKlass
+        this._config.widgets[name] = widgetKlass
     }
 
     /**
-    *
-    * @param {string}
-    * @param {Widget}
-    */
+     * Register a collection of widgets - calls registerWidget
+     * @param {array} widgets list of widgets to register
+     */
     registerWidgets(widgets) {
         if(widgets) {
             for(let widgetName of Object.keys(widgets)) {
@@ -143,24 +171,26 @@ export default class MuttConfig {
     }
 
     /**
-    *
-    * @param {string}
-    */
+     * Check if a widget has been registered
+     * @param {string} name name of widget to check
+     */
     hasWidget(name) {
-        if(this.widgets.hasOwnProperty(name)) {
+        if(this._config.widgets.hasOwnProperty(name)) {
             return true
         }
         return false
     }
 
     /**
-    *
-    * @param {string}
-    */
+     * Get a widget class by name
+     * @param {string} name name of widget class to fetch
+     */
     getWidget(name) {
-        if(this.widgets.hasOwnProperty(name)) {
-            return this.widgets[name]
+        if(this._config.widgets.hasOwnProperty(name)) {
+            return this._config.widgets[name]
         }
         return null
     }
 }
+
+export default MuttConfig

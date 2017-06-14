@@ -6,7 +6,6 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {Widget} from '../../../../src/widgets/core'
 import {StringField} from '../../../../src/fields/text'
 import {DateSelectionInput} from '../../../../src/widgets/date'
@@ -14,21 +13,20 @@ import {DateSelectionInput} from '../../../../src/widgets/date'
 describe('DateSelectionInputWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an DateSelectionInputWidget instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an DateSelectionInputWidget instance', function() {
         TestField = new StringField({
-            config: new MuttConfig(),
-            id: 'test-string', 
-            name: 'TestString', 
+            id: 'test-string',
+            name: 'TestString',
             label: 'Test String Field'
         })
 
         TestWidget = new DateSelectionInput(
-            TestField, 
-            'string', 
-            'test-widget', 
-            'TestWidget', 
+            TestField,
+            'string',
+            'test-widget',
+            'TestWidget',
             'Test Widget'
         )
     })
@@ -36,10 +34,10 @@ describe('DateSelectionInputWidget', function() {
     describe('#constructor()', function() {
         it('sets an initial date value', function() {
             let TestInitialWidget = new DateSelectionInput(
-                TestField, 
-                'string', 
-                'test-widget', 
-                'TestWidget', 
+                TestField,
+                'string',
+                'test-widget',
+                'TestWidget',
                 'Test Widget',
                 {}, {},
                 '1990-01-01'
@@ -48,7 +46,7 @@ describe('DateSelectionInputWidget', function() {
             let date = JSON.stringify(new Date(1990, 0, 1))
             expect(JSON.stringify(TestInitialWidget.value)).to.equal(date)
         })
-    })    
+    })
 
     describe('#setDateValue()', function() {
         it('sets a valid date value', function() {
@@ -69,10 +67,10 @@ describe('DateSelectionInputWidget', function() {
     describe('#render()', function() {
         it('renders the correct fields with inital values', function() {
             let TestInitialWidget = new DateSelectionInput(
-                TestField, 
-                'string', 
-                'test-widget', 
-                'TestWidget', 
+                TestField,
+                'string',
+                'test-widget',
+                'TestWidget',
                 'Test Widget',
                 {}, {},
                 '2005-07-05'
@@ -105,10 +103,10 @@ describe('DateSelectionInputWidget', function() {
 
         it('renders the correctly when initial value is none', function() {
             let TestInitialWidget = new DateSelectionInput(
-                TestField, 
-                'string', 
-                'test-widget', 
-                'TestWidget', 
+                TestField,
+                'string',
+                'test-widget',
+                'TestWidget',
                 'Test Widget',
                 {}, {},
                 null

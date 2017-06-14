@@ -6,7 +6,6 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {BooleanField} from '../../../../src/fields/boolean'
 import {ChoiceField} from '../../../../src/fields/choice'
 import {CheckboxList, CheckboxInput} from '../../../../src/widgets/checkbox'
@@ -14,21 +13,20 @@ import {CheckboxList, CheckboxInput} from '../../../../src/widgets/checkbox'
 describe('CheckboxInputWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an CheckboxInput instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an CheckboxInput instance', function() {
         TestField = new BooleanField({
-            config: new MuttConfig(),
-            id: 'test-bool', 
-            name: 'TestBool', 
+            id: 'test-bool',
+            name: 'TestBool',
             label: 'Test Boolean Field'
         })
 
         TestWidget = new CheckboxInput(
-            TestField, 
-            'boolean', 
-            'test-widget', 
-            'TestWidget', 
+            TestField,
+            'boolean',
+            'test-widget',
+            'TestWidget',
             'Test Widget'
         )
     })
@@ -86,11 +84,10 @@ describe('CheckboxInputWidget', function() {
 
 describe('CheckboxListWidget', function(){
     var TestField, TestWidget
-    beforeEach('create mock objects', function(){
-        jsdom()
+    jsdom()
 
+    beforeEach('create mock objects', function(){
         TestField = new ChoiceField({
-            config: new MuttConfig(),
             id: 'test-multiple-choice',
             name: 'TestChoice',
             label: 'Test Choice Field',
@@ -113,12 +110,14 @@ describe('CheckboxListWidget', function(){
             TestWidget.setChoices(['test1', 'test2', 'test3'])
             let node = TestWidget.render()
             document.querySelector('body').appendChild(node)
+            let id = TestWidget.id
 
-            expect(document.querySelector('#test-checkboxlist-widget-checkbox')).to.not.equal(null)
-            expect(document.querySelectorAll('#test-checkboxlist-widget-checkbox .mutt-field-checkbox').length).to.equal(3)
+            expect(document.querySelector(`#${id}`)).to.not.equal(null)
 
-            document.querySelector('#test-checkboxlist-widget-checkbox .mutt-field-checkbox').click()
-            document.querySelectorAll('#test-checkboxlist-widget-checkbox .mutt-field-checkbox')[1].click()
+            let boxes = document.querySelectorAll(`#${id} .mutt-field-checkbox`)
+            expect(boxes.length).to.equal(3)
+            boxes[0].setAttribute('checked', 'true')
+            boxes[1].setAttribute('checked', 'true')
             expect(TestWidget.getValue()).to.deep.equal([true, true, false])
         })
     })

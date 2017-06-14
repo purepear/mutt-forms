@@ -14,11 +14,10 @@ import {IntegerValidator} from '../validators/core'
 */
 export class IntegerField extends Field {
 
-    constructor({form, id, name, label = null, initial = null, widget = null,
+    constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null}) {
         super({
-            form,
             id,
             name,
             label,

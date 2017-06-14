@@ -4,8 +4,6 @@
 
 'use strict'
 
-import {displayReadonlyValue} from './text'
-
 /**
 * Base Widget interface
 * @class
@@ -24,9 +22,8 @@ export class Widget {
     * @param [object] options - optional values to configure the widget
     * @param [string] value - initial value for the widget
     */
-    constructor(field, type, id, name, label, 
+    constructor(field, type, id, name, label,
         attribs = {}, options = {}, initial = null) {
-
         this._field = field
         this._rendered = false
         this.type = type
@@ -107,16 +104,11 @@ export class Widget {
             return false
         }
 
-        let lockedValue = this.getValue()
         let wrapper = this.getElementWrapper()
         let element = this.getElement()
 
         // Clear the existing field...
         wrapper.removeChild(element)
-
-        // Add the display only field
-        // let displayElement = displayReadonlyValue(lockedValue)
-        // wrapper.appendChild(displayElement)
 
         this.locked = true
 

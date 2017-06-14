@@ -17,11 +17,10 @@ export class ArrayField extends Field {
     /**
     *
     */
-    constructor({config, id, name, label = null, initial = null, widget = null,
+    constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null, items = {}, minItems = 1, maxItems = null}) {
         super({
-            config,
             id,
             name,
             label,
@@ -44,8 +43,8 @@ export class ArrayField extends Field {
 
         // We store the array fields in the slot
         this.slots = []
-        for(let i in Array.from(Array(this.minItems).keys())) {
-            this.addSlot(false)   
+        for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
+            this.addSlot(false)
         }
 
         // Store errors as an object
@@ -68,7 +67,6 @@ export class ArrayField extends Field {
         }, this.itemOptions)
 
         let field = this.constructor.new(
-            this.config,
             fieldId,
             fieldName,
             this.itemSchema,
@@ -118,7 +116,7 @@ export class ArrayField extends Field {
             // ??
             slotIndex = parseInt(slotIndex)
 
-            if(updateWidget && slotIndex == index) {
+            if(updateWidget && slotIndex === index) {
                 this.slots[slotIndex].destroy()
             }
         }
@@ -130,7 +128,7 @@ export class ArrayField extends Field {
             let newId = this.getSlotId(position)
             let newName = this.getSlotName(position)
             let slot = this.slots[slotIndex]
-            
+
             slot.updateId(newId, updateWidget)
             slot.updateName(newName, updateWidget)
         }
@@ -174,7 +172,7 @@ export class ArrayField extends Field {
         // sent through, reset the slots and add as needed
         this.slots = []
 
-        for(let index in value) {
+        for(let index in value) { //eslint-disable-line
             this.addSlot(false)
         }
 

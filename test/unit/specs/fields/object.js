@@ -5,7 +5,6 @@
 'use strict'
 
 import {expect} from 'chai'
-import MuttConfig from '../../../../src/config'
 import {ObjectField} from '../../../../src/fields/object'
 import {TextField} from '../../../../src/fields/text'
 import {ObjectInput} from '../../../../src/widgets/object'
@@ -16,9 +15,8 @@ describe('ObjectField', function() {
 
     beforeEach('create an ObjectField instance', function() {
         TestObjectField = new ObjectField({
-            config: new MuttConfig(),
-            id: 'test-object', 
-            name: 'TestObject', 
+            id: 'test-object',
+            name: 'TestObject',
             label: 'Test Object Field',
             properties: {
                 item1: {
@@ -32,7 +30,7 @@ describe('ObjectField', function() {
             },
             required: ['item1']
         })
-    })    
+    })
 
     describe('#constructor()', function() {
         it('return field with children marked as required', function() {
@@ -44,9 +42,8 @@ describe('ObjectField', function() {
 
         it('sets parent on basic child fields', function() {
             let testParent = new ObjectField({
-                config: new MuttConfig(),
-                id: 'test-object', 
-                name: 'TestObject', 
+                id: 'test-object',
+                name: 'TestObject',
                 label: 'Test Object Field',
                 properties: {
                     item1: {
@@ -68,7 +65,7 @@ describe('ObjectField', function() {
                 },
                 required: ['item1']
             })
-            
+
             expect(testParent.getFieldByPath('item1').parent.id).to.equal(testParent.id)
             expect(testParent.getFieldByPath('item2').parent.id).to.equal(testParent.id)
             expect(testParent.getFieldByPath('item3').parent.id).to.equal(testParent.id)

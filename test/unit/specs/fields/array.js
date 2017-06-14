@@ -6,7 +6,6 @@
 
 import {assert, expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {ArrayField} from '../../../../src/fields/array'
 import {StringField} from '../../../../src/fields/text'
 import {ArrayInput} from '../../../../src/widgets/array'
@@ -14,13 +13,12 @@ import {ArrayInput} from '../../../../src/widgets/array'
 describe('ArrayField', function() {
     var FieldSpec, TestArrayField
 
-    beforeEach('create an ArrayField instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an ArrayField instance', function() {
         FieldSpec = {
-            config: new MuttConfig(),
-            id: 'test-array', 
-            name: 'TestArray', 
+            id: 'test-array',
+            name: 'TestArray',
             label: 'Test Array Field',
             items: {
                 type: 'string',
@@ -34,7 +32,6 @@ describe('ArrayField', function() {
     describe('#constructor()', function() {
         it('should return a valid set of slots', function() {
             let spec = {
-                config: new MuttConfig(),
                 type: 'array',
                 name: 'TestArray',
                 items: {
@@ -102,7 +99,7 @@ describe('ArrayField', function() {
             expect(TestArrayField.slots[1].value).to.equal('Test 3')
         })
 
-        it('removes a slot from the rendered widgets and rename remaining', 
+        it('removes a slot from the rendered widgets and rename remaining',
             function() {
                 let NewFieldSpec = Object.assign({}, FieldSpec)
                 NewFieldSpec.minItems = 3
@@ -153,14 +150,14 @@ describe('ArrayField', function() {
     })
 
     describe('Value property', function() {
-        it('should return the correct value for the array field', function() { 
+        it('should return the correct value for the array field', function() {
             let returnedValue = TestArrayField.value
             assert.typeOf(returnedValue, 'array')
             assert.equal(1, returnedValue.length)
             assert.equal(null, returnedValue[0])
         })
 
-        it('should set the correct value for the array field', function() { 
+        it('should set the correct value for the array field', function() {
             // Add some empty slots
             TestArrayField.addSlot(false)
             TestArrayField.addSlot(false)
