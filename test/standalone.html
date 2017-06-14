@@ -36,13 +36,12 @@
 
         var form = new Mutt(
             schema,
-            options,
-            function(data) {
+            options
+        )
 
-            }
-        );
-
-        form.render(document.getElementById('form'))
+        form.on('submit', (data, e) => {
+            window.console.log('Submitted! ', data)
+        }).render(document.getElementById('form'))
     </script>
 </body>
 </html>

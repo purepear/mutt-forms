@@ -32,6 +32,7 @@ class MuttForm {
     constructor(schema, options = {}) {
         this.schema = schema
         this.options = {}
+        this.callbacks = {}
 
         if(options && options.hasOwnProperty('form')) {
             this.options = options.form
@@ -39,7 +40,6 @@ class MuttForm {
 
         this.mount = false
         this.multipart = false
-        this.callback = null
         this.id = null
         this.locked = false
 
@@ -309,8 +309,8 @@ class MuttForm {
         if(valid) {
             Mutt.logger('Submit form')
 
-            if(this.callback) {
-                this.callback(this.data(), event)
+            if(this.callbacks.hasOwnProperty('submit')) {
+                this.callbacks['submit'](this.data(), event)
             } else {
                 this.form.submit()
             }
@@ -345,19 +345,20 @@ class MuttForm {
     }
 
     /**
+     * Set the callback for the submission
+     * @param {function} callback Callback function for form submission
+     */
+    on(hook, callback) {
+        this.callbacks[hook] = callback
+        return this
+    }
+
+    /**
      * Set the ID for the form - this is used for rendering
      * @param {string} formId ID for a form
      */
     setFormId(formId) {
         this.id = formId
-    }
-
-    /**
-     * Set the callback for the submission
-     * @param {function} callback Callback function for form submission
-     */
-    setSubmitCallback(callback) {
-        this.callback = callback
     }
 
     /**
