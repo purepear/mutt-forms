@@ -12,9 +12,9 @@ import {StringField} from '../../../../src/fields/text'
 describe('Widget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an TestWidget instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an TestWidget instance', function() {
         TestField = new StringField({
             id: 'test-string',
             name: 'TestString',

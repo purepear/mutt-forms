@@ -13,9 +13,9 @@ import {NumberInput, CurrencyInput} from '../../../../src/widgets/numbers'
 describe('CurrencyInputWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an CurrencyInput instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an CurrencyInput instance', function() {
         TestField = new IntegerField({
             id: 'test-int',
             name: 'TestInt',

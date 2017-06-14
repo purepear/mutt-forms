@@ -1,17 +1,23 @@
 /**
-* Mutt API Tests
-**/
+ * Mutt API Tests
+ */
 
 'use strict'
 
 import {expect} from 'chai'
 import Mutt from '../../../src/index'
+import MuttForm from '../../../src/mutt'
 import MuttConfig from '../../../src/config'
 
 class MyTestField {}
 class MyTestWidget {}
 
 describe('Mutt API', function() {
+    it('returns a instance of a mutt form', function() {
+        expect(typeof Mutt).to.equal('function')
+        let form = new Mutt({})
+        expect(form.constructor).to.equal(MuttForm)
+    })
 
     it('has a version specified', function() {
         expect(Mutt.hasOwnProperty('version')).to.equal(true)
@@ -34,7 +40,6 @@ describe('Mutt API', function() {
                 return [null, null, {test: 'test setting'}]
             }
         }
-
         expect(Mutt.config.getSetting('test')).to.equal(null)
         Mutt.use(plugin)
         expect(Mutt.config.getSetting('test')).to.equal('test setting')
@@ -46,7 +51,6 @@ describe('Mutt API', function() {
                 return [{'test': MyTestField}, null, null]
             }
         }
-
         expect(Mutt.config.hasField('test')).to.equal(false)
         Mutt.use(plugin)
         expect(Mutt.config.hasField('test')).to.equal(true)
@@ -58,7 +62,6 @@ describe('Mutt API', function() {
                 return [null, {'test': MyTestWidget}, null]
             }
         }
-
         expect(Mutt.config.hasWidget('test')).to.equal(false)
         Mutt.use(plugin)
         expect(Mutt.config.hasWidget('test')).to.equal(true)

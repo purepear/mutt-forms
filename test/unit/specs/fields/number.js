@@ -12,9 +12,9 @@ import {NumberInput, CurrencyInput} from '../../../../src/widgets/numbers'
 describe('IntegerField', function() {
     var FieldSpec, TestIntegerField
 
-    beforeEach('create an IntegerField instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an IntegerField instance', function() {
         FieldSpec = {
             id: 'test-integer',
             name: 'TestInteger',

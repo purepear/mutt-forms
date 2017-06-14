@@ -13,9 +13,9 @@ import {ArrayInput} from '../../../../src/widgets/array'
 describe('ArrayField', function() {
     var FieldSpec, TestArrayField
 
-    beforeEach('create an ArrayField instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an ArrayField instance', function() {
         FieldSpec = {
             id: 'test-array',
             name: 'TestArray',

@@ -13,9 +13,9 @@ import {DateSelectionInput} from '../../../../src/widgets/date'
 describe('DateSelectionInputWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an DateSelectionInputWidget instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an DateSelectionInputWidget instance', function() {
         TestField = new StringField({
             id: 'test-string',
             name: 'TestString',

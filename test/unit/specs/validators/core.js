@@ -7,7 +7,6 @@
 import {expect} from 'chai'
 import * as validators from '../../../../src/validators'
 
-
 describe('RequiredValidator', function() {
     describe('#validate()', function() {
         it('returns true when a string value is present', function() {
@@ -43,7 +42,7 @@ describe('RequiredValidator', function() {
         it('returns false when a value is not present', function() {
             let validator = new validators.RequiredValidator()
             expect(validator.validate(null)).to.equal(false)
-        })   
+        })
     })
 })
 
@@ -98,6 +97,6 @@ describe('RegexValidator', function() {
         it('returns false when a value is not present', function() {
             let validator = new validators.RegexValidator()
             expect(validator.validate(null)).to.equal(false)
-        })   
+        })
     })
 })
