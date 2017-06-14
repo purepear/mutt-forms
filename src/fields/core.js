@@ -4,6 +4,7 @@
 
 'use strict'
 
+import Mutt from '../index'
 import {TextInput} from '../widgets/text'
 import {
     RequiredValidator,
@@ -20,7 +21,6 @@ export class Field {
 
     /**
     * Initialise the field - this will initalise the assocaited widget
-    * @param {MuttConfig} config the Mutt Form instance
     * @param {string} id the ID of the field
     * @param {string} name the HTML name of the field
     * @param {string} [label] the HTML label linked ot the field
@@ -33,10 +33,9 @@ export class Field {
     * @param {integer} [order] order flag for sorting multiple fields
     * @param {Field} [parent] parent a parent field
     */
-    constructor({config, id, name, label = null, initial = null, widget = null,
+    constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null}) {
-        this.config = config
         this.id = id
         this.name = name
         this.label = label
@@ -255,10 +254,9 @@ export class Field {
     }
 
     /**
-    *
-    */
+     *
+     */
     updateName(newName, updateWidget = true) {
-        let oldName = this.name
         this.name = newName
 
         if(updateWidget) {
@@ -267,17 +265,16 @@ export class Field {
     }
 
     /**
-    *
-    */
-    static new(config, id, name, schema, options = {},
+     *
+     */
+    static new(id, name, schema, options = {},
         parent = null, required = false, dependancies = null) {
         let fieldSpec = {
-            config: config,
             id: id,
             name: name,
             options: options,
             attribs: {},
-            parent: parent,
+            parent: parent
         }
 
         let FieldKlass = null
@@ -303,26 +300,26 @@ export class Field {
             }
 
             fieldSpec.choices = choices
-            FieldKlass = config.getField('enum')
+            FieldKlass = Mutt.config.getField('enum')
         }
 
         // This is awkward as we are trying to support the
         // legacy/Alpaca option format
         if(options.hasOwnProperty('hidden')) {
             if(options.hidden) {
-                fieldSpec.widget = config.getWidget('hidden')
+                fieldSpec.widget = Mutt.config.getWidget('hidden')
             }
         }
 
         if(schema.format) {
-            if(config.hasWidget(schema.format)) {
-                fieldSpec.widget = config.getWidget(schema.format)
+            if(Mutt.config.hasWidget(schema.format)) {
+                fieldSpec.widget = Mutt.config.getWidget(schema.format)
             }
         }
 
         if(options.widget) {
-            if(config.hasWidget(options.widget)) {
-                fieldSpec.widget = config.getWidget(options.widget)
+            if(Mutt.config.hasWidget(options.widget)) {
+                fieldSpec.widget = Mutt.config.getWidget(options.widget)
             }
         }
 
@@ -379,11 +376,11 @@ export class Field {
 
         if(!FieldKlass) {
             // Attempt to get the field spec
-            if(!config.hasField(schema.type)) {
+            if(!Mutt.config.hasField(schema.type)) {
                 return null
             }
 
-            FieldKlass = config.getField(schema.type)
+            FieldKlass = Mutt.config.getField(schema.type)
         }
 
         let field = new FieldKlass(fieldSpec)

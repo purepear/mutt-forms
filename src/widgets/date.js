@@ -1,21 +1,21 @@
 /**
-* @file Date input widget
-*/
+ * @file Date input widget
+ */
 
 'use strict'
 
 import {Widget} from './core'
 
 /**
-* DateInput - Input for date
-* @class
-*/
+ * DateInput - Input for date
+ * @class
+ */
 export class DateInput extends Widget {
 
     /**
-    * Render the date input field
-    * @returns {HTMLElement} render the input widget
-    */
+     * Render the date input field
+     * @returns {HTMLElement} render the input widget
+     */
     renderField() {
         let dateInput = document.createElement('input')
         dateInput.setAttribute('name', this.name)
@@ -43,23 +43,22 @@ export class DateInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    */
+     * Get the class name for the widget element
+     */
     getFieldClass() { return 'mutt-field mutt-field-date' }
 }
 
 /**
-* DateSelectionInput - Selection Input for date
-* @class
-*/
+ * DateSelectionInput - Selection Input for date
+ * @class
+ */
 export class DateSelectionInput extends Widget {
 
     /**
-    *
-    */
-    constructor(field, type, id, name, label, attribs = {}, 
+     * @constructor
+     */
+    constructor(field, type, id, name, label, attribs = {},
         options = {}, initial = null) {
-
         // Don't set the initial value by default, we overide the
         // method to set it as a date object
         super(field, type, id, name, label, attribs, options, null)
@@ -67,9 +66,9 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    * Render the date input field
-    * @returns {HTMLElement} render the input widget
-    */
+     * Render the date input field
+     * @returns {HTMLElement} render the input widget
+     */
     renderField() {
         let dateWrapper = document.createElement('div')
         dateWrapper.setAttribute('class', 'mutt-date-selector')
@@ -124,7 +123,7 @@ export class DateSelectionInput extends Widget {
             monthNameOption.setAttribute('value', monthNumber)
             monthNameOption.textContent = month
 
-            if(currentValue !== null && 
+            if(currentValue !== null &&
                 currentValue.getMonth() === parseInt(monthIndex)) {
                 monthNameOption.selected = 'selected'
             }
@@ -153,7 +152,7 @@ export class DateSelectionInput extends Widget {
             if(currentValue !== null && currentValue.getFullYear() === thisYear) {
                 yearOption.selected = 'selected'
             }
-            
+
             yearInput.appendChild(yearOption)
             thisYear--
         }
@@ -164,13 +163,13 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    */
+     * Get the class name for the widget element
+     */
     getFieldClass() { return 'mutt-field mutt-field-date-selector' }
 
     /**
-    *
-    */
+     *
+     */
     getElementDay() {
         return this.getElementWrapper().querySelector(
             `[name="${this.name}-day"]`
@@ -178,8 +177,8 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    *
-    */
+     *
+     */
     getElementMonth() {
         return this.getElementWrapper().querySelector(
             `[name="${this.name}-month"]`
@@ -187,8 +186,8 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    *
-    */
+     *
+     */
     getElementYear() {
         return this.getElementWrapper().querySelector(
             `[name="${this.name}-year"]`
@@ -196,8 +195,8 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    *
-    */
+     *
+     */
     getMonthNames() {
         return [
             'January', 'February', 'March', 'April', 'May', 'June',
@@ -207,10 +206,10 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    * Get the value of an element on the stage. This is the raw value
-    * as specified in the HTML.
-    * @returns {string} value of the element on the stage
-    */
+     * Get the value of an element on the stage. This is the raw value
+     * as specified in the HTML.
+     * @returns {string} value of the element on the stage
+     */
     getDateValue() {
         if(!this._rendered) {
             return this.value
@@ -241,9 +240,9 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    * Set the value of an element on the stage.
-    * @param {string} value - value to set the HTML element too
-    */
+     * Set the value of an element on the stage.
+     * @param {string} value - value to set the HTML element too
+     */
     setDateValue(value) {
         // If its a string, try to parse
         if(typeof value === 'string') {
@@ -266,7 +265,6 @@ export class DateSelectionInput extends Widget {
         let elementDay = this.getElementDay()
         let elementMonth = this.getElementMonth()
         let elementYear = this.getElementYear()
-        let months = this.getMonthNames()
 
         let date = value.getDate()
         if(date.toString().length === 1) {
@@ -286,18 +284,18 @@ export class DateSelectionInput extends Widget {
     }
 
     /**
-    * Get the value of an element on the stage. This is the raw value
-    * as specified in the HTML.
-    * @returns {string} value of the element on the stage
-    */
+     * Get the value of an element on the stage. This is the raw value
+     * as specified in the HTML.
+     * @returns {string} value of the element on the stage
+     */
     getValue() {
         return this.getDateValue()
     }
 
     /**
-    * Set the value of an element on the stage.
-    * @param {string} value - value to set the HTML element too
-    */
+     * Set the value of an element on the stage.
+     * @param {string} value - value to set the HTML element too
+     */
     setValue(value) {
         this.setDateValue(value)
     }

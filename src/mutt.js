@@ -1,79 +1,63 @@
 /**
-* @file A simple HTML form interface, with a squishy face.
-* @version 0.0.1
-* @author Nick Snell <nick@boughtbymany.com>
-* @copyright Bought By Many 2016
-*/
+ * @file A simple HTML form interface, with a squishy face.
+ * @author Nick Snell <nick@boughtbymany.com>
+ * @copyright Bought By Many 2017
+ */
 
 'use strict'
 
+import Mutt from './index'
 import {Fieldset} from './fieldsets/core'
 
 import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 import * as utils from './utils'
-import MuttConfig from './config'
 
 export {fields, widgets, validators, utils}
 
 /**
-* Main Mutt form interface. This instance is used to build,
-* control & render the form
-* @class
-*/
-export default class Mutt {
+ * Main Mutt form interface. This instance is used to build,
+ * control & render the form
+ * @class
+ */
+class MuttForm {
 
     /**
-    * Initialisation of a Mutt form
-    * @constructor
-    * @param {HTMLElement} container Containing element for the Mutt Form
-    * @param {object} schema JSON Schema containing Form & Field Configuration
-    * @param {object} [options={}] form configuration options
-    * @param {function} [callback=null] callback function for form submission
-    * @param {boolean} [debug=false] debugging flag
-    */
-    constructor(container, schema, options = {}, callback = null,
-        debug = false, plugins = []) {
-        if(container === null) {
-            throw new Error(
-                'You must pass a valid container to create a Mutt form!'
-            )
-        }
-
-        this.container = container
-        this.multipart = false
-        this.callback = callback
-        this.id = null
-        this.debug = debug
-        this.locked = false
-
-        this.form = null
-        this.fieldsets = []
+     * Initialisation of a Mutt form
+     * @constructor
+     * @param {object} schema JSON Schema containing Form & Field Configuration
+     * @param {object} [options={}] form configuration options
+     */
+    constructor(schema, options = {}) {
+        this.schema = schema
         this.options = {}
-        this.buttons = {submit: null}
-
-        this.config = new MuttConfig()
-
-        for(let plugin of plugins) {
-            this.config.use(plugin)
-        }
+        this.callbacks = {}
 
         if(options && options.hasOwnProperty('form')) {
             this.options = options.form
         }
+
+        this.mount = false
+        this.multipart = false
+        this.id = null
+        this.locked = false
+
+        this.form = null
+        this.fieldsets = []
+        this.buttons = {submit: null}
 
         // Build the form from the config
         this.build(schema, options)
     }
 
     /**
-    * Build the form fieldsets from the config. The default is
-    * always to use one, however groups can be specified in the
-    * from options
-    * @param {object} schema JSON schema of form
-    * @param {object} [options=null] options object for the form
-    */
+     * Build the form fieldsets from the config. The default is
+     * always to use one, however groups can be specified in the
+     * from options
+     * @param {object} schema JSON schema of form
+     * @param {object} [options=null] options object for the form
+     */
     build(schema, options = null) {
         // TODO: Allow build options override
 
@@ -100,7 +84,6 @@ export default class Mutt {
                 }
 
                 let fieldset = Fieldset.new(
-                    this.config,
                     schema,
                     options,
                     fieldsetFields,
@@ -113,8 +96,7 @@ export default class Mutt {
             }
         } else {
             let fieldset = Fieldset.new(
-                this.config, 
-                schema, 
+                schema,
                 options
             )
 
@@ -123,13 +105,13 @@ export default class Mutt {
     }
 
     /**
-    * Get the data from the form - this can be returned as a list
-    * of objects, each object being a fieldsets data set. Or, by
-    * default, as a merged object of all the data
-    * @param {bool} [asList] Boolean to indicate if a list of fieldset
-    * data is required. Default is to return a merged object.
-    * @returns {object} key/value data object for the form
-    */
+     * Get the data from the form - this can be returned as a list
+     * of objects, each object being a fieldsets data set. Or, by
+     * default, as a merged object of all the data
+     * @param {bool} [asList] Boolean to indicate if a list of fieldset
+     * data is required. Default is to return a merged object.
+     * @returns {object} key/value data object for the form
+     */
     data(asList = false) {
         if(asList) {
             let data = []
@@ -151,9 +133,9 @@ export default class Mutt {
     }
 
     /**
-    * Populate the form field with selected values
-    * @param {object} data Data object with form values
-    */
+     * Populate the form field with selected values
+     * @param {object} data Data object with form values
+     */
     populate(data) {
         for(let fieldset of this.fieldsets) {
             fieldset.populate(data)
@@ -161,11 +143,15 @@ export default class Mutt {
     }
 
     /**
-    * Render the form
-    * @returns {Promise} a promise to be resolved once rendering
-    * is complete
-    */
-    render() {
+     * Render the form
+     * @param {HTMLElement} mount Containing element for the Mutt Form
+     * @returns {Promise} a promise to be resolved once rendering
+     * is complete
+     */
+    render(mount) {
+        // Save the mount point...
+        this.mount = mount
+
         return new Promise((resolve, reject) => {
             let formContainer = document.createDocumentFragment()
             this.form = document.createElement('form')
@@ -210,7 +196,7 @@ export default class Mutt {
             // Add any aditional buttons specified in the options
             if(this.options.hasOwnProperty('buttons')) {
                 for(let buttonName of Object.keys(this.options.buttons)) {
-                    if(buttonName == 'submit') {
+                    if(buttonName === 'submit') {
                         // We always default this
                         continue
                     }
@@ -247,7 +233,7 @@ export default class Mutt {
 
             // Build the form and render to the viewport
             formContainer.appendChild(this.form)
-            this.container.appendChild(formContainer)
+            this.mount.appendChild(formContainer)
 
             // Form has been renderd to the stage, call
             // the post render hooks
@@ -260,17 +246,23 @@ export default class Mutt {
     }
 
     /**
-    * Remove the form from the stage
-    */
+     * Remove the form from the stage
+     * @returns {bool} Confirmation of destruction
+     */
     destroy() {
-        let form = this.container.querySelector('form')
-        this.container.removeChild(form)
+        if(this.mount) {
+            let form = this.mount.querySelector('form')
+            this.mount.removeChild(form)
+            return true
+        }
+
+        return false
     }
 
     /**
-    * Validate the form
-    * @returns {bool} response to the validation request
-    */
+     * Validate the form
+     * @returns {bool} response to the validation request
+     */
     validate() {
         let valid = true
         let errors = []
@@ -282,7 +274,7 @@ export default class Mutt {
             }
         }
 
-        this.log(
+        Mutt.logger(
             `Validation Complete -> Status: ${valid} -> ${JSON.stringify(errors)}`
         )
 
@@ -290,8 +282,8 @@ export default class Mutt {
     }
 
     /**
-    * Redraw all of the error states on the stage
-    */
+     * Redraw all of the error states on the stage
+     */
     refreshValidationState() {
         for(let fieldset of this.fieldsets) {
             fieldset.refreshValidationState()
@@ -299,10 +291,10 @@ export default class Mutt {
     }
 
     /**
-    * Submit handler for the form
-    * @param {Event} event Event triggering the submission
-    * @returns {bool} success or failure of submission
-    */
+     * Submit handler for the form
+     * @param {Event} event Event triggering the submission
+     * @returns {bool} success or failure of submission
+     */
     submit(event) {
         // We always validate prior to validateion
         let valid = false
@@ -310,15 +302,15 @@ export default class Mutt {
         try {
             valid = this.validate()
         } catch (e) {
-            this.log('Unable to validate prior to submit!', e)
+            Mutt.logger('Unable to validate prior to submit!', e)
             return false
         }
 
         if(valid) {
-            this.log('Submit form')
+            Mutt.logger('Submit form')
 
-            if(this.callback) {
-                this.callback(this.data(), event)
+            if(this.callbacks.hasOwnProperty('submit')) {
+                this.callbacks['submit'](this.data(), event)
             } else {
                 this.form.submit()
             }
@@ -330,10 +322,10 @@ export default class Mutt {
     }
 
     /**
-    * Lock a form, this changes all of the fields to a read only state
-    */
+     * Lock a form, this changes all of the fields to a read only state
+     */
     lock() {
-        this.log('Locking form')
+        Mutt.log('Locking form')
 
         for(let fieldset of this.fieldsets) {
             fieldset.lock()
@@ -341,11 +333,11 @@ export default class Mutt {
     }
 
     /**
-    * Unlock a form, this can be used to restore a locked form to it's
-    * editable state
-    */
+     * Unlock a form, this can be used to restore a locked form to it's
+     * editable state
+     */
     unlock() {
-        this.log('Unlocking form')
+        Mutt.log('Unlocking form')
 
         for(let fieldset of this.fieldsets) {
             fieldset.unlock()
@@ -353,34 +345,35 @@ export default class Mutt {
     }
 
     /**
-    * Set the ID for the form - this is used for rendering
-    * @param {string} formId ID for a form
-    */
+     * Set the callback for the submission
+     * @param {function} callback Callback function for form submission
+     */
+    on(hook, callback) {
+        this.callbacks[hook] = callback
+        return this
+    }
+
+    /**
+     * Set the ID for the form - this is used for rendering
+     * @param {string} formId ID for a form
+     */
     setFormId(formId) {
         this.id = formId
     }
 
     /**
-    * Set the callback for the submission
-    * @param {function} callback Callback function for form submission
-    */
-    setSubmitCallback(callback) {
-        this.callback = callback
-    }
-
-    /**
-    * Get the form ID
-    * @returns {string} ID for a form
-    */
+     * Get the form ID
+     * @returns {string} ID for a form
+     */
     getFormId() {
         return this.id
     }
 
     /**
-    * Set field errors in bulk, this is typically used to
-    * show errors from a server side response
-    * @param {object} errors a hash of errors
-    */
+     * Set field errors in bulk, this is typically used to
+     * show errors from a server side response
+     * @param {object} errors a hash of errors
+     */
     setFieldErrors(errors) {
         // TODO: Known limitation. Errors are not provided
         // in a hierarchical manner. Just as key/value - so
@@ -393,10 +386,10 @@ export default class Mutt {
     }
 
     /**
-    * Get a field in the form by it's path. Paths should be
-    * provided in 'dot' notation - i.e "some.example.path"
-    * @param {string} path path to the field using dot notation
-    */
+     * Get a field in the form by it's path. Paths should be
+     * provided in 'dot' notation - i.e "some.example.path"
+     * @param {string} path path to the field using dot notation
+     */
     getFieldByPath(path) {
         // To find a field we need to inspect each fieldset
         for(let fieldset of this.fieldsets) {
@@ -407,14 +400,6 @@ export default class Mutt {
             }
         }
     }
-
-    /**
-    * Log a message
-    * @param {string} message Message to log
-    */
-    log(message) {
-        if(this.debug) {
-            window.console.log('Mutt ->', message)
-        }
-    }
 }
+
+export default MuttForm

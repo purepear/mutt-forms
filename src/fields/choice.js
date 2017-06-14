@@ -15,11 +15,10 @@ import {CheckboxList} from '../widgets/checkbox'
 */
 export class ChoiceField extends Field {
 
-    constructor({config, id, name, label = null, initial = null, widget = null,
+    constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null, choices = []}) {
         super({
-            config,
             id,
             name,
             label,

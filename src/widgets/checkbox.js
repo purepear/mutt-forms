@@ -1,22 +1,22 @@
 /**
-* @file Checkbox Widgets
-*/
+ * @file Checkbox Widgets
+ */
 
 'use strict'
 
 import {Widget} from './core'
 
 /**
-* CheckboxInput - Standard HTML checkbox
-* @class
-*/
+ * CheckboxInput - Standard HTML checkbox
+ * @class
+ */
 export class CheckboxInput extends Widget {
 
-    /*
-    * Render the text input field
-    * @returns {HTMLElement} returns the rendered HTML checkbox
-    * input field
-    */
+    /**
+     * Render the text input field
+     * @returns {HTMLElement} returns the rendered HTML checkbox
+     * input field
+     */
     renderField() {
         let checkbox = document.createElement('input')
         checkbox.setAttribute('name', this.name)
@@ -61,11 +61,11 @@ export class CheckboxInput extends Widget {
     }
 
     /**
-    * Set the value of an element on the stage. This can be a true
-    * of false value. Additionally this will also notify the label
-    * as the label is often used as a styling proxy.
-    * @param {boolean} value - turn the checkbox on/off
-    */
+     * Set the value of an element on the stage. This can be a true
+     * of false value. Additionally this will also notify the label
+     * as the label is often used as a styling proxy.
+     * @param {boolean} value - turn the checkbox on/off
+     */
     setValue(value) {
         this.value = value
 
@@ -95,14 +95,14 @@ export class CheckboxInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    * @returns {string} the class to use for the field element
-    */
+     * Get the class name for the widget element
+     * @returns {string} the class to use for the field element
+     */
     getFieldClass() { return 'mutt-field mutt-field-checkbox' }
 
     /**
-    * Get the checkbox ID
-    */
+     * Get the checkbox ID
+     */
     getFieldId() {
         return `${this.id}-checkbox`
     }
@@ -129,7 +129,7 @@ export class CheckboxList extends CheckboxInput {
         let list = document.createElement('ul')
         list.setAttribute('id', this.getFieldId())
 
-        for(let choice in this.choices){
+        for(let choice in this.choices) {
             let listItem = document.createElement('li')
             let checkbox = document.createElement('input')
 
@@ -147,7 +147,10 @@ export class CheckboxList extends CheckboxInput {
             }
 
             checkbox.onchange = () => {
-                this.setValueByIndex(!checkbox.hasAttribute('checked'), checkbox.getAttribute('data-index'))
+                this.setValueByIndex(
+                    !checkbox.hasAttribute('checked'),
+                    checkbox.getAttribute('data-index')
+                )
             }
 
             if(this.value && this.value[choice]) {

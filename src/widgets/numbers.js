@@ -69,10 +69,10 @@ export class CurrencyInput extends Widget {
     }
 
     /**
-    * Get the value of the field. This will remove a currency 
-    * symbol and round to two decimal places.
-    */
-    getValue() {        
+     * Get the value of the field. This will remove a currency
+     * symbol and round to two decimal places.
+     */
+    getValue() {
         let value = super.getValue()
 
         if(value) {

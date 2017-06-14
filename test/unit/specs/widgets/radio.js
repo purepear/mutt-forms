@@ -2,17 +2,15 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import RadioInputList from '../../../../src/widgets/radio'
 
 describe('RadioInputListWidget', function() {
     var TestField, TestWidget
 
-    beforeEach('create an CheckboxInput instance', function() {
-        jsdom()
+    jsdom()
 
+    beforeEach('create an CheckboxInput instance', function() {
         TestField = new ChoiceField({
-            config: new MuttConfig(),
             id: 'test-choice',
             name: 'TestChoice',
             label: 'Test Choice Field'
