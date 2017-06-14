@@ -1,12 +1,14 @@
 /**
-* @file Utilities
-*/
+ * @file Utilities
+ */
 
 'use strict'
 
+import Mutt from './index'
+
 /**
-* Function to provide mixin support ot classes
-*/
+ * Function to provide mixin support ot classes
+ */
 export function mixin(baseClass, ...mixins) {
     let base = class _Combined extends baseClass {
         constructor(...args) {
@@ -44,8 +46,11 @@ export function mixin(baseClass, ...mixins) {
 }
 
 /**
-*
-*/
-export function logger() {
-
+ * Log a message to the console, used for debugging
+ * @param message a message to be logged
+ */
+export function logger(message) {
+    if(Mutt.config.getSetting('debug')) {
+        console.log('Mutt :: ', message)
+    }
 }

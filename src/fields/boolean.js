@@ -12,7 +12,7 @@ function toBool(value) {
         return null
     }
 
-    if(typeof(value) === 'boolean') {
+    if(typeof value === 'boolean') {
         return value
     }
 

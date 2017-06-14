@@ -254,10 +254,9 @@ export class Field {
     }
 
     /**
-    *
-    */
+     *
+     */
     updateName(newName, updateWidget = true) {
-        let oldName = this.name
         this.name = newName
 
         if(updateWidget) {
@@ -266,8 +265,8 @@ export class Field {
     }
 
     /**
-    *
-    */
+     *
+     */
     static new(id, name, schema, options = {},
         parent = null, required = false, dependancies = null) {
         let fieldSpec = {
@@ -275,7 +274,7 @@ export class Field {
             name: name,
             options: options,
             attribs: {},
-            parent: parent,
+            parent: parent
         }
 
         let FieldKlass = null

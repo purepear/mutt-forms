@@ -43,7 +43,7 @@ export class ArrayField extends Field {
 
         // We store the array fields in the slot
         this.slots = []
-        for(let i in Array.from(Array(this.minItems).keys())) {
+        for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
             this.addSlot(false)
         }
 
@@ -116,7 +116,7 @@ export class ArrayField extends Field {
             // ??
             slotIndex = parseInt(slotIndex)
 
-            if(updateWidget && slotIndex == index) {
+            if(updateWidget && slotIndex === index) {
                 this.slots[slotIndex].destroy()
             }
         }
@@ -172,7 +172,7 @@ export class ArrayField extends Field {
         // sent through, reset the slots and add as needed
         this.slots = []
 
-        for(let index in value) {
+        for(let index in value) { //eslint-disable-line
             this.addSlot(false)
         }
 

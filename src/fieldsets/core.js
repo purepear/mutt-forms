@@ -222,7 +222,7 @@ export class Fieldset {
     static new(schema, options = {}, fields = null,
         name = null, label = null) {
         let fieldsetSpec = {
-            name: name,
+            name: name
         }
 
         if(schema.hasOwnProperty('title')) {

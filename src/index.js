@@ -1,18 +1,34 @@
 /**
-* Mutt bootstapper
-**/
+ * @file Main Mutt API
+ * @author Nick Snell <nick@boughtbymany.com>
+ * @copyright Bought By Many 2017
+ */
 
 'use strict'
 
-// import MuttForm from './mutt'
+import MuttForm from './mutt'
 import MuttConfig from './config'
+import {logger} from './utils'
 
+/**
+ * Main Mutt API.
+ * @returns {MuttForm} Returns an instance of a MuttForm
+ * @example
+ * let form = new Mutt({name: {type: 'string'}})
+ */
 function Mutt(schema, options, debug = false) {
+    if(debug) {
+        this.config.setSetting('debug', true)
+    }
+
     // Setup a new form instance if called directly
-    //return new MuttForm(schema, options, debug)
-    console.log('Setup form...')
+    return new MuttForm(schema, options)
 }
 
+/**
+ * Internal setup for Mutt API
+ * @private
+ */
 function initApi(Mutt) {
     // Setup the config
     let config = new MuttConfig()
@@ -28,6 +44,9 @@ function initApi(Mutt) {
             Mutt.config.use(plugin)
         }
     }
+
+    // Setup Utilities
+    Mutt.logger = logger
 }
 
 initApi(Mutt)

@@ -137,7 +137,6 @@ export class IntegerValidator extends Validator {
     }
 }
 
-
 /**
 * RegexValidator - Validate the value against a regular expression
 * @class
