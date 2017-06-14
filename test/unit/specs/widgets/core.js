@@ -6,7 +6,6 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {Widget} from '../../../../src/widgets/core'
 import {StringField} from '../../../../src/fields/text'
 
@@ -17,17 +16,16 @@ describe('Widget', function() {
         jsdom()
 
         TestField = new StringField({
-            config: new MuttConfig(),
-            id: 'test-string', 
-            name: 'TestString', 
+            id: 'test-string',
+            name: 'TestString',
             label: 'Test String Field'
         })
 
         TestWidget = new Widget(
-            TestField, 
-            'string', 
-            'test-widget', 
-            'TestWidget', 
+            TestField,
+            'string',
+            'test-widget',
+            'TestWidget',
             'Test Widget'
         )
     })
@@ -89,7 +87,7 @@ describe('Widget', function() {
             let label = TestWidget.renderLabel()
             expect(label).to.be.an('object')
             expect(label.constructor).to.equal(window.HTMLLabelElement)
-        })        
+        })
     })
 
     describe('#renderWrapper()', function() {
@@ -99,7 +97,7 @@ describe('Widget', function() {
             expect(wrapper.constructor).to.equal(window.HTMLDivElement)
             expect(wrapper.id).to.equal('test-widget')
             expect(wrapper.className).to.equal('mutt-field-wrapper')
-        })        
+        })
     })
 
     describe('#renderErrors()', function() {
@@ -125,6 +123,6 @@ describe('Widget', function() {
             expect(secondChild).to.be.an('object')
             expect(secondChild.constructor).to.equal(window.HTMLLIElement)
             expect(secondChild.textContent).to.equal('Error 2')
-        })        
+        })
     })
 })

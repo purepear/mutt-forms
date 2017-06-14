@@ -5,7 +5,6 @@
 'use strict'
 
 import {assert, expect} from 'chai'
-import MuttConfig from '../../../../src/config'
 import {Field} from '../../../../src/fields/core'
 import {TextInput, HiddenInput} from '../../../../src/widgets/text'
 import {RequiredValidator} from '../../../../src/validators/core'
@@ -15,9 +14,8 @@ describe('Field', function() {
 
     beforeEach('create an Field instance', function() {
         TestField = new Field({
-            config: new MuttConfig(),
-            id: 'test-field', 
-            name: 'TestField', 
+            id: 'test-field',
+            name: 'TestField',
             label: 'Test Field'
         })
     })
@@ -37,11 +35,10 @@ describe('Field', function() {
     describe('#getWidget()', function() {
         it('return the base widget used for the field', function() {
             assert.equal(TextInput, TestField.getWidget())
-            
+
             let AnotherTestField = new Field({
-                config: new MuttConfig(),
-                id: 'test-field', 
-                name: 'TestField', 
+                id: 'test-field',
+                name: 'TestField',
                 label: 'Test Field',
                 widget: HiddenInput
             })
@@ -79,9 +76,8 @@ describe('Field', function() {
         it('return a field with configured attributes', function() {
             let schema = {type: 'string'}
             let field = Field.new(
-                new MuttConfig(),
-                'test-id', 
-                'test-name', 
+                'test-id',
+                'test-name',
                 schema
             )
 
@@ -94,12 +90,11 @@ describe('Field', function() {
         it('return a field as required', function() {
             let schema = {type: 'string'}
             let requiredField = Field.new(
-                new MuttConfig(),
-                'test-id', 
-                'test-name', 
-                schema, 
-                {}, 
-                null, 
+                'test-id',
+                'test-name',
+                schema,
+                {},
+                null,
                 true
             )
 
@@ -110,10 +105,9 @@ describe('Field', function() {
 
             // Check the option config
             let optionsRequiredField = Field.new(
-                new MuttConfig(),
-                'test-id', 
-                'test-name', 
-                schema, 
+                'test-id',
+                'test-name',
+                schema,
                 {required: true}
             )
 

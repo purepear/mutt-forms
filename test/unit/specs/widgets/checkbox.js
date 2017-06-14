@@ -6,7 +6,6 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {BooleanField} from '../../../../src/fields/boolean'
 import {ChoiceField} from '../../../../src/fields/choice'
 import {CheckboxList, CheckboxInput} from '../../../../src/widgets/checkbox'
@@ -18,17 +17,16 @@ describe('CheckboxInputWidget', function() {
         jsdom()
 
         TestField = new BooleanField({
-            config: new MuttConfig(),
-            id: 'test-bool', 
-            name: 'TestBool', 
+            id: 'test-bool',
+            name: 'TestBool',
             label: 'Test Boolean Field'
         })
 
         TestWidget = new CheckboxInput(
-            TestField, 
-            'boolean', 
-            'test-widget', 
-            'TestWidget', 
+            TestField,
+            'boolean',
+            'test-widget',
+            'TestWidget',
             'Test Widget'
         )
     })
@@ -90,7 +88,6 @@ describe('CheckboxListWidget', function(){
         jsdom()
 
         TestField = new ChoiceField({
-            config: new MuttConfig(),
             id: 'test-multiple-choice',
             name: 'TestChoice',
             label: 'Test Choice Field',

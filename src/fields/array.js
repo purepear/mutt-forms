@@ -17,11 +17,10 @@ export class ArrayField extends Field {
     /**
     *
     */
-    constructor({config, id, name, label = null, initial = null, widget = null,
+    constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null, items = {}, minItems = 1, maxItems = null}) {
         super({
-            config,
             id,
             name,
             label,
@@ -45,7 +44,7 @@ export class ArrayField extends Field {
         // We store the array fields in the slot
         this.slots = []
         for(let i in Array.from(Array(this.minItems).keys())) {
-            this.addSlot(false)   
+            this.addSlot(false)
         }
 
         // Store errors as an object
@@ -68,7 +67,6 @@ export class ArrayField extends Field {
         }, this.itemOptions)
 
         let field = this.constructor.new(
-            this.config,
             fieldId,
             fieldName,
             this.itemSchema,
@@ -130,7 +128,7 @@ export class ArrayField extends Field {
             let newId = this.getSlotId(position)
             let newName = this.getSlotName(position)
             let slot = this.slots[slotIndex]
-            
+
             slot.updateId(newId, updateWidget)
             slot.updateName(newName, updateWidget)
         }

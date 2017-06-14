@@ -13,7 +13,6 @@ import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 import * as utils from './utils'
-import MuttConfig from './config'
 
 export {fields, widgets, validators, utils}
 
@@ -22,21 +21,19 @@ export {fields, widgets, validators, utils}
 * control & render the form
 * @class
 */
-export default class Mutt {
+export default class MuttForm {
 
     /**
     * Initialisation of a Mutt form
     * @constructor
     * @param {object} schema JSON Schema containing Form & Field Configuration
     * @param {object} [options={}] form configuration options
-    * @param {function} [callback=null] callback function for form submission
     * @param {boolean} [debug=false] debugging flag
     */
-    constructor(schema, options = {}, callback = null, debug = false,
-        plugins = []) {
-
+    constructor(schema, options = {}, debug = false) {
         this.schema = schema
         this.options = {}
+        this.debug = debug
 
         if(options && options.hasOwnProperty('form')) {
             this.options = options.form
@@ -44,20 +41,13 @@ export default class Mutt {
 
         this.mount = false
         this.multipart = false
-        this.callback = callback
+        this.callback = null
         this.id = null
-        this.debug = debug
         this.locked = false
 
         this.form = null
         this.fieldsets = []
         this.buttons = {submit: null}
-
-        this.config = new MuttConfig()
-
-        for(let plugin of plugins) {
-            this.config.use(plugin)
-        }
 
         // Build the form from the config
         this.build(schema, options)
@@ -96,7 +86,6 @@ export default class Mutt {
                 }
 
                 let fieldset = Fieldset.new(
-                    this.config,
                     schema,
                     options,
                     fieldsetFields,
@@ -109,7 +98,6 @@ export default class Mutt {
             }
         } else {
             let fieldset = Fieldset.new(
-                this.config,
                 schema,
                 options
             )

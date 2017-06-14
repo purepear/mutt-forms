@@ -2,7 +2,6 @@
 
 import {expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import RadioInputList from '../../../../src/widgets/radio'
 
 describe('RadioInputListWidget', function() {
@@ -12,7 +11,6 @@ describe('RadioInputListWidget', function() {
         jsdom()
 
         TestField = new ChoiceField({
-            config: new MuttConfig(),
             id: 'test-choice',
             name: 'TestChoice',
             label: 'Test Choice Field'

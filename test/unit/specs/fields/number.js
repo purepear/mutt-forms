@@ -6,7 +6,6 @@
 
 import {assert, expect} from 'chai'
 import jsdom from 'mocha-jsdom'
-import MuttConfig from '../../../../src/config'
 import {IntegerField} from '../../../../src/fields/number'
 import {NumberInput, CurrencyInput} from '../../../../src/widgets/numbers'
 
@@ -17,9 +16,8 @@ describe('IntegerField', function() {
         jsdom()
 
         FieldSpec = {
-            config: new MuttConfig(),
-            id: 'test-integer', 
-            name: 'TestInteger', 
+            id: 'test-integer',
+            name: 'TestInteger',
             label: 'Test Integer Field'
         }
 
