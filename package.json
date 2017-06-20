@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
@@ -70,5 +70,5 @@
     "lint": "eslint --ext .js src; exit 0",
     "docs": "./node_modules/jsdoc/jsdoc.js -c .jsdoc.json"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
