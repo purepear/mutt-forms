@@ -8,7 +8,7 @@
 
 import MuttForm from './mutt'
 import MuttConfig from './config'
-import {logger} from './utils'
+import {logger, mixin} from './utils'
 
 import * as fields from './fields'
 import * as widgets from './widgets'
@@ -53,6 +53,7 @@ function initApi(Mutt) {
 
     // Setup Utilities
     Mutt.logger = logger
+    Mutt.mixin = mixin
 }
 
 initApi(Mutt)
