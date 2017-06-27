@@ -9,13 +9,6 @@
 import Mutt from './index'
 import {Fieldset} from './fieldsets/core'
 
-import * as fields from './fields'
-import * as widgets from './widgets'
-import * as validators from './validators'
-import * as utils from './utils'
-
-export {fields, widgets, validators, utils}
-
 /**
  * Main Mutt form interface. This instance is used to build,
  * control & render the form
