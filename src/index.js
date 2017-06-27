@@ -10,6 +10,12 @@ import MuttForm from './mutt'
 import MuttConfig from './config'
 import {logger} from './utils'
 
+import * as fields from './fields'
+import * as widgets from './widgets'
+import * as validators from './validators'
+
+export {fields, widgets, validators}
+
 /**
  * Main Mutt API.
  * @returns {MuttForm} Returns an instance of a MuttForm
