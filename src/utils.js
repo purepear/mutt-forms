@@ -9,7 +9,7 @@ import Mutt from './index'
 /**
  * Function to provide mixin support to classes
  */
-function mixin(target, source) {
+export function mixin(target, source) {
     target = target.prototype
     source = source.prototype
 
