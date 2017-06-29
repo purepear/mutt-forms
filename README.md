@@ -29,16 +29,16 @@ The easiest way to get started with Mutt is to install via NPM:
 import Mutt from 'mutt-forms'
 
 let form = new Mutt({
-	type: 'object',
-	required: ['name', 'email'],
-	properties: {
-		name: {
-			type: 'string'
-		},
-		email: {
-			type: 'string'
-		}
+  type: 'object',
+  required: ['name', 'email'],
+  properties: {
+    name: {
+	  type: 'string'
+	},
+	email: {
+	  type: 'string'
 	}
+  }
 })
 
 form.render(document.getElementById('form'))

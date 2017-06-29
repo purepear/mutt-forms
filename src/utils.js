@@ -7,42 +7,23 @@
 import Mutt from './index'
 
 /**
- * Function to provide mixin support ot classes
+ * Function to provide mixin support to classes
  */
-export function mixin(baseClass, ...mixins) {
-    let base = class _Combined extends baseClass {
-        constructor(...args) {
-            super(...args)
-            mixins.forEach((mixin) => {
-                if(mixin.prototype.hasOwnProperty('init')) {
-                    mixin.prototype.init.call(this)
-                }
-            })
-        }
-    }
+function mixin(target, source) {
+    target = target.prototype
+    source = source.prototype
 
-    let copyProps = (target, source) => {
-        Object.getOwnPropertyNames(source)
-            .concat(Object.getOwnPropertySymbols(source))
-            .forEach((prop) => {
-                if(prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) {
-                    return
-                }
-
+    Object.getOwnPropertyNames(source).forEach(
+        function (name) {
+            if(name !== "constructor") {
                 Object.defineProperty(
                     target,
-                    prop,
-                    Object.getOwnPropertyDescriptor(source, prop)
+                    name,
+                    Object.getOwnPropertyDescriptor(source, name)
                 )
-            })
-    }
-
-    mixins.forEach((mixin) => {
-        copyProps(base.prototype, mixin.prototype)
-        copyProps(base, mixin)
-    })
-
-    return base
+            }
+        }
+    )
 }
 
 /**

@@ -3,12 +3,16 @@
 const path = require('path')
 const webpack = require('webpack')
 
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
     entry: './src/standalone.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: resolve('dist'),
         filename: 'mutt.js',
-        library: ['Mutt'],
+        library: 'Mutt',
         libraryTarget: 'var'
     },
     module: {
@@ -16,20 +20,24 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                include: [
+                    resolve('src'),
+                    resolve('test')
+                ]
             }
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            // Introspection prevents mangling
-            mangle: false,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     // Introspection prevents mangling
+        //     mangle: false,
+        //     compress: {
+        //         warnings: false
+        //     }
+        // }),
+        // new webpack.LoaderOptionsPlugin({
+        //     minimize: true
+        // })
     ]
 }

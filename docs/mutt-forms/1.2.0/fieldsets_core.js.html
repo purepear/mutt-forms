@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>fieldsets/core.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ArrayField.html">ArrayField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#addSlot">addSlot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#getFieldByPath">getFieldByPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#getSlotId">getSlotId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#getSlotName">getSlotName</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#getWidget">getWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#postRender">postRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#refreshValidationState">refreshValidationState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#removeSlot">removeSlot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#spliceSlot">spliceSlot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayField.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ArrayInput.html">ArrayInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#addSlot">addSlot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#getElement">getElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#getElementByIndex">getElementByIndex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#removeSlot">removeSlot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#renderLabel">renderLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#renderList">renderList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ArrayInput.html#spliceSlot">spliceSlot</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="BaseChoiceWidget.html">BaseChoiceWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="BaseChoiceWidget.html#formatLabel">formatLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="BaseChoiceWidget.html#getChoices">getChoices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="BaseChoiceWidget.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="BaseChoiceWidget.html#setChoices">setChoices</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="BooleanField.html">BooleanField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="BooleanField.html#getWidget">getWidget</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="BooleanRequiredValidator.html">BooleanRequiredValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="BooleanTrueValidator.html">BooleanTrueValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ButtonField.html">ButtonField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ButtonField.html#getWidget">getWidget</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ButtonWidget.html">ButtonWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ButtonWidget.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ButtonWidget.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CheckboxInput.html">CheckboxInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxInput.html#getFieldId">getFieldId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxInput.html#getValue">getValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxInput.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxInput.html#setValue">setValue</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CheckboxList.html">CheckboxList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getAllElements">getAllElements</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getChoices">getChoices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getElementByIndex">getElementByIndex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getFieldId">getFieldId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getValue">getValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#getValueByIndex">getValueByIndex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#setChoices">setChoices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#setValue">setValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CheckboxList.html#setValueByIndex">setValueByIndex</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ChoiceField.html">ChoiceField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ChoiceField.html#getWidget">getWidget</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CurrencyInput.html">CurrencyInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CurrencyInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CurrencyInput.html#getValue">getValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CurrencyInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DateInput.html">DateInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DateSelectionInput.html">DateSelectionInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getDateValue">getDateValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getElementDay">getElementDay</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getElementMonth">getElementMonth</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getElementYear">getElementYear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getMonthNames">getMonthNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#getValue">getValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#setDateValue">setDateValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DateSelectionInput.html#setValue">setValue</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DisplayWidget.html">DisplayWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DisplayWidget.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DisplayWidget.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EmailInput.html">EmailInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EmailInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EmailInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Field.html">Field</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#.new">new</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#destroy">destroy</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#getSortOrder">getSortOrder</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#getWidget">getWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#initOptions">initOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#postRender">postRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#refreshValidationState">refreshValidationState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#setSortOrder">setSortOrder</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#toString">toString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#updateId">updateId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#updateName">updateName</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Field.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Fieldset.html">Fieldset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#.new">new</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#addField">addField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#data">data</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#getFieldByPath">getFieldByPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#hasField">hasField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#populate">populate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#postRender">postRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#refreshValidationState">refreshValidationState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#setFieldErrors">setFieldErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#setLegend">setLegend</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#unlock">unlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Fieldset.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="HiddenInput.html">HiddenInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="HiddenInput.html#getChoices">getChoices</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="HiddenInput.html#renderErrors">renderErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="HiddenInput.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="HiddenInput.html#renderLabel">renderLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="HiddenInput.html#setChoices">setChoices</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="IntegerField.html">IntegerField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="IntegerField.html#getWidget">getWidget</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="IntegerValidator.html">IntegerValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="LengthValidator.html">LengthValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MuttConfig.html">MuttConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#getField">getField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#getSetting">getSetting</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#getWidget">getWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#hasField">hasField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#hasWidget">hasWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#registerField">registerField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#registerFields">registerFields</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#registerWidget">registerWidget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#registerWidgets">registerWidgets</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttConfig.html#use">use</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MuttForm.html">MuttForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#build">build</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#data">data</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#destroy">destroy</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#getFieldByPath">getFieldByPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#getFormId">getFormId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#on">on</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#populate">populate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#refreshValidationState">refreshValidationState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#setFieldErrors">setFieldErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#setFormId">setFormId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#submit">submit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#unlock">unlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MuttForm.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NumberInput.html">NumberInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NumberInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NumberInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ObjectField.html">ObjectField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectField.html#getFieldByPath">getFieldByPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectField.html#postRender">postRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectField.html#refreshValidationState">refreshValidationState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectField.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectField.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ObjectInput.html">ObjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ObjectInput.html#renderObject">renderObject</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="PasswordInput.html">PasswordInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="PasswordInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="PasswordInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="RadioInput.html">RadioInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="RadioInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="RadioInput.html#getRadioValue">getRadioValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="RadioInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="RegexValidator.html">RegexValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="RequiredValidator.html">RequiredValidator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SelectInput.html">SelectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SelectInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SelectInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="StringField.html">StringField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="TextAreaInput.html">TextAreaInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TextAreaInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TextAreaInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="TextInput.html">TextInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TextInput.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TextInput.html#renderField">renderField</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Validator.html">Validator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Widget.html">Widget</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#destroy">destroy</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getElement">getElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getElementError">getElementError</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getElementLabel">getElementLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getElementWrapper">getElementWrapper</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getErrorClass">getErrorClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getErrorWrapperClass">getErrorWrapperClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getFieldClass">getFieldClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getFieldId">getFieldId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getFieldWrapperClass">getFieldWrapperClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#getValue">getValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#postRender">postRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#refreshErrorState">refreshErrorState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#render">render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#renderErrors">renderErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#renderField">renderField</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#renderHelp">renderHelp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#renderLabel">renderLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#renderWrapper">renderWrapper</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#setValue">setValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#unlock">unlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#updateId">updateId</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Widget.html#updateName">updateName</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#displayReadonlyValue">displayReadonlyValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#initApi">initApi</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#logger">logger</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#mixin">mixin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Mutt">Mutt</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">fieldsets/core.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* @file Fieldset Interface
+*/
+
+// (c) Bought By Many 2016
+
+'use strict'
+
+import {Field} from '../fields/core'
+
+/**
+* Fieldset wrapper class
+* @class
+*/
+export class Fieldset {
+
+    /**
+    * Setup the fieldset class
+    * @constructor
+    * @param {string} label the label of the fieldset, typically
+    * used for legends
+    * @param {string} name the name of the fieldset
+    */
+    constructor({label = null, name = null}) {
+        this.name = name
+        this.label = label
+        this.fields = []
+        this.errors = {}
+    }
+
+    /**
+    * Add a field to the fieldset
+    * @param {field} field object to add to the fieldset
+    */
+    addField(field) {
+        this.fields.push(field)
+    }
+
+    /**
+    * Check if a fieldset contains a field
+    * @param {string} fieldName A Field name
+    */
+    hasField(fieldName) {
+        for(let field in this.fields) {
+            if(field.name === fieldName) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    /**
+    * Get the data for the fieldset, this is returned as
+    * an object with field -> value pairs
+    * @returns {object}
+    */
+    data() {
+        let data = {}
+
+        for(let field of this.fields) {
+            data[field.name] = field.value
+        }
+
+        return data
+    }
+
+    /**
+    * Populate the fieldset with selected values
+    * @param {object} data Data object with form values
+    */
+    populate(data) {
+        for(let field of this.fields) {
+            if(data.hasOwnProperty(field.name)) {
+                field.value = data[field.name]
+            }
+        }
+    }
+
+    /**
+    * Validate the fields in the fieldset. Stores an object
+    * of error information field name -> error.
+    * @returns {boolean}
+    */
+    validate() {
+        let valid = true
+
+        for(let field of this.fields) {
+            if(!field.validate()) {
+                this.errors[field.name] = field.errors
+                valid = false
+            }
+        }
+
+        return valid
+    }
+
+    /**
+    * Set errors on the fields
+    * @param {object} errors Object with error information
+    */
+    setFieldErrors(errors) {
+        for(let errorField in errors) {
+            if(this.hasField(errorField)) {
+                this.getField(errorField)
+            }
+        }
+    }
+
+    /**
+    * Set the legend on the form
+    * @param {string} legend text to be used for the fieldset legend
+    */
+    setLegend(legend) {
+        this.label = legend
+    }
+
+    /**
+    * Refresh the validation state on all of the fields in the fieldset
+    */
+    refreshValidationState() {
+        this.errors = {}
+
+        for(let field of this.fields) {
+            field.refreshValidationState()
+        }
+    }
+
+    /**
+    * Render the fieldset and return a document fragment
+    * @returns {HTMLFragment}
+    */
+    render() {
+        let fieldsetContainer = document.createDocumentFragment()
+        let fieldset = document.createElement('fieldset')
+        fieldset.classList.add('mutt-fieldset')
+
+        if(this.name) {
+            fieldset.setAttribute('name', this.name)
+        }
+
+        if(this.label) {
+            let legend = document.createElement('legend')
+            legend.textContent = this.label
+            fieldset.appendChild(legend)
+        }
+
+        this.fields.sort(function(a, b) {
+            return a.getSortOrder() - b.getSortOrder()
+        })
+
+        for(let field of this.fields) {
+            let fieldElement = field.render()
+            fieldset.appendChild(fieldElement)
+        }
+
+        fieldsetContainer.appendChild(fieldset)
+
+        return fieldsetContainer
+    }
+
+    /**
+    * Callback triggered after the element has been rendered to
+    * the stage
+    */
+    postRender() {
+        for(let field of this.fields) {
+            field.postRender()
+        }
+    }
+
+    /**
+    * Lock all of the fields in the fieldset
+    */
+    lock() {
+        for(let field of this.fields) {
+            field.lock()
+        }
+    }
+
+    /**
+    * Unlock all the fields in the fieldset
+    */
+    unlock() {
+        for(let field of this.fields) {
+            field.unlock()
+        }
+    }
+
+    /**
+    * Get a field in the form by it's path. Paths should be
+    * provided in 'dot' notation - i.e "some.example.path"
+    * @params {string} path dot notation path to field to search for
+    * @returns {Field} field returns a field class
+    */
+    getFieldByPath(path) {
+        let pathParts = path.split('.')
+        let searchName = pathParts.shift()
+
+        for(let field of this.fields) {
+            if(field.name === searchName) {
+                if(pathParts.length === 0) {
+                    return field
+                } else if(field.constructor.prototype
+                            .hasOwnProperty('getFieldByPath')) {
+                    return field.getFieldByPath(pathParts.join('.'))
+                }
+            }
+        }
+
+        return null
+    }
+
+    /**
+    * Create a new fieldset class from a JSON Schema
+    * @staticmethod
+    * @params {object} schema JSON schema for the fieldset spec
+    * @params [object] options options for fields and the fieldset
+    * @params [string] name of the fieldset(added as class)
+    * @params [string] label optional label for the fieldset
+    */
+    static new(schema, options = {}, fields = null,
+        name = null, label = null) {
+        let fieldsetSpec = {
+            name: name
+        }
+
+        if(schema.hasOwnProperty('title')) {
+            fieldsetSpec.label = schema.title
+        }
+
+        if(options.hasOwnProperty('form')) {
+            if(options.form.hasOwnProperty('label')) {
+                fieldsetSpec.label = options.form.label
+            }
+        }
+
+        if(label !== null) {
+            fieldsetSpec.label = label
+        }
+
+        Object.assign(fieldsetSpec, options)
+
+        if(schema.hasOwnProperty('properties')) {
+            schema = schema.properties
+        }
+
+        let fieldset = new Fieldset(fieldsetSpec)
+        let fieldIndex = 1
+
+        for(let fieldName of Object.keys(schema)) {
+            let fieldId = `${fieldName}_field_${fieldIndex}`
+            let fieldSchema = schema[fieldName]
+            let fieldOptions = {}
+
+            // If a set of fields is specified, we only allow
+            // these to be created
+            if(fields) {
+                if(!Object.keys(fields).includes(fieldName)) {
+                    continue
+                }
+            }
+
+            if(options.fields) {
+                if(options.fields.hasOwnProperty(fieldName)) {
+                    fieldOptions = options.fields[fieldName]
+                }
+            }
+
+            if(options.fieldsets) {
+                fieldOptions.fieldsets = options.fieldsets
+            }
+
+            let field = Field.new(
+                fieldId,
+                fieldName,
+                fieldSchema,
+                fieldOptions
+            )
+
+            if(field) {
+                // Only set the sort order if this wasn't set previously,
+                // this may of been set by options
+                if(!field.getSortOrder()) {
+                    field.setSortOrder(fieldIndex)
+                }
+
+                fieldset.addField(field)
+                fieldIndex++
+            }
+        }
+
+        return fieldset
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 29 2017 15:08:29 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
