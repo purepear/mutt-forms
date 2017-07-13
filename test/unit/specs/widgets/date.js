@@ -45,6 +45,11 @@ describe('DateSelectionInputWidget', function() {
 
             let date = JSON.stringify(new Date(1990, 0, 1))
             expect(JSON.stringify(TestInitialWidget.value)).to.equal(date)
+
+            let getDate = TestInitialWidget.getDateValue()
+
+            expect(JSON.stringify(getDate)).to.equal(date)
+            expect(getDate.constructor).to.equal(Date)
         })
     })
 
@@ -54,6 +59,7 @@ describe('DateSelectionInputWidget', function() {
             TestWidget.setDateValue(date)
             // Convert to string for comparison
             expect(JSON.stringify(TestWidget.value)).to.equal(JSON.stringify(date))
+            expect(TestWidget.value.constructor).to.equal(Date)
         })
 
         it('sets a valid date value from a string', function() {
