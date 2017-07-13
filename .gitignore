@@ -54,4 +54,4 @@ __py
 .hg/
 .hgcheck/
 node_modules
-
+.babelrc
