@@ -242,6 +242,10 @@ export class Widget {
     refreshErrorState(errors) {
         this.errors = errors
 
+        if(!this._rendered) {
+            return
+        }
+
         let elementWrapper = this.getElementWrapper()
         let errorElement = this.getElementError()
         let errorWrapperClass = this.getErrorWrapperClass()
