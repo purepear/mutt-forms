@@ -9,17 +9,17 @@ import Mutt from './index'
 /**
  * Function to provide mixin support to classes
  */
-export function mixin(target, mixin) {
+export function mixin(target, source) {
     target = target.prototype
-    mixin = mixin.prototype
+    source = source.prototype
 
-    Object.getOwnPropertyNames(mixin).forEach(
-        function(name) {
-            if(name !== 'constructor' && !target.hasOwnProperty(name)) {
+    Object.getOwnPropertyNames(source).forEach(
+        function (name) {
+            if(name !== "constructor") {
                 Object.defineProperty(
                     target,
                     name,
-                    Object.getOwnPropertyDescriptor(mixin, name)
+                    Object.getOwnPropertyDescriptor(source, name)
                 )
             }
         }
