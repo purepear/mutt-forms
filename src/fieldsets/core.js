@@ -2,11 +2,9 @@
 * @file Fieldset Interface
 */
 
-// (c) Bought By Many 2016
-
 'use strict'
 
-import {Field} from '../fields/core'
+import { Field } from '../fields/core'
 
 /**
 * Fieldset wrapper class

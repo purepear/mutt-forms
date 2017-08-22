@@ -7,7 +7,7 @@
 'use strict'
 
 import Mutt from './index'
-import {Fieldset} from './fieldsets/core'
+import { Fieldset } from './fieldsets/core'
 
 /**
  * Main Mutt form interface. This instance is used to build,

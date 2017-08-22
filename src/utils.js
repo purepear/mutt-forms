@@ -13,7 +13,7 @@ export function mixin(target, source) {
     target = target.prototype
     source = source.prototype
 
-    Object.getOwnPropertyNames(target).forEach(
+    Object.getOwnPropertyNames(source).forEach(
         function(name) {
             if(name !== 'constructor') {
                 Object.defineProperty(

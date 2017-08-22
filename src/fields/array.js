@@ -4,8 +4,8 @@
 
 'use strict'
 
-import {Field} from './core'
-import {ArrayInput} from '../widgets/array'
+import Mutt from '../index'
+import { Field } from './core'
 
 /**
 * Array is a complex field type, which is essentially a list
@@ -41,7 +41,7 @@ export class ArrayField extends Field {
         this.itemSchema = items // schema to make new items
         this.itemOptions = options
 
-        // We store the array fields in the slot
+        // We store the array fields as slots
         this.slots = []
         for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
             this.addSlot(false)
@@ -77,7 +77,7 @@ export class ArrayField extends Field {
         this.slots.push(field)
 
         // FIXME: This shouldn't be at this level
-        if(updateWidget) {
+        if(updateWidget && this.widget.hasOwnProperty('addSlot')) {
             this.widget.addSlot(field)
         }
     }
@@ -94,7 +94,7 @@ export class ArrayField extends Field {
 
         this.slots.pop()
 
-        if(updateWidget) {
+        if(updateWidget && this.widget.hasOwnProperty('removeSlot')) {
             this.widget.removeSlot()
         }
 
@@ -172,7 +172,7 @@ export class ArrayField extends Field {
         // sent through, reset the slots and add as needed
         this.slots = []
 
-        for(let index in value) { //eslint-disable-line
+        for(let _ in value) { // eslint-disable-line
             this.addSlot(false)
         }
 
@@ -222,7 +222,7 @@ export class ArrayField extends Field {
     *
     */
     getWidget() {
-        return ArrayInput
+        return Mutt.config.getWidget('array')
     }
 
     /**

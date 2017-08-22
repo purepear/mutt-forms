@@ -4,7 +4,7 @@
 
 'use strict'
 
-import {Widget} from './core'
+import { Widget } from './core'
 
 /**
 * ArrayInput - Render a list of fields

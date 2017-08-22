@@ -5,7 +5,6 @@
 'use strict'
 
 import Mutt from '../index'
-import {TextInput} from '../widgets/text'
 import {
     RequiredValidator,
     BooleanRequiredValidator,
@@ -214,9 +213,10 @@ export class Field {
 
     /**
     * Get the widget class used to render the field
+    * @return TextInput widget
     */
     getWidget() {
-        return TextInput
+        return Mutt.config.getWidget('text')
     }
 
     /**

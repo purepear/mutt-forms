@@ -8,13 +8,13 @@
 
 import MuttForm from './mutt'
 import MuttConfig from './config'
-import {logger, mixin} from './utils'
+import { logger, mixin } from './utils'
 
 import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 
-export {fields, widgets, validators}
+export { fields, widgets, validators }
 
 /**
  * Main Mutt API.

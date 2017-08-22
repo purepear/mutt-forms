@@ -4,8 +4,8 @@
 
 'use strict'
 
-import {Field} from './core'
-import {TextInput} from '../widgets/text'
+import Mutt from '../index'
+import { Field } from './core'
 
 /**
 * String Field, used to input text values
@@ -14,6 +14,6 @@ import {TextInput} from '../widgets/text'
 export class StringField extends Field {
 
     getWidget() {
-        return TextInput
+        return Mutt.config.getWidget('text')
     }
 }
