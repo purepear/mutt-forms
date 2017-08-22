@@ -17,15 +17,14 @@ export function mixin(target, source) {
         function(name) {
             if(name !== 'constructor') {
                 Object.defineProperty(
-                    source,
+                    target,
                     name,
-                    Object.getOwnPropertyDescriptor(target, name)
+                    Object.getOwnPropertyDescriptor(source, name)
                 )
             }
         }
     )
 }
-
 
 /**
  * Log a message to the console, used for debugging
