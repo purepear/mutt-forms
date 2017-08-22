@@ -4,7 +4,7 @@
 
 'use strict'
 
-import {BaseChoiceWidget} from './choice'
+import { BaseChoiceWidget } from './choice'
 
 /**
 * SelectInput - Standard HTML select input

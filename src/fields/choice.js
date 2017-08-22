@@ -4,9 +4,8 @@
 
 'use strict'
 
-import {Field} from './core'
-import {SelectInput} from '../widgets/select'
-import {CheckboxList} from '../widgets/checkbox'
+import Mutt from '../index'
+import { Field } from './core'
 
 /**
 * Choice Field, used as a base to capture inputs from
@@ -38,17 +37,21 @@ export class ChoiceField extends Field {
             this.choices = options.choices
         }
 
-        this.widget.setChoices(this.choices)
+        if(this.widget.hasOwnProperty('setChoices')) {
+            this.widget.setChoices(this.choices)
+        }
     }
+
     /**
     * Get the widget used to display the field
     * @returns {SelectInput} widget to display
     */
     getWidget() {
-        if(this.options.hasOwnProperty('widget') && this.options.widget === 'checkboxlist') {
-            return CheckboxList
+        if(this.options.hasOwnProperty('widget') &&
+            this.options.widget === 'checkboxlist') {
+            return Mutt.config.getWidget('checkboxlist')
         } else {
-            return SelectInput
+            return Mutt.config.getWidget('select')
         }
     }
 }

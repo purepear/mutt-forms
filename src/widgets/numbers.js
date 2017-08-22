@@ -4,7 +4,7 @@
 
 'use strict'
 
-import {Widget} from './core'
+import { Widget } from './core'
 
 /**
 * NumberInput - Standard HTML number input

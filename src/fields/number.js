@@ -4,9 +4,9 @@
 
 'use strict'
 
-import {Field} from './core'
-import {NumberInput} from '../widgets/numbers'
-import {IntegerValidator} from '../validators/core'
+import Mutt from '../index'
+import { Field } from './core'
+import { IntegerValidator } from '../validators/core'
 
 /**
 * Integer Field, used to input integer values
@@ -55,6 +55,6 @@ export class IntegerField extends Field {
     *
     */
     getWidget() {
-        return NumberInput
+        return Mutt.config.getWidget('number')
     }
 }

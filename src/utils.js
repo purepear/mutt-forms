@@ -14,8 +14,8 @@ export function mixin(target, source) {
     source = source.prototype
 
     Object.getOwnPropertyNames(source).forEach(
-        function (name) {
-            if(name !== "constructor") {
+        function(name) {
+            if(name !== 'constructor') {
                 Object.defineProperty(
                     target,
                     name,

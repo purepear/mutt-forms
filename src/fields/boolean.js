@@ -4,8 +4,8 @@
 
 'use strict'
 
-import {Field} from './core'
-import {CheckboxInput} from '../widgets/checkbox'
+import Mutt from '../index'
+import { Field } from './core'
 
 function toBool(value) {
     if((value === undefined) || (value === null)) {
@@ -60,6 +60,6 @@ export class BooleanField extends Field {
     * @returns {Widget}
     */
     getWidget() {
-        return CheckboxInput
+        return Mutt.config.getWidget('checkbox')
     }
 }

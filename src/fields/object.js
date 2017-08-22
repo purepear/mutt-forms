@@ -4,8 +4,8 @@
 
 'use strict'
 
-import {Field} from './core'
-import {ObjectInput} from '../widgets/object'
+import Mutt from '../index'
+import { Field } from './core'
 
 // TODO: An object is basically a fieldset within a fieldset,
 // we are repeating a bunch of functionality from the fieldset
@@ -141,7 +141,7 @@ export class ObjectField extends Field {
     }
 
     getWidget() {
-        return ObjectInput
+        return Mutt.config.getWidget('object')
     }
 
     /**
