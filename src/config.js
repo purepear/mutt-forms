@@ -191,6 +191,14 @@ class MuttConfig {
         }
         return null
     }
+
+    /**
+     * Get currently configured widgets
+     * @param {object} widgets object of currently configured widgets
+     */
+    getWidgets(name) {
+        return this._config.widgets
+    }
 }
 
 export default MuttConfig
