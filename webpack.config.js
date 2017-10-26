@@ -8,7 +8,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-    entry: './src/standalone.js',
+    entry: ['babel-polyfill', './src/standalone.js'],
     output: {
         path: resolve('dist'),
         filename: 'mutt.js',
