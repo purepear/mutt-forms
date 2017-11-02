@@ -33,14 +33,11 @@
   "bugs": {
     "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
-    "babel-env": "^2.4.1",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^6.4.1",
-    "babel-register": "^6.24.1",
+    "babel-eslint": "^8.0.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
     "eslint-changes": "^0.1.2",
@@ -61,22 +58,15 @@
   "scripts": {
     "build": "webpack",
     "unit": "./node_modules/mocha/bin/mocha --require babel-polyfill --compilers js:babel-register --recursive test/unit/specs; exit 0",
-    "test": "npm run unit",
+    "test": "yarn run unit",
     "lint": "eslint --ext .js src; exit 0",
     "docs": "./node_modules/jsdoc/jsdoc.js -c .jsdoc.json"
   },
   "license": "MIT",
   "babel": {
+    "babelrc": false,
     "presets": [
-        "env",
-        "react",
-        "stage-0"
-    ],
-    "plugins": [
-        "transform-class-properties",
-        "transform-decorators",
-        "transform-react-constant-elements",
-        "transform-react-inline-elements"
+      "env"
     ]
   }
 }

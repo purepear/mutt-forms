@@ -21,6 +21,10 @@ The easiest way to get started with Mutt is to install via NPM:
 
 `npm install mutt-forms`
 
+or
+
+`yarn install mutt-forms`
+
 
 ### Getting Started
 
@@ -58,7 +62,7 @@ and navigating to:
 
 #### Development
 
-All pull requests should be made against the `dev` branch.
+All pull requests should be made against the `rc` branch.
 
 ---
 
