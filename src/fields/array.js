@@ -168,12 +168,20 @@ export class ArrayField extends Field {
             throw new Error('Unable to set array field value(s) from non-array!')
         }
 
-        // We may need to add or remove slots depending on the value
-        // sent through, reset the slots and add as needed
-        this.slots = []
-
-        for(let _ in value) { // eslint-disable-line
-            this.addSlot(false)
+        //
+        // NOTE: This is a bit of a gotcha
+        // If the current array value is the same as the proposed value
+        // we just map each value in. If there is a larger proposed value
+        // we must add new slots to map into, if it's smaller, we need to
+        // trim the slots.
+        //
+        if(value.length > this.slots.length) {
+            let difference = value.length - this.slots.length
+            for(let _ of Array(difference).keys()) { // eslint-disable-line
+                this.addSlot()
+            }
+        } else if(value.length < this.slots.length) {
+            this.slots = this.slots.slice(0, value.length)
         }
 
         let fieldValueMap = this.slots.map(function(field, index) {
