@@ -55,3 +55,4 @@ __py
 .hgcheck/
 node_modules
 .babelrc
+_book/

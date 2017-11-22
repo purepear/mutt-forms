@@ -44,6 +44,10 @@ export class IntegerField extends Field {
         // Widgets deal with the HTML value, which
         // can not represent an integer. Coerce to
         // the expected type
+        if(!value) {
+            return ''
+        }
+
         return parseInt(value)
     }
 
