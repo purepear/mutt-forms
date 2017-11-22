@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/boughtbymany/mutt-forms-vue/master/docs/mutt.svg?sanitize=true" alt="Mutt" width="275">
+<img src="https://raw.githubusercontent.com/boughtbymany/mutt-forms/master/docs/mutt.svg?sanitize=true" alt="Mutt" width="275">
 
 # Mutt Forms
 
