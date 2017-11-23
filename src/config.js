@@ -74,6 +74,14 @@ class MuttConfig {
     }
 
     /**
+     * Set a setting by name
+     * @param {string} name Name of setting
+     */
+    setSetting(name, value) {
+        this._config.settings[name] = value
+    }
+
+    /**
      * Use a plugin in the registry
      * @param {object} plugin a plugin to configure, requires install method.
      */

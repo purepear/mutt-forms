@@ -296,7 +296,7 @@ export class Field {
             let choices = []
 
             for(let option of schema.enum) {
-                choices.push([option, option])
+                choices.push([ option, option ])
             }
 
             fieldSpec.choices = choices
@@ -348,15 +348,15 @@ export class Field {
             fieldSpec.required = schema.required
         }
 
-        if(schema.minLength) {
+        if(schema.hasOwnProperty('minLength')) {
             validators.push(
-                new LengthValidator({min: schema.minLength})
+                new LengthValidator({ min: schema.minLength })
             )
         }
 
-        if(schema.maxLength) {
+        if(schema.hasOwnProperty('maxLength')) {
             validators.push(
-                new LengthValidator({max: schema.maxLength})
+                new LengthValidator({ max: schema.maxLength })
             )
         }
 
@@ -364,11 +364,11 @@ export class Field {
             validators.unshift(...options.validators)
         }
 
-        if(schema.minItems) {
+        if(schema.hasOwnProperty('minItems')) {
             fieldSpec.minItems = schema.minItems
         }
 
-        if(schema.maxItems) {
+        if(schema.hasOwnProperty('maxItems')) {
             fieldSpec.maxItems = schema.maxItems
         }
 
