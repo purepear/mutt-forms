@@ -149,6 +149,46 @@ describe('ArrayField', function() {
         })
     })
 
+    describe('#validate()', function() {
+        it('should validate minItems', function() {
+            let spec = {
+                type: 'array',
+                name: 'TestArray',
+                minItems: 2,
+                items: {
+                    type: 'string'
+                }
+            }
+
+            let TestArrayValidate = new ArrayField(spec)
+
+            TestArrayValidate.value = ['one']
+            expect(TestArrayValidate.validate()).to.equal(false)
+
+            TestArrayValidate.value = ['one', 'two']
+            expect(TestArrayValidate.validate()).to.equal(true)
+        })
+
+        it('should validate maxItems', function() {
+            let spec = {
+                type: 'array',
+                name: 'TestArray',
+                maxItems: 2,
+                items: {
+                    type: 'string'
+                }
+            }
+
+            let TestArrayValidate = new ArrayField(spec)
+
+            TestArrayValidate.value = ['one']
+            expect(TestArrayValidate.validate()).to.equal(true)
+
+            TestArrayValidate.value = ['one', 'two', 'three']
+            expect(TestArrayValidate.validate()).to.equal(false)
+        })
+    })
+
     describe('Value property', function() {
         it('should return the correct value for the array field', function() {
             let returnedValue = TestArrayField.value
