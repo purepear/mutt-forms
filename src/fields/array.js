@@ -202,16 +202,22 @@ export class ArrayField extends Field {
     * @returns {bool} returns sucess or failure of validation
     */
     validate() {
-        let valid = true
+        this.refreshValidationState()
 
         if(this.validators.length > 0) {
             for(let validator of this.validators) {
                 if(!validator.validate(this.value)) {
                     this.errors = validator.error
-                    valid = false
                 }
             }
         }
+
+        if(this.errors.length > 0) {
+            this.widget.refreshErrorState(this.errors)
+            return false
+        }
+
+        let valid = true
 
         for(let field of this.slots) {
             if(!field.validate()) {
