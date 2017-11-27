@@ -6,6 +6,7 @@
 
 import Mutt from '../index'
 import { Field } from './core'
+import { LengthValidator } from '../validators/core'
 
 /**
 * Array is a complex field type, which is essentially a list
@@ -34,10 +35,8 @@ export class ArrayField extends Field {
             parent
         })
 
-        // TODO: Sanity check min/max items
-
         this.minItems = minItems
-        this.maxItems = maxItems
+        this.maxItems = (maxItems > minItems) ? maxItems : minItems
         this.itemSchema = items // schema to make new items
         this.itemOptions = options
 
@@ -47,8 +46,13 @@ export class ArrayField extends Field {
             this.addSlot(false)
         }
 
+        this.validators.push(new LengthValidator({
+            min: this.minItems,
+            max: this.maxItems
+        }))
+
         // Store errors as an object
-        this.errors = {}
+        this._errors = []
     }
 
     /**
@@ -200,12 +204,21 @@ export class ArrayField extends Field {
     validate() {
         let valid = true
 
+        if(this.validators.length > 0) {
+            for(let validator of this.validators) {
+                if(!validator.validate(this.value)) {
+                    this.errors = validator.error
+                    valid = false
+                }
+            }
+        }
+
         for(let field of this.slots) {
             if(!field.validate()) {
-                this._errors[field.name] = field.errors
                 valid = false
             }
         }
+
         return valid
     }
 
@@ -214,7 +227,7 @@ export class ArrayField extends Field {
     */
     refreshValidationState() {
         super.refreshValidationState()
-        this._errors = {}
+        this._errors = []
     }
 
     /**
@@ -267,17 +280,5 @@ export class ArrayField extends Field {
         }
 
         return null
-    }
-
-    /**
-    * Property - get/set errors
-    * @param {string} Error string
-    */
-    get errors() {
-        return this._errors
-    }
-
-    set errors(error) {
-        this._errors = error
     }
 }
