@@ -30,7 +30,7 @@ describe('ArrayField', function() {
     })
 
     describe('#constructor()', function() {
-        it('should return a valid set of slots', function() {
+        it('should return a valid set of slots', () => {
             let spec = {
                 type: 'array',
                 name: 'TestArray',
@@ -45,6 +45,23 @@ describe('ArrayField', function() {
             expect(TestArrayConstruct.slots.length).to.equal(1)
             expect(TestArrayConstruct.slots[0].constructor).to.equal(StringField)
             expect(TestArrayConstruct.slots[0].label).to.equal('Testing')
+        })
+
+        it('should suppress slot creation with "disablePlaceholders" option', () => {
+            let spec = {
+                type: 'array',
+                name: 'TestArray',
+                options: {
+                    disablePlaceholders: true
+                },
+                items: {
+                    type: 'string',
+                    title: 'Testing'
+                }
+            }
+
+            let TestArrayConstruct = new ArrayField(spec)
+            expect(TestArrayConstruct.slots.length).to.equal(0)
         })
     })
 

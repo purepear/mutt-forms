@@ -42,8 +42,18 @@ export class ArrayField extends Field {
 
         // We store the array fields as slots
         this.slots = []
-        for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
-            this.addSlot(false)
+        let buildPlaceholders = true
+        
+        if(this.options.hasOwnProperty('disablePlaceholders')) {
+            buildPlaceholders = !this.options.disablePlaceholders
+        }
+
+        // We may want to suppress the placeholder slots from
+        // being added by default
+        if(buildPlaceholders) {
+            for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
+                this.addSlot(false)
+            }
         }
 
         this.validators.push(new LengthValidator({
