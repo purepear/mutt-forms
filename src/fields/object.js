@@ -90,6 +90,10 @@ export class ObjectField extends Field {
     }
 
     set value(values) {
+        if(!values) {
+            return
+        }
+
         // Wo ist mein Object.isObject()??
         if(typeof values !== 'object') {
             throw new Error(
