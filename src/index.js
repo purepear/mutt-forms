@@ -20,7 +20,7 @@ export { fields, widgets, validators }
  * Main Mutt API.
  * @returns {MuttForm} Returns an instance of a MuttForm
  * @example
- * let form = new Mutt({name: {type: 'string'}})
+ * let form = new Mutt({ name: { type: 'string' } })
  */
 function Mutt(schema, options, debug = false) {
     if(debug) {
@@ -58,6 +58,6 @@ function initApi(Mutt) {
 
 initApi(Mutt)
 
-Mutt.version = '__VERSION__'
+Mutt.version = '1.7.0'
 
 export default Mutt

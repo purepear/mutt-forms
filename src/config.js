@@ -1,9 +1,12 @@
 /**
  * @file Config - Registry of settings
+ * @author Nick Snell <nick@boughtbymany.com>
+ * @copyright Bought By Many 2018
  */
 
 'use strict'
 
+import MuttForm from './mutt'
 import * as fields from './fields'
 import * as widgets from './widgets'
 
@@ -93,21 +96,45 @@ class MuttConfig {
             )
         }
 
-        let [fields, widgets, settings] = plugin.install()
+		let pluginComponents = {}
+        let pluginFeatures = plugin.install()
 
-        if(fields) {
-            this.registerFields(fields)
+		// NOTE: Support for legacy plugins returning an array
+		if(Array.isArray(pluginFeatures)) {
+			let [ fields, widgets, settings ] = pluginFeatures
+			pluginComponents = { fields, widgets, settings }
+		} else {
+			pluginComponents = pluginFeatures
+		}
+
+		// Fields & Widgets allow for the extension of mutt default
+		// fields & widgets
+        if(pluginComponents.fields) {
+            this.registerFields(pluginComponents.fields)
         }
 
-        if(widgets) {
-            this.registerWidgets(widgets)
+        if(pluginComponents.widgets) {
+            this.registerWidgets(pluginComponents.widgets)
         }
 
-        if(settings) {
+		// Settings
+		// These allow for internal settings to be overidden or
+		// extended by plugins
+        if(pluginComponents.settings) {
             this._config.settings = Object.assign(
                 this._config.settings,
-                settings
+                pluginComponents.settings
             )
+        }
+
+		// Extensions
+		// These allow for the MuttForm class to be extended
+		// or overidden by plugins
+		if(pluginComponents.extensions) {
+			Object.keys(pluginComponents.extensions).forEach((name) => {
+				let extension = pluginComponents.extensions[name]
+				MuttForm.prototype[name] = extension
+			})
         }
     }
 
