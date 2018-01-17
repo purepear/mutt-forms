@@ -21,7 +21,7 @@ describe('Mutt API', function() {
 
     it('has a version specified', function() {
         expect(Mutt.hasOwnProperty('version')).to.equal(true)
-        expect(Mutt.version).to.equal('__VERSION__')
+        expect(Mutt.version).to.equal('1.7.0')
     })
 
     it('has a config specified', function() {
