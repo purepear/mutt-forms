@@ -1,7 +1,7 @@
 /**
  * @file Main Mutt API
  * @author Nick Snell <nick@boughtbymany.com>
- * @copyright Bought By Many 2017
+ * @copyright Bought By Many 2018
  */
 
 'use strict'
@@ -14,17 +14,19 @@ import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
 
-export { fields, widgets, validators }
-
 /**
  * Main Mutt API.
  * @returns {MuttForm} Returns an instance of a MuttForm
  * @example
  * let form = new Mutt({ name: { type: 'string' } })
  */
-function Mutt(schema, options, debug = false) {
+function Mutt(schema, options = {}, debug = false) {
     if(debug) {
         this.config.setSetting('debug', true)
+    }
+  
+    if(schema === undefined) {
+        throw new Error('You must specify a Schema!')
     }
 
     // Setup a new form instance if called directly
@@ -54,10 +56,15 @@ function initApi(Mutt) {
     // Setup Utilities
     Mutt.logger = logger
     Mutt.mixin = mixin
+  
+    // Add in hooks for fields, widgets & validators
+    Mutt.fields = fields
+    Mutt.widgets = widgets
+    Mutt.validators = validators
 }
 
 initApi(Mutt)
 
-Mutt.version = '1.7.0'
+Mutt.version = '1.8.0'
 
 export default Mutt
