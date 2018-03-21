@@ -92,13 +92,13 @@
       </div>
     </div>
     <script>
-        var form;
+        var form = null;
       
         function renderForm() {
           var schema = JSON.parse(document.getElementById('schema').textContent);
           var options = JSON.parse(document.getElementById('options').textContent);
           
-          if(form) {
+          if(form !== null) {
             form.destroy()
           }
           
