@@ -17,6 +17,12 @@ export default {
     },
   ],
   plugins: [
-    resolve(), babel(), uglify({keep_classnames: true}),
-  ]
+    resolve(),
+    babel(),
+    uglify({
+        keep_classnames: true,
+        keep_fnames: true,
+        safari10: true,
+    }),
+  ],
 }
