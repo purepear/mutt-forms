@@ -348,18 +348,6 @@ export class Field {
             fieldSpec.required = schema.required
         }
 
-        if(schema.hasOwnProperty('minLength')) {
-            validators.push(
-                new LengthValidator({ min: schema.minLength })
-            )
-        }
-
-        if(schema.hasOwnProperty('maxLength')) {
-            validators.push(
-                new LengthValidator({ max: schema.maxLength })
-            )
-        }
-
         if(options.validators) {
             validators.unshift(...options.validators)
         }

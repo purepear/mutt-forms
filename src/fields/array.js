@@ -36,14 +36,14 @@ export class ArrayField extends Field {
         })
 
         this.minItems = minItems
-        this.maxItems = (maxItems > minItems) ? maxItems : minItems
+        this.maxItems = (maxItems >= minItems) ? maxItems : null
         this.itemSchema = items // schema to make new items
         this.itemOptions = options
 
         // We store the array fields as slots
         this.slots = []
         let buildPlaceholders = true
-        
+
         if(this.options.hasOwnProperty('disablePlaceholders')) {
             buildPlaceholders = !this.options.disablePlaceholders
         }
