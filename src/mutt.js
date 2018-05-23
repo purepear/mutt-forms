@@ -318,7 +318,7 @@ class MuttForm {
      * Lock a form, this changes all of the fields to a read only state
      */
     lock() {
-        Mutt.log('Locking form')
+        Mutt.logger('Locking form')
 
         for(let fieldset of this.fieldsets) {
             fieldset.lock()
