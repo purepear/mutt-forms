@@ -20,6 +20,7 @@ export default {
     resolve(),
     babel(),
     uglify({
+        mangle: false,
         keep_classnames: true,
         keep_fnames: true,
         safari10: true,
