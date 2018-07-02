@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -35,6 +35,11 @@
   "bugs": {
     "url": "https://github.com/boughtbymany/mutt-forms/issues"
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "keywords": [
     "mutt-forms",
     "forms",
@@ -67,6 +72,7 @@
     "build": "rollup -c",
     "unit": "./node_modules/mocha/bin/mocha --compilers js:babel-register --recursive test/unit/specs; exit 0",
     "test": "yarn run unit",
-    "lint": "eslint --ext .js src"
+    "lint": "eslint --ext .js src",
+    "prepublish": "yarn run build"
   }
 }

@@ -35,6 +35,7 @@ class MuttConfig {
                 array: fields.ArrayField,
                 boolean: fields.BooleanField,
                 enum: fields.ChoiceField,
+                number: fields.IntegerField,
                 integer: fields.IntegerField,
                 object: fields.ObjectField,
                 string: fields.StringField,
