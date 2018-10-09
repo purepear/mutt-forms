@@ -5,7 +5,7 @@
 'use strict'
 
 import Mutt from '../index'
-import { Field } from './core'
+import {Field} from './core'
 
 /**
  * Button field, used to add custom actions to form elements

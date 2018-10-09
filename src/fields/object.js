@@ -1,22 +1,21 @@
 /**
-* @file Object Field
-*/
+ * @file Object Field
+ */
 
 'use strict'
 
 import Mutt from '../index'
-import { Field } from './core'
+import {Field} from './core'
 
 // TODO: An object is basically a fieldset within a fieldset,
 // we are repeating a bunch of functionality from the fieldset
 // here. This should be refactored.
 
 /**
-* Object Field
-* @class
-*/
+ * Object Field
+ * @class
+ */
 export class ObjectField extends Field {
-
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null, properties = {}, required = []}) {
@@ -31,24 +30,24 @@ export class ObjectField extends Field {
             description,
             options,
             order,
-            parent
+            parent,
         })
 
         this.object = {}
         let fieldIndex = 1
 
-        for(let fieldName of Object.keys(properties)) {
+        for (const fieldName of Object.keys(properties)) {
             let fieldId = `${name}_${fieldName}`
             let fieldOptions = {}
             let fieldRequired = false
 
-            if(this.options.hasOwnProperty(fieldName)) {
+            if (this.options.hasOwnProperty(fieldName)) {
                 fieldOptions = options[fieldName]
             }
 
             // Check if the field is required
-            if(required.length > 0) {
-                if(required.indexOf(fieldName) !== -1) {
+            if (required.length > 0) {
+                if (required.indexOf(fieldName) !== -1) {
                     fieldRequired = true
                 }
             }
@@ -62,16 +61,15 @@ export class ObjectField extends Field {
                 fieldRequired
             )
 
-            if(!field) {
+            if (!field) {
                 throw new Error('Unable to create Field on ObjectField!')
             }
 
-            if(!field.getSortOrder()) {
+            if (!field.getSortOrder()) {
                 field.setSortOrder(fieldIndex)
             }
 
             this.object[fieldName] = field
-
             fieldIndex++
         }
 
@@ -82,7 +80,7 @@ export class ObjectField extends Field {
     get value() {
         let values = {}
 
-        for(let key of Object.keys(this.object)) {
+        for (const key of Object.keys(this.object)) {
             values[key] = this.object[key].value
         }
 
@@ -90,21 +88,21 @@ export class ObjectField extends Field {
     }
 
     set value(values) {
-        if(!values) {
+        if (!values) {
             return
         }
 
         // Wo ist mein Object.isObject()??
-        if(typeof values !== 'object') {
+        if (typeof values !== 'object') {
             throw new Error(
                 'Unable to set object field value(s) from non-object!'
             )
         }
 
-        for(let key of Object.keys(values)) {
+        for (let key of Object.keys(values)) {
             // TODO: Should we warn/error if we set keys that aren't
             // in field object?
-            if(this.object.hasOwnProperty(key)) {
+            if (this.object.hasOwnProperty(key)) {
                 this.object[key].value = values[key]
             }
         }
@@ -116,9 +114,9 @@ export class ObjectField extends Field {
     validate() {
         let valid = true
 
-        for(let key of Object.keys(this.object)) {
+        for (let key of Object.keys(this.object)) {
             let field = this.object[key]
-            if(!field.validate()) {
+            if (!field.validate()) {
                 this._errors[key] = field.errors
                 valid = false
             }
@@ -139,7 +137,7 @@ export class ObjectField extends Field {
     *
     */
     postRender() {
-        for(let key of Object.keys(this.object)) {
+        for (const key of Object.keys(this.object)) {
             this.object[key].postRender()
         }
     }
@@ -162,13 +160,13 @@ export class ObjectField extends Field {
         let pathParts = path.split('.')
         let searchName = pathParts.shift()
 
-        for(let key of Object.keys(this.object)) {
+        for (const key of Object.keys(this.object)) {
             let field = this.object[key]
 
-            if(field.name === searchName) {
-                if(pathParts.length === 0) {
+            if (field.name === searchName) {
+                if (pathParts.length === 0) {
                     return field
-                } else if(field.constructor.prototype
+                } else if (field.constructor.prototype
                                 .hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }

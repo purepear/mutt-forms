@@ -4,14 +4,13 @@
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
  * Button - Standard HTML Button
  * @class
  */
 export class ButtonWidget extends Widget {
-
     /**
      * Render the button field
      * @returns {HTMLElement} render the button widget
@@ -21,7 +20,7 @@ export class ButtonWidget extends Widget {
         button.setAttribute('type', 'button')
         button.setAttribute('class', this.getFieldClass())
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             button.setAttribute(attrib, this.attribs[attrib])
         }
 

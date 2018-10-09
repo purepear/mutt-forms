@@ -4,14 +4,13 @@
 
 'use strict'
 
-import { Field } from '../fields/core'
+import {Field} from '../fields/core'
 
 /**
 * Fieldset wrapper class
 * @class
 */
 export class Fieldset {
-
     /**
     * Setup the fieldset class
     * @constructor
@@ -39,8 +38,8 @@ export class Fieldset {
     * @param {string} fieldName A Field name
     */
     hasField(fieldName) {
-        for(let field in this.fields) {
-            if(field.name === fieldName) {
+        for (const field in this.fields) {
+            if (field.name === fieldName) {
                 return true
             }
         }
@@ -56,8 +55,8 @@ export class Fieldset {
     data() {
         let data = {}
 
-        for(let field of this.fields) {
-            data[field.name] = field.value
+        for (const field of this.fields) {
+            data[field.name] = field.getSerializedValue()
         }
 
         return data
@@ -68,8 +67,8 @@ export class Fieldset {
     * @param {object} data Data object with form values
     */
     populate(data) {
-        for(let field of this.fields) {
-            if(data.hasOwnProperty(field.name)) {
+        for (let field of this.fields) {
+            if (data.hasOwnProperty(field.name)) {
                 field.value = data[field.name]
             }
         }
@@ -83,8 +82,8 @@ export class Fieldset {
     validate() {
         let valid = true
 
-        for(let field of this.fields) {
-            if(!field.validate()) {
+        for (let field of this.fields) {
+            if (!field.validate()) {
                 this.errors[field.name] = field.errors
                 valid = false
             }
@@ -98,8 +97,8 @@ export class Fieldset {
     * @param {object} errors Object with error information
     */
     setFieldErrors(errors) {
-        for(let errorField in errors) {
-            if(this.hasField(errorField)) {
+        for (const errorField in errors) {
+            if (this.hasField(errorField)) {
                 this.getField(errorField)
             }
         }
@@ -119,7 +118,7 @@ export class Fieldset {
     refreshValidationState() {
         this.errors = {}
 
-        for(let field of this.fields) {
+        for (const field of this.fields) {
             field.refreshValidationState()
         }
     }
@@ -133,11 +132,11 @@ export class Fieldset {
         let fieldset = document.createElement('fieldset')
         fieldset.classList.add('mutt-fieldset')
 
-        if(this.name) {
+        if (this.name) {
             fieldset.setAttribute('name', this.name)
         }
 
-        if(this.label) {
+        if (this.label) {
             let legend = document.createElement('legend')
             legend.textContent = this.label
             fieldset.appendChild(legend)
@@ -147,7 +146,7 @@ export class Fieldset {
             return a.getSortOrder() - b.getSortOrder()
         })
 
-        for(let field of this.fields) {
+        for (const field of this.fields) {
             let fieldElement = field.render()
             fieldset.appendChild(fieldElement)
         }
@@ -162,7 +161,7 @@ export class Fieldset {
     * the stage
     */
     postRender() {
-        for(let field of this.fields) {
+        for (const field of this.fields) {
             field.postRender()
         }
     }
@@ -171,7 +170,7 @@ export class Fieldset {
     * Lock all of the fields in the fieldset
     */
     lock() {
-        for(let field of this.fields) {
+        for (const field of this.fields) {
             field.lock()
         }
     }
@@ -180,7 +179,7 @@ export class Fieldset {
     * Unlock all the fields in the fieldset
     */
     unlock() {
-        for(let field of this.fields) {
+        for (const field of this.fields) {
             field.unlock()
         }
     }
@@ -195,11 +194,11 @@ export class Fieldset {
         let pathParts = path.split('.')
         let searchName = pathParts.shift()
 
-        for(let field of this.fields) {
-            if(field.name === searchName) {
-                if(pathParts.length === 0) {
+        for (const field of this.fields) {
+            if (field.name === searchName) {
+                if (pathParts.length === 0) {
                     return field
-                } else if(field.constructor.prototype
+                } else if (field.constructor.prototype
                             .hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }
@@ -223,49 +222,49 @@ export class Fieldset {
             name: name
         }
 
-        if(schema.hasOwnProperty('title')) {
+        if (schema.hasOwnProperty('title')) {
             fieldsetSpec.label = schema.title
         }
 
-        if(options.hasOwnProperty('form')) {
-            if(options.form.hasOwnProperty('label')) {
+        if (options.hasOwnProperty('form')) {
+            if (options.form.hasOwnProperty('label')) {
                 fieldsetSpec.label = options.form.label
             }
         }
 
-        if(label !== null) {
+        if (label !== null) {
             fieldsetSpec.label = label
         }
 
         Object.assign(fieldsetSpec, options)
 
-        if(schema.hasOwnProperty('properties')) {
+        if (schema.hasOwnProperty('properties')) {
             schema = schema.properties
         }
 
         let fieldset = new Fieldset(fieldsetSpec)
         let fieldIndex = 1
 
-        for(let fieldName of Object.keys(schema)) {
+        for (const fieldName of Object.keys(schema)) {
             let fieldId = `${fieldName}_field_${fieldIndex}`
             let fieldSchema = schema[fieldName]
             let fieldOptions = {}
 
             // If a set of fields is specified, we only allow
             // these to be created
-            if(fields) {
-                if(!Object.keys(fields).includes(fieldName)) {
+            if (fields) {
+                if (!Object.keys(fields).includes(fieldName)) {
                     continue
                 }
             }
 
-            if(options.fields) {
-                if(options.fields.hasOwnProperty(fieldName)) {
+            if (options.fields) {
+                if (options.fields.hasOwnProperty(fieldName)) {
                     fieldOptions = options.fields[fieldName]
                 }
             }
 
-            if(options.fieldsets) {
+            if (options.fieldsets) {
                 fieldOptions.fieldsets = options.fieldsets
             }
 
@@ -276,10 +275,10 @@ export class Fieldset {
                 fieldOptions
             )
 
-            if(field) {
+            if (field) {
                 // Only set the sort order if this wasn't set previously,
                 // this may of been set by options
-                if(!field.getSortOrder()) {
+                if (!field.getSortOrder()) {
                     field.setSortOrder(fieldIndex)
                 }
 

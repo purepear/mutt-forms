@@ -8,11 +8,12 @@
 
 import MuttForm from './mutt'
 import MuttConfig from './config'
-import { logger, mixin } from './utils'
+import {logger, mixin} from './utils'
 
 import * as fields from './fields'
 import * as widgets from './widgets'
 import * as validators from './validators'
+import * as serializers from './serializers'
 
 /**
  * Main Mutt API.
@@ -21,11 +22,11 @@ import * as validators from './validators'
  * let form = new Mutt({ name: { type: 'string' } })
  */
 function Mutt(schema, options = {}, debug = false) {
-    if(debug) {
+    if (debug) {
         this.config.setSetting('debug', true)
     }
-  
-    if(schema === undefined) {
+
+    if (schema === undefined) {
         throw new Error('You must specify a Schema!')
     }
 
@@ -39,16 +40,16 @@ function Mutt(schema, options = {}, debug = false) {
  */
 function initApi(Mutt) {
     // Setup the config
-    let config = new MuttConfig()
+    const config = new MuttConfig()
     Mutt.config = config
 
     // Setup plugin interface
     Mutt.use = function(plugins) {
-        if(!Array.isArray(plugins)) {
+        if (!Array.isArray(plugins)) {
             plugins = [plugins]
         }
 
-        for(let plugin of plugins) {
+        for (const plugin of plugins) {
             Mutt.config.use(plugin)
         }
     }
@@ -56,15 +57,16 @@ function initApi(Mutt) {
     // Setup Utilities
     Mutt.logger = logger
     Mutt.mixin = mixin
-  
+
     // Add in hooks for fields, widgets & validators
     Mutt.fields = fields
     Mutt.widgets = widgets
     Mutt.validators = validators
+    Mutt.serializers = serializers
 }
 
 initApi(Mutt)
 
-Mutt.version = '1.8.0'
+Mutt.version = '1.10.0'
 
 export default Mutt

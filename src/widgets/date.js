@@ -4,14 +4,13 @@
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
  * DateInput - Input for date
  * @class
  */
 export class DateInput extends Widget {
-
     /**
      * Render the date input field
      * @returns {HTMLElement} render the input widget
@@ -23,8 +22,8 @@ export class DateInput extends Widget {
         dateInput.setAttribute('value', (this.value) ? this.value : '')
         dateInput.setAttribute('class', this.getFieldClass())
 
-        if(this.options.hasOwnProperty('min')) {
-            if(this.options.min === 'now') {
+        if (this.options.hasOwnProperty('min')) {
+            if (this.options.min === 'now') {
                 var today = new Date()
                 dateInput.setAttribute(
                     'min',
@@ -35,7 +34,7 @@ export class DateInput extends Widget {
             }
         }
 
-        for(let attrib in this.attribs) {
+        for (let attrib in this.attribs) {
             dateInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -86,7 +85,7 @@ export class DateSelectionInput extends Widget {
         let dayInput = document.createElement('select')
         dayInput.setAttribute('name', `${this.name}-day`)
 
-        for(let index of Array.from(Array(31).keys())) {
+        for (let index of Array.from(Array(31).keys())) {
             let day = index + 1
             let dayNumberOption = document.createElement('option')
             dayNumberOption.setAttribute(
@@ -96,7 +95,7 @@ export class DateSelectionInput extends Widget {
 
             dayNumberOption.textContent = day
 
-            if(currentValue !== null && currentValue.getDate() === day) {
+            if (currentValue !== null && currentValue.getDate() === day) {
                 dayNumberOption.selected = 'selected'
             }
 
@@ -109,7 +108,7 @@ export class DateSelectionInput extends Widget {
         monthInput.setAttribute('name', `${this.name}-month`)
 
         let months = this.getMonthNames()
-        for(let monthIndex in months) {
+        for (let monthIndex in months) {
             let month = months[monthIndex]
             let monthNameOption = document.createElement('option')
 
@@ -123,7 +122,7 @@ export class DateSelectionInput extends Widget {
             monthNameOption.setAttribute('value', monthNumber)
             monthNameOption.textContent = month
 
-            if(currentValue !== null &&
+            if (currentValue !== null &&
                 currentValue.getMonth() === parseInt(monthIndex)) {
                 monthNameOption.selected = 'selected'
             }
@@ -140,16 +139,17 @@ export class DateSelectionInput extends Widget {
         let thisYear = currentYear
         let maxYears = 20
 
-        if(this.options.hasOwnProperty('years')) {
+        if (this.options.hasOwnProperty('years')) {
             maxYears = this.options.years
         }
 
-        while(thisYear > (currentYear - maxYears)) {
+        while (thisYear > (currentYear - maxYears)) {
             let yearOption = document.createElement('option')
             yearOption.setAttribute('value', thisYear)
             yearOption.textContent = thisYear
 
-            if(currentValue !== null && currentValue.getFullYear() === thisYear) {
+            if (currentValue !== null &&
+                currentValue.getFullYear() === thisYear) {
                 yearOption.selected = 'selected'
             }
 
@@ -211,7 +211,7 @@ export class DateSelectionInput extends Widget {
      * @returns {string} value of the element on the stage
      */
     getDateValue() {
-        if(!this._rendered) {
+        if (!this._rendered) {
             return this.value
         }
 
@@ -219,7 +219,7 @@ export class DateSelectionInput extends Widget {
         let elementMonth = this.getElementMonth()
         let elementYear = this.getElementYear()
 
-        if(!elementDay || !elementMonth || !elementYear) {
+        if (!elementDay || !elementMonth || !elementYear) {
             throw new Error('Unable to get element for date!')
         }
 
@@ -228,7 +228,7 @@ export class DateSelectionInput extends Widget {
         // Attempt to validate the bloody thing
         let timestamp = Date.parse(value)
 
-        if(isNaN(timestamp)) {
+        if (isNaN(timestamp)) {
             this.value = null
             return this.value
         }
@@ -245,10 +245,10 @@ export class DateSelectionInput extends Widget {
      */
     setDateValue(value) {
         // If its a string, try to parse
-        if(typeof value === 'string') {
+        if (typeof value === 'string') {
             let timestamp = Date.parse(value)
 
-            if(isNaN(timestamp)) {
+            if (isNaN(timestamp)) {
                 // Don't set invalid dates
                 return
             }
@@ -258,7 +258,7 @@ export class DateSelectionInput extends Widget {
 
         this.value = value
 
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
 
@@ -267,16 +267,16 @@ export class DateSelectionInput extends Widget {
         let elementYear = this.getElementYear()
 
         let date = value.getDate()
-        if(date.toString().length === 1) {
+        if (date.toString().length === 1) {
             date = `0${date}`
         }
 
         let month = value.getMonth() + 1
-        if(month.toString().length === 1) {
+        if (month.toString().length === 1) {
             month = `0${month}`
         }
 
-        if(elementDay && elementMonth && elementYear) {
+        if (elementDay && elementMonth && elementYear) {
             elementDay.value = date
             elementMonth.value = month
             elementYear.value = this.value.getFullYear()

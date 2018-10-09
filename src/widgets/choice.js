@@ -1,18 +1,17 @@
 /**
-* @file Choice Widgets
-*/
+ * @file Choice Widgets
+ */
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
-* BaseChoiceWidget - Abstract input for choice fields
-* @class
-* @abstract
-*/
+ * BaseChoiceWidget - Abstract input for choice fields
+ * @class
+ * @abstract
+ */
 export class BaseChoiceWidget extends Widget {
-
     /**
     * Abstract class for managing widgets with choices, such as selects
     * @constructor
@@ -51,7 +50,7 @@ export class BaseChoiceWidget extends Widget {
     * @returns {string} formated label
     */
     formatLabel(label) {
-        if(label) {
+        if (label) {
             label = label.toLowerCase().replace('_', ' ')
             return `${label.charAt(0).toUpperCase()}${label.slice(1)}`
         }

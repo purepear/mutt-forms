@@ -1,22 +1,22 @@
 /**
-* @file Boolean Field
-*/
+ * @file Boolean Field
+ */
 
 'use strict'
 
 import Mutt from '../index'
-import { Field } from './core'
+import {Field} from './core'
 
 function toBool(value) {
-    if((value === undefined) || (value === null)) {
+    if ((value === undefined) || (value === null)) {
         return null
     }
 
-    if(typeof value === 'boolean') {
+    if (typeof value === 'boolean') {
         return value
     }
 
-    switch(value.toLowerCase().trim()) {
+    switch (value.toLowerCase().trim()) {
         case 'true':
         case 'yes':
         case '1':
@@ -34,11 +34,10 @@ function toBool(value) {
 }
 
 /**
-* Boolean field, used to capture true/false inputs
-* @class
-*/
+ * Boolean field, used to capture true/false inputs
+ * @class
+ */
 export class BooleanField extends Field {
-
     /**
     * Property - get/set value
     */

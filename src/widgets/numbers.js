@@ -1,20 +1,19 @@
 /**
-* @file Number input widget
-*/
+ * @file Number input widget
+ */
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
-* NumberInput - Standard HTML number input
-* @class
-*/
+ * NumberInput - Standard HTML number input
+ * @class
+ */
 export class NumberInput extends Widget {
-
     /**
-    * Render the text input field
-    */
+     * Render the text input field
+     */
     renderField() {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
@@ -28,7 +27,7 @@ export class NumberInput extends Widget {
         // to be fired over the alpha one
         textInput.setAttribute('pattern', '[0-9]*')
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -36,20 +35,19 @@ export class NumberInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    */
+     * Get the class name for the widget element
+     */
     getFieldClass() { return 'mutt-field mutt-field-number' }
 }
 
 /**
-* CurrencyInput
-* @class
-*/
+ * CurrencyInput
+ * @class
+ */
 export class CurrencyInput extends Widget {
-
     /**
-    * Render the text input field
-    */
+     * Render the text input field
+     */
     renderField() {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
@@ -61,7 +59,7 @@ export class CurrencyInput extends Widget {
         // See note for NumberInput....
         textInput.setAttribute('pattern', '[0-9]*')
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -75,7 +73,7 @@ export class CurrencyInput extends Widget {
     getValue() {
         let value = super.getValue()
 
-        if(value) {
+        if (value) {
             value = parseFloat(value)
             value = value.toFixed(2)
         }
@@ -84,7 +82,7 @@ export class CurrencyInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    */
+     * Get the class name for the widget element
+     */
     getFieldClass() { return 'mutt-field mutt-field-currency' }
 }

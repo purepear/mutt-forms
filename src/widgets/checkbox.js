@@ -4,14 +4,13 @@
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
  * CheckboxInput - Standard HTML checkbox
  * @class
  */
 export class CheckboxInput extends Widget {
-
     /**
      * Render the text input field
      * @returns {HTMLElement} returns the rendered HTML checkbox
@@ -27,11 +26,11 @@ export class CheckboxInput extends Widget {
             this.setValue(!checkbox.hasAttribute('checked'))
         }
 
-        if(this.value) {
+        if (this.value) {
             checkbox.setAttribute('checked', 'checked')
         }
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             checkbox.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -49,11 +48,11 @@ export class CheckboxInput extends Widget {
      * @returns {string} value of the element on the stage
      */
     getValue() {
-        if(!this._rendered) {
+        if (!this._rendered) {
             return this.value
         }
 
-        if(this.getElement().hasAttribute('checked')) {
+        if (this.getElement().hasAttribute('checked')) {
             return true
         }
 
@@ -69,19 +68,19 @@ export class CheckboxInput extends Widget {
     setValue(value) {
         this.value = value
 
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
 
         let element = this.getElement()
 
-        if(element) {
+        if (element) {
             let label = this.getElementLabel()
 
-            if(this.value) {
+            if (this.value) {
                 element.setAttribute('checked', 'checked')
 
-                if(label) {
+                if (label) {
                     label.classList.add('mutt-field-checkbox-checked')
                 }
             } else {
@@ -116,7 +115,7 @@ export class CheckboxList extends CheckboxInput {
 
     constructor(field, type, id, name, label, attribs, options, value) {
         super(field, type, id, name, label, attribs, options, value)
-        if(!this.value) {
+        if (!this.value) {
             this.value = []
         }
     }
@@ -129,7 +128,7 @@ export class CheckboxList extends CheckboxInput {
         let list = document.createElement('ul')
         list.setAttribute('id', this.getFieldId())
 
-        for(let choice in this.choices) {
+        for (let choice in this.choices) {
             let listItem = document.createElement('li')
             let checkbox = document.createElement('input')
 
@@ -139,7 +138,8 @@ export class CheckboxList extends CheckboxInput {
             checkbox.setAttribute('data-index', choice)
             checkbox.setAttribute('id', this.id + choice)
 
-            if(this.options.hasOwnProperty('choices') && this.options['choices'][choice][1]) {
+            if (this.options.hasOwnProperty('choices') &&
+                this.options['choices'][choice][1]) {
                 let label = document.createElement('label')
                 label.setAttribute('for', this.id + choice)
                 label.textContent = this.options['choices'][choice][1]
@@ -153,11 +153,11 @@ export class CheckboxList extends CheckboxInput {
                 )
             }
 
-            if(this.value && this.value[choice]) {
+            if (this.value && this.value[choice]) {
                 checkbox.setAttribute('checked', 'checked')
             }
 
-            for(let attrib in this.attribs) {
+            for (let attrib in this.attribs) {
                 checkbox.setAttribute(attrib, this.attribs[attrib])
             }
 
@@ -176,17 +176,17 @@ export class CheckboxList extends CheckboxInput {
      * @return {HTMLElement} the element on the stage
      */
     getValueByIndex(index) {
-        if(!this._rendered) {
+        if (!this._rendered) {
             return this.value[index]
         }
 
         let element = this.getElementByIndex(index)
 
-        if(!element) {
+        if (!element) {
             throw new Error('Unable to get element!')
         }
 
-        if(element.hasAttribute('checked')) {
+        if (element.hasAttribute('checked')) {
             this.value = true
         } else {
             this.value = false
@@ -201,18 +201,18 @@ export class CheckboxList extends CheckboxInput {
      * @returns {boolean|*|string} value of the element on the stage
      */
     getValue() {
-        if(!this._rendered) {
+        if (!this._rendered) {
             return this.value
         }
 
         let elements = this.getAllElements()
 
-        if(!elements) {
+        if (!elements) {
             throw new Error('Unable to get elements!')
         }
 
-        for(let index in Array.from(elements)) {
-            if(elements[index].hasAttribute('checked')) {
+        for (let index in Array.from(elements)) {
+            if (elements[index].hasAttribute('checked')) {
                 this.value[index] = true
             } else {
                 this.value[index] = false
@@ -229,11 +229,12 @@ export class CheckboxList extends CheckboxInput {
      */
     setValueByIndex(value, index) {
         this.value[index] = value
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
+
         let element = this.getElementByIndex(index)
-        if(element) {
+        if (element) {
             if(this.value[index]) {
                 element.setAttribute('checked', 'checked')
             } else {
@@ -248,22 +249,25 @@ export class CheckboxList extends CheckboxInput {
      */
     setValue(value) {
         this.value = value
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
+
         let elements = this.getAllElements()
-        if(value.length === elements.length) {
+        if (value.length === elements.length) {
             elements[0].setAttribute('checked', 'checked')
 
-            for(let index in Array.from(elements)) {
-                if(this.value[index]) {
+            for (let index in Array.from(elements)) {
+                if (this.value[index]) {
                     elements[parseInt(index)].setAttribute('checked', 'checked')
                 } else {
                     elements[parseInt(index)].removeAttribute('checked')
                 }
             }
         } else {
-            throw new Error('Array Length does not match number of Elements in CheckboxList')
+            throw new Error(
+            'Array Length does not match number of Elements in CheckboxList'
+            )
         }
     }
 
@@ -272,8 +276,8 @@ export class CheckboxList extends CheckboxInput {
      * @param choices
      */
     setChoices(choices) {
-        for(let index in choices) {
-            if(this.value && typeof this.value[index] === 'undefined') {
+        for (let index in choices) {
+            if (this.value && typeof this.value[index] === 'undefined') {
                 this.value[index] = false
             }
         }

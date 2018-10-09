@@ -1,23 +1,22 @@
 /**
-* @file Array Widgets
-*/
+ * @file Array Widgets
+ */
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
-* ArrayInput - Render a list of fields
-* @class
-*/
+ * ArrayInput - Render a list of fields
+ * @class
+ */
 export class ArrayInput extends Widget {
-
     /**
-    * Render the list of input fields
-    * @params {array} fields - a list of Field objects to render
-    * @returns {HTMLElement} returns a HTML fragment containing
-    * all rendered fields
-    */
+     * Render the list of input fields
+     * @params {array} fields - a list of Field objects to render
+     * @returns {HTMLElement} returns a HTML fragment containing
+     * all rendered fields
+     */
     renderList(fields) {
         // Create a fragment for our widget
         let widgetFragment = document.createDocumentFragment()
@@ -28,7 +27,7 @@ export class ArrayInput extends Widget {
             return a.getSortOrder() - b.getSortOrder()
         })
 
-        for(let field of fields) {
+        for (const field of fields) {
             let renderedField = field.render()
             wrapper.appendChild(renderedField)
         }
@@ -58,7 +57,9 @@ export class ArrayInput extends Widget {
     * Get the class name for the widget element
     * @returns {string} the class to use for the field element
     */
-    getFieldClass() { return 'mutt-field mutt-field-array' }
+    getFieldClass() {
+        return 'mutt-field mutt-field-array'
+    }
 
     /**
     *

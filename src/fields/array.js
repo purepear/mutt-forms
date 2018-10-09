@@ -1,26 +1,26 @@
 /**
-* @file Array field
-*/
+ * @file Array field
+ */
 
 'use strict'
 
 import Mutt from '../index'
-import { Field } from './core'
-import { LengthValidator } from '../validators/core'
+import {Field} from './core'
+import {LengthValidator} from '../validators/core'
 
 /**
-* Array is a complex field type, which is essentially a list
-* of other fields.
-* @class
-*/
+ * Array is a complex field type, which is essentially a list
+ * of other fields.
+ * @class
+ */
 export class ArrayField extends Field {
-
     /**
     *
     */
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
-        order = null, parent = null, items = {}, minItems = 1, maxItems = null}) {
+        order = null, parent = null, items = {}, minItems = 1,
+        maxItems = null}) {
         super({
             id,
             name,
@@ -32,7 +32,7 @@ export class ArrayField extends Field {
             description,
             options,
             order,
-            parent
+            parent,
         })
 
         this.minItems = minItems
@@ -44,21 +44,21 @@ export class ArrayField extends Field {
         this.slots = []
         let buildPlaceholders = true
 
-        if(this.options.hasOwnProperty('disablePlaceholders')) {
+        if (this.options.hasOwnProperty('disablePlaceholders')) {
             buildPlaceholders = !this.options.disablePlaceholders
         }
 
         // We may want to suppress the placeholder slots from
         // being added by default
-        if(buildPlaceholders) {
-            for(let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
+        if (buildPlaceholders) {
+            for (let i in Array.from(Array(this.minItems).keys())) { // eslint-disable-line
                 this.addSlot(false)
             }
         }
 
         this.validators.push(new LengthValidator({
             min: this.minItems,
-            max: this.maxItems
+            max: this.maxItems,
         }))
 
         // Store errors as an object
@@ -66,9 +66,9 @@ export class ArrayField extends Field {
     }
 
     /**
-    * Add a new slot to the array field
-    * @param [updateWidget] Update the widget attached to the field
-    */
+     * Add a new slot to the array field
+     * @param [updateWidget] Update the widget attached to the field
+     */
     addSlot(updateWidget = true) {
         let position = this.slots.length + 1
         let fieldId = this.getSlotId(position)
@@ -77,7 +77,7 @@ export class ArrayField extends Field {
         // FIXME: This is a workaround, really should
         // get the correct option structure to this class
         let fieldOptions = Object.assign({
-            order: position
+            order: position,
         }, this.itemOptions)
 
         let field = this.constructor.new(
@@ -91,7 +91,7 @@ export class ArrayField extends Field {
         this.slots.push(field)
 
         // FIXME: This shouldn't be at this level
-        if(updateWidget && this.widget.hasOwnProperty('addSlot')) {
+        if (updateWidget && this.widget.hasOwnProperty('addSlot')) {
             this.widget.addSlot(field)
         }
     }
@@ -102,13 +102,13 @@ export class ArrayField extends Field {
     * @returns {bool} success of the removal of a slot
     */
     removeSlot(updateWidget = true) {
-        if(this.slots.length === 0) {
+        if (this.slots.length === 0) {
             return false
         }
 
         this.slots.pop()
 
-        if(updateWidget && this.widget.hasOwnProperty('removeSlot')) {
+        if (updateWidget && this.widget.hasOwnProperty('removeSlot')) {
             this.widget.removeSlot()
         }
 
@@ -122,22 +122,22 @@ export class ArrayField extends Field {
     * @returns {bool} success of the removal of a slot
     */
     spliceSlot(index, updateWidget = true) {
-        if(this.slots.length === 0) {
+        if (this.slots.length === 0) {
             return false
         }
 
-        for(let slotIndex in this.slots) {
+        for (let slotIndex in this.slots) {
             // ??
             slotIndex = parseInt(slotIndex)
 
-            if(updateWidget && slotIndex === index) {
+            if (updateWidget && slotIndex === index) {
                 this.slots[slotIndex].destroy()
             }
         }
 
         this.slots.splice(index, 1)
 
-        for(let slotIndex in this.slots) {
+        for (let slotIndex in this.slots) {
             let position = parseInt(slotIndex) + 1
             let newId = this.getSlotId(position)
             let newName = this.getSlotName(position)
@@ -170,7 +170,7 @@ export class ArrayField extends Field {
     get value() {
         let valueArray = []
 
-        for(let slot of this.slots) {
+        for (let slot of this.slots) {
             valueArray.push(slot.value)
         }
 
@@ -178,8 +178,10 @@ export class ArrayField extends Field {
     }
 
     set value(value) {
-        if(!Array.isArray(value)) {
-            throw new Error('Unable to set array field value(s) from non-array!')
+        if (!Array.isArray(value)) {
+            throw new Error(
+                'Unable to set array field value(s) from non-array!'
+            )
         }
 
         //
@@ -189,12 +191,12 @@ export class ArrayField extends Field {
         // we must add new slots to map into, if it's smaller, we need to
         // trim the slots.
         //
-        if(value.length > this.slots.length) {
+        if (value.length > this.slots.length) {
             let difference = value.length - this.slots.length
-            for(let _ of Array(difference).keys()) { // eslint-disable-line
+            for (let _ of Array(difference).keys()) { // eslint-disable-line
                 this.addSlot()
             }
-        } else if(value.length < this.slots.length) {
+        } else if (value.length < this.slots.length) {
             this.slots = this.slots.slice(0, value.length)
         }
 
@@ -202,7 +204,7 @@ export class ArrayField extends Field {
             return [field, value[index]]
         })
 
-        for(let [field, value] of fieldValueMap) {
+        for (let [field, value] of fieldValueMap) {
             field.value = value
         }
     }
@@ -214,23 +216,23 @@ export class ArrayField extends Field {
     validate() {
         this.refreshValidationState()
 
-        if(this.validators.length > 0) {
-            for(let validator of this.validators) {
-                if(!validator.validate(this.value)) {
+        if (this.validators.length > 0) {
+            for (const validator of this.validators) {
+                if (!validator.validate(this.value)) {
                     this.errors = validator.error
                 }
             }
         }
 
-        if(this.errors.length > 0) {
+        if (this.errors.length > 0) {
             this.widget.refreshErrorState(this.errors)
             return false
         }
 
         let valid = true
 
-        for(let field of this.slots) {
-            if(!field.validate()) {
+        for (const field of this.slots) {
+            if (!field.validate()) {
                 valid = false
             }
         }
@@ -250,7 +252,7 @@ export class ArrayField extends Field {
     * Triggers post render call on all fields in array
     */
     postRender() {
-        for(let field of this.slots) {
+        for (const field of this.slots) {
             field.postRender()
         }
     }
@@ -279,19 +281,19 @@ export class ArrayField extends Field {
         // it should be an index to an field in the array
         let searchIndex = parseInt(pathParts.shift())
 
-        if(isNaN(searchIndex)) {
+        if (isNaN(searchIndex)) {
             return null
-        } else if(searchIndex > this.slots.length) {
+        } else if (searchIndex > this.slots.length) {
             return null
         }
 
         let field = this.slots[searchIndex]
 
-        if(pathParts.length === 0) {
+        if (pathParts.length === 0) {
             return field
         }
 
-        if(field.constructor.prototype.hasOwnProperty('getFieldByPath')) {
+        if (field.constructor.prototype.hasOwnProperty('getFieldByPath')) {
             return field.getFieldByPath(pathParts.join('.'))
         }
 

@@ -4,12 +4,12 @@
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
-* TextInput - Standard HTML text input
-* @class
-*/
+ * TextInput - Standard HTML text input
+ * @class
+ */
 export class TextInput extends Widget {
 
     /**
@@ -23,7 +23,7 @@ export class TextInput extends Widget {
         textInput.setAttribute('value', (this.value) ? this.value : '')
         textInput.setAttribute('class', this.getFieldClass())
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -31,17 +31,16 @@ export class TextInput extends Widget {
     }
 
     /**
-    * Get the class name for the widget element
-    */
+     * Get the class name for the widget element
+     */
     getFieldClass() { return 'mutt-field mutt-field-text' }
 }
 
 /**
-* TextAreaInput - Standard HTML textarea input
-* @class
-*/
+ * TextAreaInput - Standard HTML textarea input
+ * @class
+ */
 export class TextAreaInput extends Widget {
-
     /**
     * Render the text input field
     */
@@ -51,7 +50,7 @@ export class TextAreaInput extends Widget {
         textareaInput.setAttribute('class', this.getFieldClass())
         textareaInput.textContent = (this.value) ? this.value : ''
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textareaInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -65,11 +64,10 @@ export class TextAreaInput extends Widget {
 }
 
 /**
-* EmailInput - Standard HTML text input
-* @class
-*/
+ * EmailInput - Standard HTML text input
+ * @class
+ */
 export class EmailInput extends TextInput {
-
     /**
     * Render the text input field
     */
@@ -80,7 +78,7 @@ export class EmailInput extends TextInput {
         textInput.setAttribute('value', (this.value) ? this.value : '')
         textInput.setAttribute('class', this.getFieldClass())
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -94,19 +92,18 @@ export class EmailInput extends TextInput {
 }
 
 /**
-* HiddenInput - Standard HTML hidden input
-* @class
-*/
+ * HiddenInput - Standard HTML hidden input
+ * @class
+ */
 export class HiddenInput extends Widget {
-
     constructor(field, type, id, name, label, attribs, options, value) {
         super(field, type, id, name, label, attribs, options, value)
         this.choices = []
     }
 
     /**
-    * Render the text input field
-    */
+     * Render the text input field
+     */
     renderField() {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
@@ -114,7 +111,7 @@ export class HiddenInput extends Widget {
         textInput.setAttribute('value', (this.value) ? this.value : '')
         textInput.setAttribute('class', this.getFieldClass())
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -122,23 +119,23 @@ export class HiddenInput extends Widget {
     }
 
     /**
-    * Label is not used for hidden fields
-    */
+     * Label is not used for hidden fields
+     */
     renderLabel() {
         return null
     }
 
     /**
-    * Errors are not shown for hidden fields
-    */
+     * Errors are not shown for hidden fields
+     */
     renderErrors() {
         return null
     }
 
     /**
-    *
-    * @params {array}
-    */
+     *
+     * @params {array}
+     */
     setChoices(choices) {
         this.choices = choices
     }
@@ -153,14 +150,13 @@ export class HiddenInput extends Widget {
 }
 
 /**
-* PasswordInput - Standard HTML password input
-* @class
-*/
+ * PasswordInput - Standard HTML password input
+ * @class
+ */
 export class PasswordInput extends TextInput {
-
     /**
-    * Render the text input field
-    */
+     * Render the text input field
+     */
     renderField() {
         let textInput = document.createElement('input')
         textInput.setAttribute('name', this.name)
@@ -168,7 +164,7 @@ export class PasswordInput extends TextInput {
         textInput.setAttribute('value', (this.value) ? this.value : '')
         textInput.setAttribute('class', this.getFieldClass())
 
-        for(let attrib in this.attribs) {
+        for (const attrib in this.attribs) {
             textInput.setAttribute(attrib, this.attribs[attrib])
         }
 
@@ -182,9 +178,9 @@ export class PasswordInput extends TextInput {
 }
 
 /**
-* DisplayWidget - Display only widget, this just shows the field as
-* plain text. Typically used by the lock form utility.
-*/
+ * DisplayWidget - Display only widget, this just shows the field as
+ * plain text. Typically used by the lock form utility.
+ */
 export function displayReadonlyValue(value) {
     let display = document.createElement('span')
 
@@ -196,11 +192,10 @@ export function displayReadonlyValue(value) {
 }
 
 /**
-* DisplayWidget - Widget to display field as plain text
-* @class
-*/
+ * DisplayWidget - Widget to display field as plain text
+ * @class
+ */
 export class DisplayWidget extends Widget {
-
     /**
     * Render the text input field
     */

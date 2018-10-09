@@ -9,6 +9,7 @@
 import MuttForm from './mutt'
 import * as fields from './fields'
 import * as widgets from './widgets'
+import * as serializers from './serializers'
 
 /**
  * Internal registry for Mutt fields & widgets. This is used
@@ -18,7 +19,6 @@ import * as widgets from './widgets'
  * @class
  */
 class MuttConfig {
-
     /**
      * MuttConfig is used for configuration information.
      * It's primarily used by the builder utility to decide
@@ -29,7 +29,7 @@ class MuttConfig {
     constructor() {
         this._config = {
             settings: {
-                debug: false
+                debug: false,
             },
             fields: {
                 array: fields.ArrayField,
@@ -41,7 +41,7 @@ class MuttConfig {
                 string: fields.StringField,
                 date: fields.StringField,
                 datetime: fields.StringField,
-                button: fields.ButtonField
+                button: fields.ButtonField,
             },
             widgets: {
                 array: widgets.ArrayInput,
@@ -60,8 +60,11 @@ class MuttConfig {
                 hidden: widgets.HiddenInput,
                 password: widgets.PasswordInput,
                 display: widgets.DisplayWidget,
-                button: widgets.ButtonWidget
-            }
+                button: widgets.ButtonWidget,
+            },
+            serializers: {
+                trim: serializers.TrimSerializer,
+            },
         }
     }
 
@@ -70,7 +73,7 @@ class MuttConfig {
      * @param {string} name Name of setting
      */
     getSetting(name) {
-        if(!this._config.settings.hasOwnProperty(name)) {
+        if (!this._config.settings.hasOwnProperty(name)) {
             return null
         }
 
@@ -91,51 +94,51 @@ class MuttConfig {
      */
     use(plugin) {
         // Check we can install the plugin
-        if(!plugin.hasOwnProperty('install')) {
+        if (!plugin.hasOwnProperty('install')) {
             throw new Error(
                 'Unable to install plugin - missing install!'
             )
         }
 
-		let pluginComponents = {}
+        let pluginComponents = {}
         let pluginFeatures = plugin.install()
 
-		// NOTE: Support for legacy plugins returning an array
-		if(Array.isArray(pluginFeatures)) {
-			let [ fields, widgets, settings ] = pluginFeatures
-			pluginComponents = { fields, widgets, settings }
-		} else {
-			pluginComponents = pluginFeatures
-		}
+        // NOTE: Support for legacy plugins returning an array
+        if (Array.isArray(pluginFeatures)) {
+            let [fields, widgets, settings] = pluginFeatures
+            pluginComponents = {fields, widgets, settings}
+        } else {
+            pluginComponents = pluginFeatures
+        }
 
-		// Fields & Widgets allow for the extension of mutt default
-		// fields & widgets
-        if(pluginComponents.fields) {
+        // Fields & Widgets allow for the extension of mutt default
+        // fields & widgets
+        if (pluginComponents.fields) {
             this.registerFields(pluginComponents.fields)
         }
 
-        if(pluginComponents.widgets) {
+        if (pluginComponents.widgets) {
             this.registerWidgets(pluginComponents.widgets)
         }
 
-		// Settings
-		// These allow for internal settings to be overidden or
-		// extended by plugins
-        if(pluginComponents.settings) {
+        // Settings
+        // These allow for internal settings to be overidden or
+        // extended by plugins
+        if (pluginComponents.settings) {
             this._config.settings = Object.assign(
                 this._config.settings,
                 pluginComponents.settings
             )
         }
 
-		// Extensions
-		// These allow for the MuttForm class to be extended
-		// or overidden by plugins
-		if(pluginComponents.extensions) {
-			Object.keys(pluginComponents.extensions).forEach((name) => {
-				let extension = pluginComponents.extensions[name]
-				MuttForm.prototype[name] = extension
-			})
+        // Extensions
+        // These allow for the MuttForm class to be extended
+        // or overidden by plugins
+        if (pluginComponents.extensions) {
+            Object.keys(pluginComponents.extensions).forEach((name) => {
+                let extension = pluginComponents.extensions[name]
+                MuttForm.prototype[name] = extension
+            })
         }
     }
 
@@ -155,8 +158,8 @@ class MuttConfig {
      * @param {Widget}
      */
     registerFields(fields) {
-        if(fields) {
-            for(let fieldType of Object.keys(fields)) {
+        if (fields) {
+            for (let fieldType of Object.keys(fields)) {
                 this.registerField(fieldType, fields[fieldType])
             }
         }
@@ -168,7 +171,7 @@ class MuttConfig {
      * @returns {bool} returns true if field type exists in registry
      */
     hasField(type) {
-        if(this._config.fields.hasOwnProperty(type)) {
+        if (this._config.fields.hasOwnProperty(type)) {
             return true
         }
         return false
@@ -179,7 +182,7 @@ class MuttConfig {
      * @param {string}
      */
     getField(type) {
-        if(this._config.fields.hasOwnProperty(type)) {
+        if (this._config.fields.hasOwnProperty(type)) {
             return this._config.fields[type]
         }
         return null
@@ -199,8 +202,8 @@ class MuttConfig {
      * @param {array} widgets list of widgets to register
      */
     registerWidgets(widgets) {
-        if(widgets) {
-            for(let widgetName of Object.keys(widgets)) {
+        if (widgets) {
+            for (const widgetName of Object.keys(widgets)) {
                 this.registerWidget(widgetName, widgets[widgetName])
             }
         }
@@ -211,7 +214,7 @@ class MuttConfig {
      * @param {string} name name of widget to check
      */
     hasWidget(name) {
-        if(this._config.widgets.hasOwnProperty(name)) {
+        if (this._config.widgets.hasOwnProperty(name)) {
             return true
         }
         return false
@@ -222,7 +225,7 @@ class MuttConfig {
      * @param {string} name name of widget class to fetch
      */
     getWidget(name) {
-        if(this._config.widgets.hasOwnProperty(name)) {
+        if (this._config.widgets.hasOwnProperty(name)) {
             return this._config.widgets[name]
         }
         return null
@@ -234,6 +237,60 @@ class MuttConfig {
      */
     getWidgets(name) {
         return this._config.widgets
+    }
+
+    /**
+     * Register a serializer class with a key
+     * @param {string} name reference for widget
+     * @param {function} serializer class of widget to be registered
+     */
+    registerSerializer(name, serializer) {
+        this._config.serializers[name] = serializer
+    }
+
+    /**
+     * Register a collection of serializers - calls registerSerializer
+     * @param {array} serializers list of serializers to register
+     */
+    registerSerializers(serializers) {
+        if (serializers) {
+            for (const serializerName of Object.keys(serializers)) {
+                this.registerSerilizer(
+                    serializerName,
+                    serializers[serializerName]
+                )
+            }
+        }
+    }
+
+    /**
+     * Check if a serializer has been registered
+     * @param {string} name name of serializer to check
+     */
+    hasSerializer(name) {
+        if (this._config.serializers.hasOwnProperty(name)) {
+            return true
+        }
+        return false
+    }
+
+    /**
+     * Get a serilizer by name
+     * @param {string} name name of serializer class to fetch
+     */
+    getSerializer(name) {
+        if (this._config.serializers.hasOwnProperty(name)) {
+            return this._config.serializers[name]
+        }
+        return null
+    }
+
+    /**
+     * Get currently configured serializers
+     * @param {object} serializers object of currently configured serilizers
+     */
+    getSerializers(name) {
+        return this._config.serializers
     }
 }
 

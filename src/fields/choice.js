@@ -1,19 +1,18 @@
 /**
-* @file Choice Field
-*/
+ * @file Choice Field
+ */
 
 'use strict'
 
 import Mutt from '../index'
-import { Field } from './core'
+import {Field} from './core'
 
 /**
-* Choice Field, used as a base to capture inputs from
-* a range of values
-* @class
-*/
+ * Choice Field, used as a base to capture inputs from
+ * a range of values
+ * @class
+ */
 export class ChoiceField extends Field {
-
     constructor({id, name, label = null, initial = null, widget = null,
         validators = [], attribs = {}, description = null, options = {},
         order = null, parent = null, choices = []}) {
@@ -28,16 +27,16 @@ export class ChoiceField extends Field {
             description,
             options,
             order,
-            parent
+            parent,
         })
 
         this.choices = choices
 
-        if(options.hasOwnProperty('choices')) {
+        if (options.hasOwnProperty('choices')) {
             this.choices = options.choices
         }
 
-        if(this.widget.hasOwnProperty('setChoices')) {
+        if (this.widget.hasOwnProperty('setChoices')) {
             this.widget.setChoices(this.choices)
         }
     }
@@ -47,7 +46,7 @@ export class ChoiceField extends Field {
     * @returns {SelectInput} widget to display
     */
     getWidget() {
-        if(this.options.hasOwnProperty('widget') &&
+        if (this.options.hasOwnProperty('widget') &&
             this.options.widget === 'checkboxlist') {
             return Mutt.config.getWidget('checkboxlist')
         } else {

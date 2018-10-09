@@ -5,13 +5,15 @@
       "loose": true,
       "targets": {
         "browsers": [
-          "last 2 versions", 
+          "last 2 versions",
           "Explorer 11"
         ]
       }
     }]
   ],
-  "plugins": [
-    "external-helpers"
-  ]
+  "env": {
+    "test": {
+      "presets": [["env"]]
+    }
+  }
 }

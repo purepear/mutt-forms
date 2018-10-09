@@ -1,25 +1,24 @@
 /**
-* @file Object input widget
-*/
+ * @file Object input widget
+ */
 
 'use strict'
 
-import { Widget } from './core'
+import {Widget} from './core'
 
 /**
-* ObjectInput - Render a list of fields
-* @class
-*/
+ * ObjectInput - Render a list of fields
+ * @class
+ */
 export class ObjectInput extends Widget {
-
     renderObjectFields(wrapper, fields, allowedFields = null) {
         // Objects need to be ordered on output, we create a list to
         // order them by, then render each in that order
         let orderedFields = []
 
-        for(let key of Object.keys(fields)) {
-            if(allowedFields) {
-                if(!Object.keys(allowedFields).includes(key)) {
+        for (const key of Object.keys(fields)) {
+            if (allowedFields) {
+                if (!Object.keys(allowedFields).includes(key)) {
                     continue
                 }
             }
@@ -32,16 +31,16 @@ export class ObjectInput extends Widget {
             return a[0] - b[0]
         })
 
-        for(let fieldOrderKey of orderedFields) {
+        for (const fieldOrderKey of orderedFields) {
             let [, key] = fieldOrderKey
-            let renderedField = fields[key].render()
+            const renderedField = fields[key].render()
             wrapper.appendChild(renderedField)
         }
     }
 
     /**
-    * Render the object input fields
-    */
+     * Render the object input fields
+     */
     renderObject(fields) {
         // Create a fragment for our widget
         let widgetFragment = document.createDocumentFragment()
@@ -50,9 +49,9 @@ export class ObjectInput extends Widget {
 
         // Check if we are rendering into fieldsets or just
         // are regular object
-        if(this.options.fieldsets) {
+        if (this.options.fieldsets) {
             let fieldsetIndex = 0
-            for(let fieldset of this.options.fieldsets) {
+            for (let fieldset of this.options.fieldsets) {
                 let fieldsetElement = document.createElement('fieldset')
                 fieldsetElement.classList.add('mutt-fieldset')
                 fieldsetElement.setAttribute(
@@ -60,21 +59,28 @@ export class ObjectInput extends Widget {
                     `${this.name}-fieldset-${fieldsetIndex}`
                 )
 
-                if(fieldset.hasOwnProperty('options')) {
-                    if(fieldset.options.hasOwnProperty('class') &&
+                if (fieldset.hasOwnProperty('options')) {
+                    if (fieldset.options.hasOwnProperty('class') &&
                         fieldset.options.class) {
-                        if(fieldset.options.class.includes(' ')) {
+                        if (fieldset.options.class.includes(' ')) {
                             let classes = fieldset.options.class.split(' ')
-                            for(let className of classes) {
+                            for (let className of classes) {
                                 fieldsetElement.classList.add(className)
                             }
                         } else {
-                            fieldsetElement.classList.add(fieldset.options.class)
+                            fieldsetElement.classList.add(
+                                fieldset.options.class
+                            )
                         }
                     }
                 }
 
-                this.renderObjectFields(fieldsetElement, fields, fieldset.fields)
+                this.renderObjectFields(
+                    fieldsetElement,
+                    fields,
+                    fieldset.fields
+                )
+
                 wrapper.appendChild(fieldsetElement)
 
                 fieldsetIndex++
@@ -91,7 +97,9 @@ export class ObjectInput extends Widget {
     }
 
     render() {
-        throw new Error('ObjectInput must render as a object - use renderObject')
+        throw new Error(
+            'ObjectInput must render as a object - use renderObject'
+        )
     }
 
     renderLabel() {

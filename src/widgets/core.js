@@ -1,27 +1,26 @@
 /**
-* @file Base widget interface
-*/
+ * @file Base widget interface
+ */
 
 'use strict'
 
 /**
-* Base Widget interface
-* @class
-*/
+ * Base Widget interface
+ * @class
+ */
 export class Widget {
-
     /**
-    * Base Widget interface
-    * @constructor
-    * @param {Field} field - fields object widget is bound too
-    * @param {string} type - name of field type
-    * @param {string} id - ID of the field (used in HTML)
-    * @param {string} name - name of the field (used in HTML)
-    * @param [string] label - optional label for the field
-    * @param [object] attribs - optional HTML attributes for the field
-    * @param [object] options - optional values to configure the widget
-    * @param [string] value - initial value for the widget
-    */
+     * Base Widget interface
+     * @constructor
+     * @param {Field} field - fields object widget is bound too
+     * @param {string} type - name of field type
+     * @param {string} id - ID of the field (used in HTML)
+     * @param {string} name - name of the field (used in HTML)
+     * @param [string] label - optional label for the field
+     * @param [object] attribs - optional HTML attributes for the field
+     * @param [object] options - optional values to configure the widget
+     * @param [string] value - initial value for the widget
+     */
     constructor(field, type, id, name, label,
         attribs = {}, options = {}, initial = null) {
         this._field = field
@@ -51,17 +50,17 @@ export class Widget {
         let help = this.renderHelp()
         let errors = this.renderErrors()
 
-        if(label) {
+        if (label) {
             wrapper.appendChild(label)
         }
 
         wrapper.appendChild(field)
 
-        if(help) {
+        if (help) {
             wrapper.appendChild(help)
         }
 
-        if(errors) {
+        if (errors) {
             wrapper.appendChild(errors)
         }
 
@@ -96,11 +95,11 @@ export class Widget {
     }
 
     /**
-    * Lock the widget - this places it in a read only state
-    * @returns {bool} returns true if lock is successful, false otherwise
-    */
+     * Lock the widget - this places it in a read only state
+     * @returns {bool} returns true if lock is successful, false otherwise
+     */
     lock() {
-        if(this.locked) {
+        if (this.locked) {
             return false
         }
 
@@ -116,12 +115,12 @@ export class Widget {
     }
 
     /**
-    * Unlock the widget - this removes any previous lock and returns
-    * it to it's default state.
-    * @returns {bool} returns true if unlock is successful, false otherwise
-    */
+     * Unlock the widget - this removes any previous lock and returns
+     * it to it's default state.
+     * @returns {bool} returns true if unlock is successful, false otherwise
+     */
     unlock() {
-        if(!this.locked) {
+        if (!this.locked) {
             return false
         }
 
@@ -140,8 +139,8 @@ export class Widget {
     }
 
     /**
-    * Update the ID of the wrapper element
-    */
+     * Update the ID of the wrapper element
+     */
     updateId(oldId, newId) {
         // Pass the old ID to ensure we can fetch it as expected
         let wrapper = this.getElementWrapper(oldId)
@@ -150,8 +149,8 @@ export class Widget {
     }
 
     /**
-    * Update the name of the element
-    */
+     * Update the name of the element
+     */
     updateName(newName) {
         let element = this.getElement()
         element.name = newName
@@ -184,7 +183,7 @@ export class Widget {
     * label is configured for the widget
     */
     renderLabel() {
-        if(this.label) {
+        if (this.label) {
             let label = document.createElement('label')
             label.setAttribute('for', this.getFieldId())
             label.setAttribute('class', 'mutt-label')
@@ -201,7 +200,7 @@ export class Widget {
     * help text is configured for the widget
     */
     renderHelp() {
-        if(this.options.hasOwnProperty('help') && this.options.help) {
+        if (this.options.hasOwnProperty('help') && this.options.help) {
             let help = document.createElement('span')
             help.setAttribute('class', 'mutt-help')
             help.textContent = this.options.help
@@ -217,11 +216,11 @@ export class Widget {
     * information of null if no errors are present
     */
     renderErrors() {
-        if(this.errors.length > 0) {
+        if (this.errors.length > 0) {
             let errorList = document.createElement('ul')
             errorList.className = this.getErrorClass()
 
-            for(let error of this.errors) {
+            for (let error of this.errors) {
                 let errorItem = document.createElement('li')
                 errorItem.textContent = error
                 errorList.appendChild(errorItem)
@@ -242,7 +241,7 @@ export class Widget {
     refreshErrorState(errors) {
         this.errors = errors
 
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
 
@@ -251,17 +250,17 @@ export class Widget {
         let errorWrapperClass = this.getErrorWrapperClass()
 
         // Remove existing errors
-        if(errorElement) {
+        if (errorElement) {
             elementWrapper.classList.remove(errorWrapperClass)
             elementWrapper.removeChild(errorElement)
         }
 
         // Add errors if present
-        if(this.errors.length > 0) {
+        if (this.errors.length > 0) {
             elementWrapper.classList.add(errorWrapperClass)
             let errors = this.renderErrors()
 
-            if(errors) {
+            if (errors) {
                 elementWrapper.appendChild(errors)
             }
         }
@@ -273,7 +272,7 @@ export class Widget {
     * @return {HTMLElement} the element's wrapper on the stage
     */
     getElementWrapper(id = null) {
-        if(!id) {
+        if (!id) {
             id = this.id
         }
         return document.querySelector(`#${id}`)
@@ -309,13 +308,13 @@ export class Widget {
     * @returns {string} value of the element on the stage
     */
     getValue() {
-        if(!this._rendered) {
+        if (!this._rendered) {
             return this.value
         }
 
         let element = this.getElement()
 
-        if(!element) {
+        if (!element) {
             throw new Error('Unable to get element!')
         }
 
@@ -331,13 +330,13 @@ export class Widget {
     setValue(value) {
         this.value = value
 
-        if(!this._rendered) {
+        if (!this._rendered) {
             return
         }
 
         let element = this.getElement()
 
-        if(element) {
+        if (element) {
             element.value = this.value
         }
     }
@@ -347,7 +346,7 @@ export class Widget {
     * @returns {string} the class to use for the field element
     */
     getFieldClass() {
-        if(this.attribs.hasOwnProperty('class')) {
+        if (this.attribs.hasOwnProperty('class')) {
             return `mutt-field ${this.attribs.class}`
         }
 

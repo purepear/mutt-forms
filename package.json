@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -49,20 +49,17 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "chai": "^3.5.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-jest": "^23.6.0",
     "eslint": "^4.19.0",
     "eslint-changes": "^0.1.2",
     "eslint-config-google": "^0.9.1",
+    "jest": "^23.6.0",
     "jsdoc": "^3.4.3",
-    "jsdom": "^9.12.0",
-    "minami": "^1.2.3",
-    "mocha": "^3.4.2",
-    "mocha-jsdom": "^1.1.0",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-node-resolve": "^3.3.0",
@@ -70,7 +67,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "unit": "./node_modules/mocha/bin/mocha --compilers js:babel-register --recursive test/unit/specs; exit 0",
+    "unit": "jest",
     "test": "yarn run unit",
     "lint": "eslint --ext .js src",
     "prepublish": "yarn run build"

@@ -7,7 +7,7 @@
 'use strict'
 
 import Mutt from './index'
-import { Fieldset } from './fieldsets/core'
+import {Fieldset} from './fieldsets/core'
 
 /**
  * Main Mutt form interface. This instance is used to build,
@@ -15,7 +15,6 @@ import { Fieldset } from './fieldsets/core'
  * @class
  */
 class MuttForm {
-
     /**
      * Initialisation of a Mutt form
      * @constructor
@@ -27,7 +26,7 @@ class MuttForm {
         this.options = {}
         this.callbacks = {}
 
-        if(options && options.hasOwnProperty('form')) {
+        if (options && options.hasOwnProperty('form')) {
             this.options = options.form
         }
 
@@ -56,22 +55,22 @@ class MuttForm {
 
         // If fieldsets is specfied in the form options we are
         // going to attempt to build multiple ones
-        if(options.hasOwnProperty('fieldsets')) {
+        if (options.hasOwnProperty('fieldsets')) {
             let fieldsetIndex = 0
 
-            for(let fieldsetSpec of options.fieldsets) {
+            for (let fieldsetSpec of options.fieldsets) {
                 let fieldsetFields = null
                 let fieldsetLabel = null
 
-                if(fieldsetSpec.hasOwnProperty('fields')) {
+                if (fieldsetSpec.hasOwnProperty('fields')) {
                     fieldsetFields = fieldsetSpec.fields
                 }
 
-                if(fieldsetSpec.hasOwnProperty('fieldsets')) {
+                if (fieldsetSpec.hasOwnProperty('fieldsets')) {
                     options.fieldsets = fieldsetSpec.fieldsets
                 }
 
-                if(fieldsetSpec.options &&
+                if (fieldsetSpec.options &&
                     fieldsetSpec.options.hasOwnProperty('label')) {
                     fieldsetLabel = fieldsetSpec.options.label
                 }
@@ -106,10 +105,10 @@ class MuttForm {
      * @returns {object} key/value data object for the form
      */
     data(asList = false) {
-        if(asList) {
+        if (asList) {
             let data = []
 
-            for(let fieldset of this.fieldsets) {
+            for (let fieldset of this.fieldsets) {
                 data.push(fieldset.data())
             }
 
@@ -118,7 +117,7 @@ class MuttForm {
 
         let data = {}
 
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             data = Object.assign(data, fieldset.data())
         }
 
@@ -130,7 +129,7 @@ class MuttForm {
      * @param {object} data Data object with form values
      */
     populate(data) {
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             fieldset.populate(data)
         }
     }
@@ -149,7 +148,7 @@ class MuttForm {
             let formContainer = document.createDocumentFragment()
             this.form = document.createElement('form')
 
-            if(this.id) {
+            if (this.id) {
                 this.form.setAttribute('id', this.id)
             }
 
@@ -157,11 +156,11 @@ class MuttForm {
             this.form.setAttribute('action', '')
             this.form.setAttribute('class', 'mutt-form')
 
-            if(this.multipart) {
+            if (this.multipart) {
                 this.form.setAttribute('enctype', 'multipart/form-data')
             }
 
-            for(let fieldset of this.fieldsets) {
+            for (let fieldset of this.fieldsets) {
                 let fieldsetElement = fieldset.render()
                 this.form.appendChild(fieldsetElement)
             }
@@ -171,13 +170,14 @@ class MuttForm {
             let buttonText = 'Submit'
 
             // Check for button overide options
-            if(this.options.hasOwnProperty('buttons')) {
-                if(this.options.buttons.hasOwnProperty('submit')) {
-                    if(this.options.buttons.submit.hasOwnProperty('class')) {
-                        buttonClass = buttonClass + ' ' + this.options.buttons.submit.class
+            if (this.options.hasOwnProperty('buttons')) {
+                if (this.options.buttons.hasOwnProperty('submit')) {
+                    if (this.options.buttons.submit.hasOwnProperty('class')) {
+                        let submitClass = this.options.buttons.submit.class
+                        buttonClass = buttonClass + ' ' + submitClass
                     }
 
-                    if(this.options.buttons.submit.hasOwnProperty('text')) {
+                    if (this.options.buttons.submit.hasOwnProperty('text')) {
                         buttonText = this.options.buttons.submit.text
                     }
                 }
@@ -187,9 +187,9 @@ class MuttForm {
             buttonWrapper.setAttribute('class', 'mutt-button-wrapper')
 
             // Add any aditional buttons specified in the options
-            if(this.options.hasOwnProperty('buttons')) {
-                for(let buttonName of Object.keys(this.options.buttons)) {
-                    if(buttonName === 'submit') {
+            if (this.options.hasOwnProperty('buttons')) {
+                for (let buttonName of Object.keys(this.options.buttons)) {
+                    if (buttonName === 'submit') {
                         // We always default this
                         continue
                     }
@@ -230,7 +230,7 @@ class MuttForm {
 
             // Form has been renderd to the stage, call
             // the post render hooks
-            for(let fieldset of this.fieldsets) {
+            for (let fieldset of this.fieldsets) {
                 fieldset.postRender()
             }
 
@@ -243,7 +243,7 @@ class MuttForm {
      * @returns {bool} Confirmation of destruction
      */
     destroy() {
-        if(this.mount) {
+        if (this.mount) {
             let form = this.mount.querySelector('form')
             this.mount.removeChild(form)
             return true
@@ -260,15 +260,15 @@ class MuttForm {
         let valid = true
         let errors = []
 
-        for(let fieldset of this.fieldsets) {
-            if(!fieldset.validate()) {
+        for (let fieldset of this.fieldsets) {
+            if (!fieldset.validate()) {
                 errors.push(fieldset.errors)
                 valid = false
             }
         }
 
         Mutt.logger(
-            `Validation Complete -> Status: ${valid} -> ${JSON.stringify(errors)}`
+            `Validation -> Status ${valid} -> ${JSON.stringify(errors)}`
         )
 
         return valid
@@ -278,7 +278,7 @@ class MuttForm {
      * Redraw all of the error states on the stage
      */
     refreshValidationState() {
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             fieldset.refreshValidationState()
         }
     }
@@ -299,10 +299,10 @@ class MuttForm {
             return false
         }
 
-        if(valid) {
+        if (valid) {
             Mutt.logger('Submit form')
 
-            if(this.callbacks.hasOwnProperty('submit')) {
+            if (this.callbacks.hasOwnProperty('submit')) {
                 this.callbacks['submit'](this.data(), event)
             } else {
                 this.form.submit()
@@ -320,7 +320,7 @@ class MuttForm {
     lock() {
         Mutt.logger('Locking form')
 
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             fieldset.lock()
         }
     }
@@ -332,7 +332,7 @@ class MuttForm {
     unlock() {
         Mutt.log('Unlocking form')
 
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             fieldset.unlock()
         }
     }
@@ -373,7 +373,7 @@ class MuttForm {
         // duplicate keys scoped by parent objects are not
         // supported. Errors are added to both fields in this
         // instance.
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             fieldset.setFieldErrors(errors)
         }
     }
@@ -385,10 +385,10 @@ class MuttForm {
      */
     getFieldByPath(path) {
         // To find a field we need to inspect each fieldset
-        for(let fieldset of this.fieldsets) {
+        for (let fieldset of this.fieldsets) {
             let field = fieldset.getFieldByPath(path)
 
-            if(field) {
+            if (field) {
                 return field
             }
         }

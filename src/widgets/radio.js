@@ -1,15 +1,15 @@
 /**
-* @file HTML Radio widget
-*/
+ * @file HTML Radio widget
+ */
 
 'use strict'
 
-import { BaseChoiceWidget } from './choice'
+import {BaseChoiceWidget} from './choice'
 
 /**
-* RadioInput - Standard HTML radio input
-* @class
-*/
+ * RadioInput - Standard HTML radio input
+ * @class
+ */
 export class RadioInput extends BaseChoiceWidget {
 
     /**
@@ -20,8 +20,8 @@ export class RadioInput extends BaseChoiceWidget {
 
         // Booleans do not have choices, so we must contrive
         // them if they aren't already set
-        if(this.type === 'boolean') {
-            if(options.hasOwnProperty('choices')) {
+        if (this.type === 'boolean') {
+            if (options.hasOwnProperty('choices')) {
                 this.choices = options.choices
             } else {
                 this.choices = [[true, 'Yes'], [false, 'No']]
@@ -36,7 +36,7 @@ export class RadioInput extends BaseChoiceWidget {
         let radioInputListWrapper = document.createElement('div')
         let index = 0
 
-        for(let choice of this.choices) {
+        for (let choice of this.choices) {
             let [value, label] = choice
             let fieldId = `${this.id}_${index}`
 
@@ -53,19 +53,19 @@ export class RadioInput extends BaseChoiceWidget {
             // Radio buttons may be used to drive UI events, if a
             // callback is specified, bind it to the elements as
             // they are being created.
-            if(this.options.hasOwnProperty('callback')) {
+            if (this.options.hasOwnProperty('callback')) {
                 radioInput.onclick = () => {
                     return this.options.callback(this)
                 }
             }
 
-            if(this.attribs) {
-                for(let attrib in this.attribs) {
+            if (this.attribs) {
+                for (let attrib in this.attribs) {
                     radioInput.setAttribute(attrib, this.attribs[attrib])
                 }
             }
 
-            if(this.value === value) {
+            if (this.value === value) {
                 radioInput.setAttribute('checked', 'checked')
             }
 
