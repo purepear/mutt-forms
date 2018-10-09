@@ -121,6 +121,10 @@ class MuttConfig {
             this.registerWidgets(pluginComponents.widgets)
         }
 
+        if (pluginComponents.serializers) {
+            this.registerSerializers(pluginComponents.serializers)
+        }
+
         // Settings
         // These allow for internal settings to be overidden or
         // extended by plugins
@@ -255,7 +259,7 @@ class MuttConfig {
     registerSerializers(serializers) {
         if (serializers) {
             for (const serializerName of Object.keys(serializers)) {
-                this.registerSerilizer(
+                this.registerSerializer(
                     serializerName,
                     serializers[serializerName]
                 )

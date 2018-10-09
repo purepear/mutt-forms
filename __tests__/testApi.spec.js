@@ -10,6 +10,7 @@ import MuttConfig from '../src/config'
 
 class MyTestField {}
 class MyTestWidget {}
+class MyTestSerializer {}
 
 describe('Mutt API', () => {
     test('returns a instance of a mutt form', () => {
@@ -64,5 +65,20 @@ describe('Mutt API', () => {
         expect(Mutt.config.hasWidget('test')).toEqual(false)
         Mutt.use(plugin)
         expect(Mutt.config.hasWidget('test')).toEqual(true)
+    })
+
+    test('can install a plugin to add a serializer', () => {
+        let plugin = {
+            install: () => {
+                return {
+                    serializers: {
+                        reverse: MyTestSerializer
+                    }
+                }
+            }
+        }
+        expect(Mutt.config.hasSerializer('reverse')).toEqual(false)
+        Mutt.use(plugin)
+        expect(Mutt.config.hasSerializer('reverse')).toEqual(true)
     })
 })
