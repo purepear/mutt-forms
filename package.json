@@ -47,7 +47,8 @@
     "form",
     "mutt"
   ],
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
