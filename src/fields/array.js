@@ -210,6 +210,37 @@ export class ArrayField extends Field {
     }
 
     /**
+     * Get the value in a serialized format.
+     */
+    getSerializedValue() {
+        if (this.options.hasOwnProperty('serialize')) {
+            const serializeArgs = this.options.serialize
+            let serializeKey
+            let serializeOptions = {}
+
+            if (typeof serializeArgs === 'object') {
+                serializeKey = serializeArgs.name
+                serializeOptions = serializeArgs
+            } else {
+                serializeKey = serializeArgs
+            }
+
+            if (Mutt.config.hasSerializer(serializeKey)) {
+                const Serializer = Mutt.config.getSerializer(serializeKey)
+                return new Serializer(this.value, serializeOptions).serialize()
+            }
+        } else {
+            let valueArray = []
+
+            for (let slot of this.slots) {
+                valueArray.push(slot.getSerializedValue())
+            }
+
+            return valueArray
+        }
+    }
+
+    /**
     * Validate the form field
     * @returns {bool} returns sucess or failure of validation
     */

@@ -7,6 +7,7 @@
 import Mutt from '../src/index'
 import MuttForm from '../src/mutt'
 import MuttConfig from '../src/config'
+import packageJson from '../package.json'
 
 class MyTestField {}
 class MyTestWidget {}
@@ -21,7 +22,7 @@ describe('Mutt API', () => {
 
     test('has a version specified', () => {
         expect(Mutt.hasOwnProperty('version')).toEqual(true)
-        expect(Mutt.version).toEqual('1.10.0')
+        expect(Mutt.version).toEqual(packageJson.version)
     })
 
     test('has a config specified', () => {

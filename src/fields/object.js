@@ -109,6 +109,37 @@ export class ObjectField extends Field {
     }
 
     /**
+     * Get the value in a serialized format.
+     */
+    getSerializedValue() {
+        if (this.options.hasOwnProperty('serialize')) {
+            const serializeArgs = this.options.serialize
+            let serializeKey
+            let serializeOptions = {}
+
+            if (typeof serializeArgs === 'object') {
+                serializeKey = serializeArgs.name
+                serializeOptions = serializeArgs
+            } else {
+                serializeKey = serializeArgs
+            }
+
+            if (Mutt.config.hasSerializer(serializeKey)) {
+                const Serializer = Mutt.config.getSerializer(serializeKey)
+                return new Serializer(this.value, serializeOptions).serialize()
+            }
+        } else {
+            let values = {}
+
+            for (const key of Object.keys(this.object)) {
+                values[key] = this.object[key].getSerializedValue()
+            }
+
+            return values
+        }
+    }
+
+    /**
     * Validate the form field
     */
     validate() {
