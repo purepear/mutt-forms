@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc*/
 /**
  * @file Object Field
  */
@@ -30,7 +31,8 @@ export class ObjectField extends Field {
     order = null,
     parent = null,
     properties = {},
-    required = []
+    required = [],
+    dependencies = []
   }) {
     super({
       id,
@@ -43,7 +45,8 @@ export class ObjectField extends Field {
       description,
       options,
       order,
-      parent
+      parent,
+      dependencies
     })
 
     this.object = {}
@@ -55,6 +58,8 @@ export class ObjectField extends Field {
       let fieldId = `${name}_${fieldName}`
       let fieldOptions = {}
       let fieldRequired = false
+      let fieldDependsOn = []
+      let isDependency = false
 
       if (this.options.hasOwnProperty(fieldName)) {
         fieldOptions = options[fieldName]
@@ -67,13 +72,59 @@ export class ObjectField extends Field {
         }
       }
 
+      // Set the fielf's dependencies
+      if (
+        dependencies !== null &&
+        Object.keys(dependencies).length > 0 &&
+        dependencies.hasOwnProperty(fieldName)
+      ) {
+        let fieldDependencies = dependencies[fieldName]
+
+        if (!Array.isArray(fieldDependencies)) {
+          fieldDependsOn = fieldDependencies
+        } else {
+          fieldDependsOn.push(...dependencies[fieldName])
+        }
+      }
+
+      // TODO: refactor
+      // Check if current field itself is a dependent
+      if (dependencies !== null && Object.keys(dependencies).length > 0) {
+        for (const field in dependencies) {
+          if (dependencies.hasOwnProperty(field)) {
+            let fieldDependencies = dependencies[field]
+
+            if (!Array.isArray(fieldDependencies)) {
+              // get the required arrays from the dependency objects and set as an array
+              for (const dependencyType in fieldDependencies) {
+                if (fieldDependencies.hasOwnProperty(dependencyType)) {
+                  fieldDependencies = fieldDependencies[dependencyType].reduce(
+                    (acc, x) => {
+                      return acc.concat(x.required)
+                    },
+                    []
+                  )
+                }
+              }
+            }
+
+            if (fieldDependencies.includes(fieldName)) {
+              isDependency = true
+              break
+            }
+          }
+        }
+      }
+
       let field = this.constructor.new(
         fieldId,
         fieldName,
         resolvedProps[fieldName],
         fieldOptions,
         this, // parent
-        fieldRequired
+        fieldRequired,
+        fieldDependsOn,
+        isDependency
       )
 
       if (!field) {
@@ -160,7 +211,7 @@ export class ObjectField extends Field {
 
     for (let key of Object.keys(this.object)) {
       let field = this.object[key]
-      if (!field.validate()) {
+      if (!field.isDependency && !field.validate()) {
         this._errors[key] = field.errors
         valid = false
       }

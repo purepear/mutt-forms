@@ -25,7 +25,8 @@ export class ChoiceField extends Field {
     options = {},
     order = null,
     parent = null,
-    choices = []
+    choices = [],
+    dependencies = null
   }) {
     super({
       id,
@@ -38,7 +39,8 @@ export class ChoiceField extends Field {
       description,
       options,
       order,
-      parent
+      parent,
+      dependencies
     })
 
     this.choices = choices
@@ -54,7 +56,7 @@ export class ChoiceField extends Field {
 
   /**
    * Get the widget used to display the field
-   * @returns {SelectInput} widget to display
+   * @return {SelectInput} widget to display
    */
   getWidget() {
     if (

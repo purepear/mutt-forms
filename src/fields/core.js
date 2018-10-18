@@ -39,7 +39,9 @@ export class Field {
     description = null,
     options = {},
     order = null,
-    parent = null
+    parent = null,
+    dependencies = null,
+    isDependency = false
   }) {
     this.id = id
     this.name = name
@@ -51,6 +53,8 @@ export class Field {
     this.sortOrder = order
     this.locked = false
     this.parent = parent
+    this.dependencies = dependencies
+    this.isDependency = isDependency
 
     if (!this.label) {
       this.label = this.name
@@ -134,7 +138,7 @@ export class Field {
 
   /**
    * Render the form field using it's widget interface
-   * @returns {DocumentFragment} rendered HTML widget
+   * @return {DocumentFragment} rendered HTML widget
    */
   render() {
     return this.widget.render()
@@ -142,7 +146,7 @@ export class Field {
 
   /**
    * Destroy the rendered widget
-   * @returns the success or failure response
+   * @return the success or failure response
    */
   destroy() {
     return this.widget.destroy()
@@ -172,12 +176,164 @@ export class Field {
       }
     }
 
+    // Check the validity of the field's depedencies if
+    //      1. The field is required (i.e it has one or more validators)
+    //      2. The field is not required but has a value
+    if (
+      (this.validators.length > 0 || value) &&
+      this.dependencies &&
+      this.parent
+    ) {
+      this._validateDependencies(this.dependencies, value)
+    }
+
+    // if the parent field of dependencies is valid, we need to refresh state of dependency fields
+    if (this.errors.length === 0 && this.dependencies && this.parent) {
+      this._refreshDependenciesValidationState(this.dependencies)
+    }
+
     if (this.errors.length > 0) {
       this.widget.refreshErrorState(this.errors)
       return false
     }
 
     return true
+  }
+
+  /**
+   * Validates field dependencies
+   *
+   * @param {string[]|Object} dependencies
+   * @param {string} value
+   * @memberof Field
+   */
+  _validateDependencies(dependencies, value) {
+    const validateFields = fields => {
+      let errors = []
+
+      for (const fieldName of fields) {
+        let field = this.parent.getFieldByPath(fieldName)
+
+        if (field && !field.validate()) {
+          errors.push(`${field.name}: ${field.errors.join(",")}`)
+        }
+      }
+
+      return errors
+    }
+
+    let dependenciesValid = true
+
+    if (
+      !Array.isArray(dependencies) &&
+      typeof dependencies === "object" &&
+      dependencies.constructor === Object
+    ) {
+      let validationResults = {}
+
+      for (const dependencyType in dependencies) {
+        if (dependencies.hasOwnProperty(dependencyType)) {
+          // Validate each combination option
+          validationResults[dependencyType] = dependencies[dependencyType].map(
+            option => {
+              let errors = []
+
+              // we need to check the value against the option's enum
+              if (!option.properties[this.name].enum.includes(value)) {
+                // This combination option is false as the current field
+                // value does not match the value for the option
+                errors.push(`${this.value} does not match const`)
+                return false
+              }
+
+              if (
+                typeof option.required !== "undefined" &&
+                validateFields(option.required).length !== 0
+              ) {
+                return false
+              }
+
+              return true
+            }
+          )
+
+          // TODO: split into function
+          // Update the results object with the correct values depending on the combination
+          switch (dependencyType) {
+            case "oneOf":
+              // For oneOf, results array should only have one 'true'
+              if (
+                validationResults[dependencyType].filter(result => result)
+                  .length !== 1
+              ) {
+                this.errors = "Data should match one schema in 'oneOf'"
+                dependenciesValid = false
+              }
+              break
+            case "anyOf":
+              // For anyOf, results array should have at least one 'true'
+              if (!validationResults[dependencyType].some(result => result)) {
+                this.errors = "Data should match at least one schema in 'anyOf'"
+                dependenciesValid = false
+              }
+              break
+            case "allOf":
+              // For allOf, results array should have all 'true'
+              if (!validationResults[dependencyType].every(result => result)) {
+                this.errors = "Data should match all schema in 'allOf'"
+                dependenciesValid = false
+              }
+              break
+            default:
+              break
+          }
+        }
+      }
+    } else {
+      // We need to check the dependancies of a field
+      for (const error of validateFields(dependencies)) {
+        this.errors = error
+        dependenciesValid = false
+      }
+    }
+
+    return dependenciesValid
+  }
+
+  /**
+   * Resets dependency field vaildation states
+   *
+   * @param {string[]|Object} dependencies
+   * @return {string[]} an array of errors	
+   * @memberof Field
+   */
+  _refreshDependenciesValidationState(dependencies) {
+    const refreshFieldsValidationState = (fields) => {
+      for (const fieldName of fields) {
+        let field = this.parent.getFieldByPath(fieldName)
+        if (field) {
+          field.refreshValidationState()
+        }
+      }
+    }
+
+    if (
+      !Array.isArray(dependencies) &&
+      typeof dependencies === "object" &&
+      dependencies.constructor === Object
+    ) {
+      for (const dependencyType in dependencies) {
+        if (dependencies.hasOwnProperty(dependencyType)) {
+          for (const option of dependencies[dependencyType]) {
+            if (typeof option.required !== "undefined") {
+              refreshFieldsValidationState(option.required)
+            }
+          }
+        }
+      }
+    } else {
+      refreshFieldsValidationState(dependencies)
+    }
   }
 
   /**
@@ -308,14 +464,25 @@ export class Field {
   /**
    *
    */
-  static new(id, name, schema, options = {}, parent = null, required = false) {
+  static new(
+    id,
+    name,
+    schema,
+    options = {},
+    parent = null,
+    required = false,
+    dependencies = null,
+    isDependency = false
+  ) {
     const fieldSpec = {
-      id: id,
-      name: name,
-      options: options,
+      id,
+      name,
+      options,
       attribs: {},
-      parent: parent,
-      validators: []
+      parent,
+      validators: [],
+      dependencies,
+      isDependency
     }
 
     let FieldKlass = null
@@ -371,8 +538,16 @@ export class Field {
       fieldSpec.properties = schema.properties
     }
 
+    if (schema.dependencies) {
+      fieldSpec.dependencies = schema.dependencies
+    }
+
     // Build validator list
-    if (required || (options.hasOwnProperty("required") && options.required)) {
+    if (
+      isDependency ||
+      required ||
+      (options.hasOwnProperty("required") && options.required)
+    ) {
       if (schema.type === "boolean") {
         const BoolValidator = Mutt.config.getValidator("booleanRequired")
         fieldSpec.validators.push(new BoolValidator())
