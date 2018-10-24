@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.10.2",
+  "version": "1.11.0",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -47,7 +47,9 @@
     "form",
     "mutt"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "deepmerge": "^2.2.1"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
@@ -56,7 +58,6 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^5.6.1",
-    "eslint-changes": "^0.1.2",
     "eslint-config-google": "^0.10.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.4.3",

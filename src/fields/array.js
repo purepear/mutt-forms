@@ -7,6 +7,7 @@
 import Mutt from '../index'
 import {Field} from './core'
 import {LengthValidator} from '../validators/core'
+import {resolveSchema} from '../utils'
 
 /**
  * Array is a complex field type, which is essentially a list
@@ -37,7 +38,7 @@ export class ArrayField extends Field {
 
         this.minItems = minItems
         this.maxItems = (maxItems >= minItems) ? maxItems : null
-        this.itemSchema = items // schema to make new items
+        this.itemSchema = resolveSchema(items) // schema to make new items
         this.itemOptions = options
 
         // We store the array fields as slots

@@ -63,4 +63,4 @@ All pull requests should be made against the `master` branch.
 
 ---
 
-(c) Bought By Many 2017. Credit to Helena Long for the Mutt Logo :)
+(c) Bought By Many 2018. Credit to Helena Long for the Mutt Logo :)

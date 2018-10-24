@@ -6,6 +6,7 @@
 
 import Mutt from '../index'
 import {Field} from './core'
+import {resolveSchema} from '../utils'
 
 // TODO: An object is basically a fieldset within a fieldset,
 // we are repeating a bunch of functionality from the fieldset
@@ -36,7 +37,9 @@ export class ObjectField extends Field {
         this.object = {}
         let fieldIndex = 1
 
-        for (const fieldName of Object.keys(properties)) {
+        const resolvedProps = resolveSchema(properties)
+
+        for (const fieldName of Object.keys(resolvedProps)) {
             let fieldId = `${name}_${fieldName}`
             let fieldOptions = {}
             let fieldRequired = false
@@ -55,14 +58,16 @@ export class ObjectField extends Field {
             let field = this.constructor.new(
                 fieldId,
                 fieldName,
-                properties[fieldName],
+                resolvedProps[fieldName],
                 fieldOptions,
                 this, // parent
                 fieldRequired
             )
 
             if (!field) {
-                throw new Error('Unable to create Field on ObjectField!')
+                throw new Error(
+                    `Unable to create "${fieldId}" on ${id} (ObjectField)!`
+                )
             }
 
             if (!field.getSortOrder()) {
@@ -195,10 +200,10 @@ export class ObjectField extends Field {
             let field = this.object[key]
 
             if (field.name === searchName) {
+                const fieldProto = field.constructor.prototype
                 if (pathParts.length === 0) {
                     return field
-                } else if (field.constructor.prototype
-                                .hasOwnProperty('getFieldByPath')) {
+                } else if (fieldProto.hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }
             }
