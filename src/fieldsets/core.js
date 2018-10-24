@@ -196,10 +196,10 @@ export class Fieldset {
 
         for (const field of this.fields) {
             if (field.name === searchName) {
+                const fieldProto = field.constructor.prototype
                 if (pathParts.length === 0) {
                     return field
-                } else if (field.constructor.prototype
-                            .hasOwnProperty('getFieldByPath')) {
+                } else if (fieldProto.hasOwnProperty('getFieldByPath')) {
                     return field.getFieldByPath(pathParts.join('.'))
                 }
             }
@@ -219,7 +219,7 @@ export class Fieldset {
     static new(schema, options = {}, fields = null,
         name = null, label = null) {
         let fieldsetSpec = {
-            name: name
+            name,
         }
 
         if (schema.hasOwnProperty('title')) {
