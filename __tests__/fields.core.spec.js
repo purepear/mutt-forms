@@ -115,6 +115,23 @@ describe('Field', () => {
                 optionsRequiredField.validators[0].constructor
             ).toEqual(Mutt.validators.RequiredValidator)
         })
+
+        test('return a field with configured attributes', () => {
+            const schema = {type: 'string'}
+            const options = {
+                attribs: {
+                    'class': 'test-class'
+                }
+            }
+            let field = Mutt.fields.Field.new(
+                'test-id',
+                'test-name',
+                schema,
+                options,
+            )
+
+            expect(field.attribs.class).toEqual('test-class')
+        })
     })
 
     describe('#getSerializedValue()', () => {

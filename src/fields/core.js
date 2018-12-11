@@ -385,6 +385,13 @@ export class Field {
             fieldSpec.maxItems = schema.maxItems
         }
 
+        if (options.attribs) {
+            fieldSpec.attribs = Object.assign(
+                fieldSpec.attribs,
+                options.attribs
+            )
+        }
+
         fieldSpec.validators = validators
 
         if (!FieldKlass) {
