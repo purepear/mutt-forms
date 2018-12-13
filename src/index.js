@@ -67,6 +67,6 @@ function initApi(Mutt) {
 
 initApi(Mutt)
 
-Mutt.version = '1.11.0'
+Mutt.version = '1.12.0'
 
 export default Mutt

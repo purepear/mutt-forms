@@ -15,4 +15,11 @@ export class StringField extends Field {
     getWidget() {
         return Mutt.config.getWidget('text')
     }
+
+    /**
+     * Initial value for a field of this type
+     */
+    initialValue() {
+        return ''
+    }
 }

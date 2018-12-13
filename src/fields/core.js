@@ -58,6 +58,8 @@ export class Field {
             WidgetKlass = widget
         }
 
+        const initalValue = initial || this.initialValue()
+
         this.widget = new WidgetKlass(
             this,
             this.type,
@@ -66,7 +68,7 @@ export class Field {
             this.label,
             this.attribs,
             this.options,
-            initial
+            initalValue
         )
 
         this._errors = []
@@ -92,7 +94,7 @@ export class Field {
      * but is included for subclasses who may use this)
      */
     get type() {
-        let type = this.constructor.name.toLowerCase()
+        const type = this.constructor.name.toLowerCase()
         return (type !== 'field') ? type.replace('field', '') : type
     }
 
@@ -154,7 +156,7 @@ export class Field {
         // Clear any previous validations
         this.refreshValidationState()
 
-        let value = this.value
+        const value = this.value
         for (let validator of this.validators) {
             if (!validator.validate(value)) {
                 this.errors = validator.error
@@ -269,7 +271,7 @@ export class Field {
     *
     */
     updateId(newId, updateWidget = true) {
-        let oldId = this.id
+        const oldId = this.id
         this.id = newId
 
         if (updateWidget) {
@@ -286,6 +288,13 @@ export class Field {
         if (updateWidget) {
             this.widget.updateName(newName)
         }
+    }
+
+    /**
+     * Initial value for a field of this type
+     */
+    initialValue() {
+        return null
     }
 
     /**
@@ -403,7 +412,6 @@ export class Field {
             FieldKlass = Mutt.config.getField(schema.type)
         }
 
-        let field = new FieldKlass(fieldSpec)
-        return field
+        return new FieldKlass(fieldSpec)
     }
 }
