@@ -114,6 +114,9 @@ describe('Field', () => {
             expect(
                 optionsRequiredField.validators[0].constructor
             ).toEqual(Mutt.validators.RequiredValidator)
+            expect(optionsRequiredField.validators[0]).toBeInstanceOf(
+                Mutt.validators.RequiredValidator
+            )
         })
 
         test('return a field with configured attributes', () => {
@@ -132,6 +135,81 @@ describe('Field', () => {
 
             expect(field.attribs.class).toEqual('test-class')
         })
+
+        test('return a field with no default validators', () => {
+            const schema = {type: 'string'}
+            const options = {
+                attribs: {
+                    'class': 'test-class'
+                }
+            }
+            let field = Mutt.fields.Field.new(
+                'test-id',
+                'test-name',
+                schema,
+                options,
+            )
+
+            expect(field.validators.length).toEqual(0)
+        })
+
+        test('return a field with a option specified validator', () => {
+            const schema = {type: 'string'}
+            const options = {
+                attribs: {
+                    'class': 'test-class',
+                },
+                validators: [
+                    {
+                        name: 'alpha',
+                    },
+                ],
+            }
+            let field = Mutt.fields.Field.new(
+                'test-id',
+                'test-name',
+                schema,
+                options,
+            )
+
+            expect(field.validators.length).toEqual(1)
+            expect(field.validators[0].constructor).toEqual(
+                Mutt.validators.AlphaValidator
+            )
+            expect(field.validators[0]).toBeInstanceOf(
+                Mutt.validators.AlphaValidator
+            )
+        })
+
+        test('return a field with a option specified validator with config', () => {
+            const schema = {type: 'string'}
+            const options = {
+                attribs: {
+                    'class': 'test-class',
+                },
+                validators: [
+                    {
+                        name: 'alpha',
+                        args: {
+                            min: 10,
+                        },
+                    },
+                ],
+            }
+            let field = Mutt.fields.Field.new(
+                'test-id',
+                'test-name',
+                schema,
+                options,
+            )
+
+            expect(field.validators.length).toEqual(1)
+            expect(field.validators[0].constructor).toEqual(
+                Mutt.validators.AlphaValidator
+            )
+            expect(field.validators[0].min).toEqual(10)
+        })
+
     })
 
     describe('#getSerializedValue()', () => {

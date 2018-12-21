@@ -40,6 +40,11 @@ describe('RequiredValidator', () => {
 })
 
 describe('LengthValidator', () => {
+    test('returns true for a string with default values', () => {
+        let validator = new validators.LengthValidator()
+        expect(validator.validate('test')).toBe(true)
+    })
+
     test('returns true when a string is greater than min length', () => {
         let validator = new validators.LengthValidator({min: 3})
         expect(validator.validate('test')).toBe(true)
@@ -87,5 +92,32 @@ describe('RegexValidator', () => {
     test('returns false when a value is not present', () => {
         let validator = new validators.RegexValidator()
         expect(validator.validate(null)).toBe(false)
+    })
+})
+
+describe('AlphaValidator', () => {
+    test('returns true when a string value is present', () => {
+        let validator = new validators.AlphaValidator()
+        expect(validator.validate('test string')).toBe(true)
+    })
+
+    test('returns false when contains invalid chars - numerics', () => {
+        let validator = new validators.AlphaValidator()
+        expect(validator.validate('test string 1')).toBe(false)
+    })
+
+    test('returns false when contains invalid chars - empty space', () => {
+        let validator = new validators.AlphaValidator()
+        expect(validator.validate(' ')).toBe(false)
+    })
+
+    test('returns false when contains invalid chars - specials ? !', () => {
+        let validator = new validators.AlphaValidator()
+        expect(validator.validate('test? string!')).toBe(false)
+    })
+
+    test('returns false when contains invalid chars - specials & % $', () => {
+        let validator = new validators.AlphaValidator()
+        expect(validator.validate('test &  $tring %')).toBe(false)
     })
 })

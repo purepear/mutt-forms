@@ -10,6 +10,7 @@ import MuttForm from './mutt'
 import * as fields from './fields'
 import * as widgets from './widgets'
 import * as serializers from './serializers'
+import * as validators from './validators'
 
 /**
  * Internal registry for Mutt fields & widgets. This is used
@@ -64,6 +65,14 @@ class MuttConfig {
             },
             serializers: {
                 trim: serializers.TrimSerializer,
+            },
+            validators: {
+                required: validators.RequiredValidator,
+                booleanRequired: validators.BooleanRequiredValidator,
+                length: validators.LengthValidator,
+                integer: validators.IntegerValidator,
+                regex: validators.RegexValidator,
+                alpha: validators.AlphaValidator,
             },
         }
     }
@@ -295,6 +304,60 @@ class MuttConfig {
      */
     getSerializers(name) {
         return this._config.serializers
+    }
+
+    /**
+     * Register a Validator class with a key
+     * @param {string} name reference for widget
+     * @param {function} Validator class of widget to be registered
+     */
+    registerValidator(name, validator) {
+        this._config.validators[name] = validator
+    }
+
+    /**
+     * Register a collection of Validators - calls registerValidator
+     * @param {array} Validators list of Validators to register
+     */
+    registerValidators(validators) {
+        if (validators) {
+            for (const validatorName of Object.keys(validators)) {
+                this.registerValidator(
+                    validatorName,
+                    validators[validatorName]
+                )
+            }
+        }
+    }
+
+    /**
+     * Check if a Validator has been registered
+     * @param {string} name name of Validator to check
+     */
+    hasValidator(name) {
+        if (this._config.validators.hasOwnProperty(name)) {
+            return true
+        }
+        return false
+    }
+
+    /**
+     * Get a serilizer by name
+     * @param {string} name name of Validator class to fetch
+     */
+    getValidator(name) {
+        if (this._config.validators.hasOwnProperty(name)) {
+            return this._config.validators[name]
+        }
+        return null
+    }
+
+    /**
+     * Get currently configured Validators
+     * @param {object} Validators object of currently configured serilizers
+     */
+    getValidators(name) {
+        return this._config.validators
     }
 }
 

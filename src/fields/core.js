@@ -5,10 +5,7 @@
 'use strict'
 
 import Mutt from '../index'
-import {
-    RequiredValidator,
-    BooleanRequiredValidator,
-} from '../validators/core'
+import * as validators from '../validators'
 
 /**
  * Base Field class, this is used as a base interface for
@@ -302,16 +299,16 @@ export class Field {
      */
     static new(id, name, schema, options = {},
         parent = null, required = false, dependancies = null) {
-        let fieldSpec = {
+        const fieldSpec = {
             id: id,
             name: name,
             options: options,
             attribs: {},
             parent: parent,
+            validators: [],
         }
 
         let FieldKlass = null
-        let validators = []
 
         if (schema.description) {
             fieldSpec.description = schema.description
@@ -326,7 +323,7 @@ export class Field {
         }
 
         if (schema.enum) {
-            let choices = []
+            const choices = []
 
             for (let option of schema.enum) {
                 choices.push([option, option])
@@ -368,9 +365,13 @@ export class Field {
         if (required || (options.hasOwnProperty('required') &&
             options.required)) {
             if (schema.type === 'boolean') {
-                validators.push(new BooleanRequiredValidator())
+                const BoolValidator = Mutt.config.getValidator(
+                    'booleanRequired'
+                )
+                fieldSpec.validators.push(new BoolValidator())
             } else {
-                validators.push(new RequiredValidator())
+                const RequiredValidator = Mutt.config.getValidator('required')
+                fieldSpec.validators.push(new RequiredValidator())
             }
 
             fieldSpec.attribs.required = 'true'
@@ -382,8 +383,34 @@ export class Field {
             fieldSpec.required = schema.required
         }
 
+        // Validators can come in a variety of options, either we derive
+        // them from the spec, the are passed explicity, or we try to
+        // load them form the mutt config.
         if (options.validators) {
-            validators.unshift(...options.validators)
+            for (const validator of options.validators) {
+                if (typeof validator === 'object') {
+                    if (validator instanceof validators.Validator) {
+                        // Is already a validator, accept and pass through
+                        fieldSpec.validators.push(validator)
+                    } else if (validator.hasOwnProperty('name')) {
+                        // Validator needs to be setup
+                        const Validator = Mutt.config.getValidator(
+                            validator.name
+                        )
+
+                        let validatorArgs = {}
+
+                        if (validator.hasOwnProperty('args')) {
+                            validatorArgs = validator.args
+                        }
+
+                        fieldSpec.validators.push(
+                            new Validator(validatorArgs)
+                        )
+                    }
+                }
+            }
+
         }
 
         if (schema.hasOwnProperty('minItems')) {
@@ -400,8 +427,6 @@ export class Field {
                 options.attribs
             )
         }
-
-        fieldSpec.validators = validators
 
         if (!FieldKlass) {
             // Attempt to get the field spec

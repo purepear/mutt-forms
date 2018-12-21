@@ -13,7 +13,9 @@ export class Validator {
             required: 'This field is required.',
         }
 
-        Object.assign(this.messages, messages)
+        if (messages) {
+            Object.assign(this.messages, messages)
+        }
     }
 
     validate(value) {
@@ -71,7 +73,7 @@ export class BooleanTrueValidator extends Validator {
 * @class
 */
 export class LengthValidator extends Validator {
-    constructor({min = null, max = null, messages = null}) {
+    constructor({min = null, max = null, messages = null} = {}) {
         super(messages)
         this.min = min
         this.max = max
@@ -153,6 +155,45 @@ export class RegexValidator extends Validator {
 
         if (!value.match(this.pattern)) {
             this.error = this.messages.invalidPattern
+            return false
+        }
+
+        return true
+    }
+}
+
+/**
+* AlphaValidator - Validate the value is alpha chars only (between 2
+* and 25 in length)
+* @class
+*/
+export class AlphaValidator extends Validator {
+    constructor({min = 2, max = 25, messages = null} = {}) {
+        super(messages)
+        this.min = min
+        this.max = max
+    }
+
+    validate(value) {
+        if (!value) {
+            this.error = this.messages.required
+            return false
+        }
+
+        value = value.trim()
+
+        if (value.length < this.min) {
+            this.error = 'Must be more than 2 characters.'
+            return false
+        }
+
+        if (value.length > this.max) {
+            this.error = 'Must be less than 25 characters.'
+            return false
+        }
+
+        if (!value.match(/^[a-zA-Z\s]+$/)) {
+            this.error = 'Only letters and spaces can be used.'
             return false
         }
 
