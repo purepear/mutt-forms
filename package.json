@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.12.0",
+  "version": "1.14.0",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -22,6 +22,10 @@
     {
       "name": "Jack Prior",
       "email": "jack@boughtbymany.com"
+    },
+    {
+      "name": "Andy Pattenden",
+      "email": "andyp@boughtbymany.com"
     }
   ],
   "main": "src/index.js",
@@ -74,5 +78,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepublish": "npm run build"
+  },
+  "prettier": {
+    "semi": false
   }
 }

@@ -7,14 +7,14 @@
  * @class
  */
 export class Serializer {
-    constructor(value, options = {}) {
-        this.value = value;
-        this.options = options;
-    }
+  constructor(value, options = {}) {
+    this.value = value
+    this.options = options
+  }
 
-    serialize() {
-        return this.value;
-    }
+  serialize() {
+    return this.value
+  }
 }
 
 /**
@@ -22,7 +22,7 @@ export class Serializer {
  * @class
  */
 export class TrimSerializer extends Serializer {
-    serialize() {
-        return this.value.toString().trim();
-    }
+  serialize() {
+    return this.value.toString().trim()
+  }
 }

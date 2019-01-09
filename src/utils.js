@@ -2,42 +2,42 @@
  * @file Utilities
  */
 
-"use strict";
+"use strict"
 
-import Mutt from "./index";
-import merge from "deepmerge";
+import Mutt from "./index"
+import merge from "deepmerge"
 
 /**
  * Function to provide mixin support to classes
  */
 export function mixin(target, source) {
-    target = target.prototype;
-    source = source.prototype;
+  target = target.prototype
+  source = source.prototype
 
-    Object.getOwnPropertyNames(source).forEach(function(name) {
-        if (name !== "constructor") {
-            Object.defineProperty(
-                target,
-                name,
-                Object.getOwnPropertyDescriptor(source, name)
-            );
-        }
-    });
+  Object.getOwnPropertyNames(source).forEach(function(name) {
+    if (name !== "constructor") {
+      Object.defineProperty(
+        target,
+        name,
+        Object.getOwnPropertyDescriptor(source, name)
+      )
+    }
+  })
 }
 
 /**
  * Resolve a schema
  */
 export function resolveSchema(schema) {
-    // Merge all of the allOf declerations together
-    if (schema.hasOwnProperty("allOf")) {
-        schema = mergeAllOf(schema.allOf);
-    }
+  // Merge all of the allOf declerations together
+  if (schema.hasOwnProperty("allOf")) {
+    schema = mergeAllOf(schema.allOf)
+  }
 
-    // TODO: other *Of syntax
-    // TODO: $ref definitions
+  // TODO: other *Of syntax
+  // TODO: $ref definitions
 
-    return schema;
+  return schema
 }
 
 /**
@@ -48,7 +48,7 @@ export function resolveSchema(schema) {
  * be ignored and the last type will win.
  */
 export function mergeAllOf(allOfList) {
-    return merge.all(allOfList);
+  return merge.all(allOfList)
 }
 
 /**
@@ -56,7 +56,7 @@ export function mergeAllOf(allOfList) {
  * @param message a message to be logged
  */
 export function logger(message) {
-    if (Mutt.config.getSetting("debug")) {
-        console.log("Mutt :: ", message); // eslint-disable-line no-console
-    }
+  if (Mutt.config.getSetting("debug")) {
+    console.log("Mutt :: ", message) // eslint-disable-line no-console
+  }
 }
