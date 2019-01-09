@@ -2,24 +2,24 @@
  * @file Text Field
  */
 
-'use strict'
+"use strict"
 
-import Mutt from '../index'
-import {Field} from './core'
+import Mutt from "../index"
+import { Field } from "./core"
 
 /**
  * String Field, used to input text values
  * @class
  */
 export class StringField extends Field {
-    getWidget() {
-        return Mutt.config.getWidget('text')
-    }
+  getWidget() {
+    return Mutt.config.getWidget("text")
+  }
 
-    /**
-     * Initial value for a field of this type
-     */
-    initialValue() {
-        return ''
-    }
+  /**
+   * Initial value for a field of this type
+   */
+  initialValue() {
+    return ""
+  }
 }

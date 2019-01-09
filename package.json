@@ -1,6 +1,6 @@
 {
   "name": "mutt-forms",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -22,6 +22,10 @@
     {
       "name": "Jack Prior",
       "email": "jack@boughtbymany.com"
+    },
+    {
+      "name": "Andy Pattenden",
+      "email": "andyp@boughtbymany.com"
     }
   ],
   "main": "src/index.js",
@@ -58,9 +62,11 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^5.6.1",
-    "eslint-config-google": "^0.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.4.3",
+    "prettier": "^1.15.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-node-resolve": "^3.3.0",
@@ -69,7 +75,11 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "lint": "eslint --ext .js src",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepublish": "npm run build"
+  },
+  "prettier": {
+    "semi": false
   }
 }
