@@ -4,6 +4,8 @@
 
 > A HTML Form generator & manager
 
+<img src="https://travis-ci.org/mutt-forms/mutt-forms.svg?branch=master">
+
 Mutt forms is a tool for creating HTML forms in Javascript
 from JSON Schema definitions.
 
