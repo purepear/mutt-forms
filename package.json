@@ -1,6 +1,6 @@
 {
-  "name": "mutt-forms",
-  "version": "1.14.0",
+  "name": "@mutt/forms",
+  "version": "2.0.0",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -31,13 +31,13 @@
   "main": "src/index.js",
   "module": "dist/mutt-forms.es.js",
   "description": "HTML Forms with a squishy face.",
-  "homepage": "https://github.com/boughtbymany/mutt-forms",
+  "homepage": "https://github.com/mutt-forms/mutt-forms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boughtbymany/mutt-forms.git"
+    "url": "https://github.com/mutt-forms/mutt-forms.git"
   },
   "bugs": {
-    "url": "https://github.com/boughtbymany/mutt-forms/issues"
+    "url": "https://github.com/mutt-forms/mutt-forms/issues"
   },
   "files": [
     "dist",
@@ -81,5 +81,8 @@
   },
   "prettier": {
     "semi": false
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
