@@ -21,10 +21,7 @@ export default {
     resolve(),
     json(),
     babel({
-      exclude: [
-        'node_modules/**',
-        '*.json',
-      ],
+      exclude: ["node_modules/**", "*.json"]
     }),
     uglify({
       mangle: false,
