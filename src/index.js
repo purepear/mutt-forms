@@ -15,6 +15,8 @@ import * as widgets from "./widgets"
 import * as validators from "./validators"
 import * as serializers from "./serializers"
 
+import packageJson from "../package.json"
+
 /**
  * Main Mutt API.
  * @returns {MuttForm} Returns an instance of a MuttForm
@@ -67,6 +69,6 @@ function initApi(Mutt) {
 
 initApi(Mutt)
 
-Mutt.version = "2.0.0"
+Mutt.version = packageJson.version
 
 export default Mutt

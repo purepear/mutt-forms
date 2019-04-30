@@ -1,6 +1,6 @@
 {
   "name": "@mutt/forms",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "author": {
     "name": "Nick Snell",
@@ -69,6 +69,7 @@
     "prettier": "^1.15.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0"
   },
