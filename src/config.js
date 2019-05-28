@@ -4,9 +4,8 @@
  * @copyright Bought By Many 2018
  */
 
-"use strict"
-
 import MuttForm from "./mutt"
+import { Fieldset } from "./fieldsets/core"
 import * as fields from "./fields"
 import * as widgets from "./widgets"
 import * as serializers from "./serializers"
@@ -30,7 +29,8 @@ class MuttConfig {
   constructor() {
     this._config = {
       settings: {
-        debug: false
+        debug: false,
+        fieldset: Fieldset,
       },
       fields: {
         array: fields.ArrayField,
@@ -42,26 +42,9 @@ class MuttConfig {
         string: fields.StringField,
         date: fields.StringField,
         datetime: fields.StringField,
-        button: fields.ButtonField
       },
       widgets: {
-        array: widgets.ArrayInput,
-        checkbox: widgets.CheckboxInput,
-        checkboxlist: widgets.CheckboxList,
-        date: widgets.DateInput,
-        dateselect: widgets.DateSelectionInput,
-        number: widgets.NumberInput,
-        currency: widgets.CurrencyInput,
-        object: widgets.ObjectInput,
-        radio: widgets.RadioInput,
-        select: widgets.SelectInput,
-        text: widgets.TextInput,
-        textarea: widgets.TextAreaInput,
-        email: widgets.EmailInput,
-        hidden: widgets.HiddenInput,
-        password: widgets.PasswordInput,
-        display: widgets.DisplayWidget,
-        button: widgets.ButtonWidget
+
       },
       serializers: {
         trim: serializers.TrimSerializer
@@ -73,7 +56,7 @@ class MuttConfig {
         integer: validators.IntegerValidator,
         regex: validators.RegexValidator,
         alpha: validators.AlphaValidator
-      }
+      },
     }
   }
 

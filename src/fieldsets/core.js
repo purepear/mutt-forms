@@ -2,8 +2,6 @@
  * @file Fieldset Interface
  */
 
-"use strict"
-
 import { Field } from "../fields/core"
 
 /**

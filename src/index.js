@@ -4,12 +4,11 @@
  * @copyright Bought By Many 2018
  */
 
-"use strict"
-
 import MuttForm from "./mutt"
 import MuttConfig from "./config"
 import { logger, mixin } from "./utils"
 
+import { Fieldset } from "./fieldsets/core"
 import * as fields from "./fields"
 import * as widgets from "./widgets"
 import * as validators from "./validators"
@@ -65,6 +64,7 @@ function initApi(Mutt) {
   Mutt.widgets = widgets
   Mutt.validators = validators
   Mutt.serializers = serializers
+  Mutt.fieldset = Fieldset
 }
 
 initApi(Mutt)

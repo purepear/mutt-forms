@@ -7,7 +7,6 @@
 "use strict"
 
 import Mutt from "./index"
-import { Fieldset } from "./fieldsets/core"
 
 /**
  * Main Mutt form interface. This instance is used to build,
@@ -52,6 +51,7 @@ class MuttForm {
    */
   build(schema, options = null) {
     // TODO: Allow build options override
+    const FieldsetKlass = Mutt.config.getSetting('fieldset')
 
     // If fieldsets is specfied in the form options we are
     // going to attempt to build multiple ones
@@ -77,7 +77,7 @@ class MuttForm {
           fieldsetLabel = fieldsetSpec.options.label
         }
 
-        let fieldset = Fieldset.new(
+        let fieldset = FieldsetKlass.new(
           schema,
           options,
           fieldsetFields,
@@ -89,7 +89,7 @@ class MuttForm {
         fieldsetIndex++
       }
     } else {
-      let fieldset = Fieldset.new(schema, options)
+      let fieldset = FieldsetKlass.new(schema, options)
 
       this.fieldsets.push(fieldset)
     }
@@ -131,124 +131,6 @@ class MuttForm {
     for (let fieldset of this.fieldsets) {
       fieldset.populate(data)
     }
-  }
-
-  /**
-   * Render the form
-   * @param {HTMLElement} mount Containing element for the Mutt Form
-   * @return {Promise} a promise to be resolved once rendering
-   * is complete
-   */
-  render(mount) {
-    // Save the mount point...
-    this.mount = mount
-
-    return new Promise(resolve => {
-      let formContainer = document.createDocumentFragment()
-      this.form = document.createElement("form")
-
-      if (this.id) {
-        this.form.setAttribute("id", this.id)
-      }
-
-      this.form.setAttribute("method", "POST")
-      this.form.setAttribute("action", "")
-      this.form.setAttribute("class", "mutt-form")
-
-      if (this.multipart) {
-        this.form.setAttribute("enctype", "multipart/form-data")
-      }
-
-      for (let fieldset of this.fieldsets) {
-        let fieldsetElement = fieldset.render()
-        this.form.appendChild(fieldsetElement)
-      }
-
-      // Add form controls
-      let buttonClass = "mutt-button"
-      let buttonText = "Submit"
-
-      // Check for button overide options
-      if (this.options.hasOwnProperty("buttons")) {
-        if (this.options.buttons.hasOwnProperty("submit")) {
-          if (this.options.buttons.submit.hasOwnProperty("class")) {
-            let submitClass = this.options.buttons.submit.class
-            buttonClass = buttonClass + " " + submitClass
-          }
-
-          if (this.options.buttons.submit.hasOwnProperty("text")) {
-            buttonText = this.options.buttons.submit.text
-          }
-        }
-      }
-
-      let buttonWrapper = document.createElement("div")
-      buttonWrapper.setAttribute("class", "mutt-button-wrapper")
-
-      // Add any aditional buttons specified in the options
-      if (this.options.hasOwnProperty("buttons")) {
-        for (let buttonName of Object.keys(this.options.buttons)) {
-          if (buttonName === "submit") {
-            // We always default this
-            continue
-          }
-
-          let buttonSpec = this.options.buttons[buttonName]
-
-          // Setup a new button
-          let button = document.createElement("button")
-          button.setAttribute("name", buttonName)
-          button.setAttribute("class", buttonSpec.class)
-          button.setAttribute("type", "button")
-          button.textContent = buttonSpec.text
-          button.onclick = buttonSpec.callback
-
-          this.buttons[buttonName] = button
-
-          buttonWrapper.appendChild(button)
-        }
-      }
-
-      let submitButton = document.createElement("button")
-      submitButton.setAttribute("class", buttonClass)
-      submitButton.setAttribute("type", "submit")
-      submitButton.textContent = buttonText
-      submitButton.onclick = e => {
-        this.submit(e)
-        return false
-      }
-
-      this.buttons.submit = submitButton
-      buttonWrapper.appendChild(submitButton)
-
-      this.form.appendChild(buttonWrapper)
-
-      // Build the form and render to the viewport
-      formContainer.appendChild(this.form)
-      this.mount.appendChild(formContainer)
-
-      // Form has been renderd to the stage, call
-      // the post render hooks
-      for (let fieldset of this.fieldsets) {
-        fieldset.postRender()
-      }
-
-      resolve(this)
-    })
-  }
-
-  /**
-   * Remove the form from the stage
-   * @return {bool} Confirmation of destruction
-   */
-  destroy() {
-    if (this.mount) {
-      let form = this.mount.querySelector("form")
-      this.mount.removeChild(form)
-      return true
-    }
-
-    return false
   }
 
   /**

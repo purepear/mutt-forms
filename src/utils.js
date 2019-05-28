@@ -2,8 +2,6 @@
  * @file Utilities
  */
 
-"use strict"
-
 import Mutt from "./index"
 import merge from "deepmerge"
 

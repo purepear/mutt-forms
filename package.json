@@ -17,7 +17,7 @@
     },
     {
       "name": "Alex Russell",
-      "email": "me@alexrussell.me.uk"
+      "email": "alexr@boughtbymany.com"
     },
     {
       "name": "Jack Prior",
@@ -26,6 +26,14 @@
     {
       "name": "Andy Pattenden",
       "email": "andyp@boughtbymany.com"
+    },
+    {
+      "name": "Shaun Dobson",
+      "email": "shaun@boughtbymany.com"
+    },
+    {
+      "name": "Sam Hicks",
+      "email": "samh@boughtbymany.com"
     }
   ],
   "main": "src/index.js",

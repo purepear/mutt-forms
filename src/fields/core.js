@@ -51,6 +51,7 @@ export class Field {
     this.sortOrder = order
     this.locked = false
     this.parent = parent
+    this._value = null
 
     if (!this.label) {
       this.label = this.name
@@ -61,22 +62,24 @@ export class Field {
     // Setup the widget
     let WidgetKlass = this.getWidget()
 
-    if (widget) {
-      WidgetKlass = widget
+    if (WidgetKlass) {
+      if (widget) {
+        WidgetKlass = widget
+      }
+
+      const initalValue = initial || this.initialValue()
+
+      this.widget = new WidgetKlass(
+        this,
+        this.type,
+        this.id,
+        this.name,
+        this.label,
+        this.attribs,
+        this.options,
+        initalValue
+      )
     }
-
-    const initalValue = initial || this.initialValue()
-
-    this.widget = new WidgetKlass(
-      this,
-      this.type,
-      this.id,
-      this.name,
-      this.label,
-      this.attribs,
-      this.options,
-      initalValue
-    )
 
     this._errors = []
   }
@@ -113,11 +116,11 @@ export class Field {
    * Property - get/set value
    */
   get value() {
-    return this.widget.getValue()
+    return this._value
   }
 
   set value(value) {
-    this.widget.setValue(value)
+    this._value = value
   }
 
   /**
