@@ -167,24 +167,6 @@ export class Fieldset {
   }
 
   /**
-   * Lock all of the fields in the fieldset
-   */
-  lock() {
-    for (const field of this.fields) {
-      field.lock()
-    }
-  }
-
-  /**
-   * Unlock all the fields in the fieldset
-   */
-  unlock() {
-    for (const field of this.fields) {
-      field.unlock()
-    }
-  }
-
-  /**
    * Get a field in the form by it's path. Paths should be
    * provided in 'dot' notation - i.e "some.example.path"
    * @params {string} path dot notation path to field to search for

@@ -49,7 +49,6 @@ export class Field {
     this.options = options
     this.validators = validators
     this.sortOrder = order
-    this.locked = false
     this.parent = parent
 
     if (!this.label) {
@@ -176,34 +175,6 @@ export class Field {
       this.widget.refreshErrorState(this.errors)
       return false
     }
-
-    return true
-  }
-
-  /**
-   * Turn the field from an editable elment to a readonly one
-   */
-  lock() {
-    if (this.locked) {
-      return false
-    }
-
-    this.widget.lock()
-    this.locked = true
-
-    return true
-  }
-
-  /*
-   * Restore a field from a locked state
-   */
-  unlock() {
-    if (!this.locked) {
-      return false
-    }
-
-    this.widget.unlock()
-    this.locked = false
 
     return true
   }
