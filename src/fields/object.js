@@ -158,9 +158,30 @@ export class ObjectField extends Field {
   validate() {
     let valid = true
 
+    // Run each of the subfields' validators
+    Object.values(this.object).forEach(field => field.validate())
+
+    // Run this field's validators
+    if (this.validators.length > 0) {
+      for (const validator of this.validators) {
+        if (!validator.validate(this.value)) {
+          for (const [fieldName, error] of Object.entries(validator.error)) {
+            const field = this.object[fieldName]
+
+            // Add a field error whilst maintaining any existing ones
+            field.errors = error
+
+            // Re-render the widget to show the error
+            field.widget.refreshErrorState(field.errors)
+          }
+        }
+      }
+    }
+
+    // Make all of the subfields' errors available to this field
     for (let key of Object.keys(this.object)) {
       let field = this.object[key]
-      if (!field.validate()) {
+      if (field.errors.length) {
         this._errors[key] = field.errors
         valid = false
       }
