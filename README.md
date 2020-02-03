@@ -4,6 +4,8 @@
 
 > A HTML Form generator & manager
 
+<img src="https://travis-ci.org/mutt-forms/mutt-forms.svg?branch=master">
+
 Mutt forms is a tool for creating HTML forms in Javascript
 from JSON Schema definitions.
 
@@ -21,18 +23,18 @@ API to these tools.
 
 The easiest way to get started with Mutt is to install via NPM:
 
-`npm install mutt-forms`
+`npm install @mutt/forms`
 
 or
 
-`yarn add mutt-forms`
+`yarn add @mutt/forms`
 
 
 ### Getting Started
 
 ```javascript
 
-import Mutt from 'mutt-forms'
+import Mutt from '@mutt/forms'
 
 let form = new Mutt({
   type: 'object',
@@ -61,4 +63,4 @@ All pull requests should be made against the `master` branch.
 
 ---
 
-(c) Bought By Many 2018. Credit to Helena Long for the Mutt Logo :)
+(c) Bought By Many 2019. Credit to Helena Long for the Mutt Logo :)

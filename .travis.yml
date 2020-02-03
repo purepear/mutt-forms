@@ -1,5 +1,18 @@
 language: node_js
 node_js:
-  - "node"
-  - "8"
-  - "7"
+- node
+- '9'
+- '8'
+cache: npm
+script:
+- npm run lint
+- npm run test
+deploy:
+  provider: npm
+  email: nick@muttforms.org
+  api_key:
+    secure: YuumxlT7yfDrSOjWrJmimbUgV+iEdFCZQEAu9ACVOfoiYkEkc+1DG2LC8c4errMmAGPtjbm6R2dgxddxUamQap8UmhXgC22HpL/uu634Jla7rWLPPnUvaKqIME/tngFsM1q/Ln+RiBOI0lUIMKUhgv9sQ5o9MjhvQ9ZddTtEBeR7VxQQ6TAa9nZ/5HZTNlcEORD6c6gE+GZCdB+zMu+B/wuMARdS0HT7scBy0Ud+ScSaz0aj67tt86501wNuJUnZTg80Odf2806/G9fldeefh/b9MQzjT33Rj21WvUbEvcGv2dtokyEYUvFfTH5neqV0ve5geW6YM6CyTWIcXATQYbBYrn4CkELrg1alF8VStcNTNdAmiiIyLkNmxvB7hXPoVqbhEOKDxanJt4weDjzTmS1aS8gYJaXpJpJCzuwIwssD3NdrNhUIblgb1hMssA4LSkwBJ0KSmHdJ0Y589E3JfK1X9otX+fvoRCV/ihRLdZXUTAqWsYKwrg0tSmaWM677q2vq/YpAcTAxY0qGzD5y13cwi2Y2MkeyseYKyWFplBjecRPTR7evO59EeWJfCWnzt5WnAGVB9VoKdHq3uYQcNxPz2C1OcIwVYimjPiLuTrfeTa6EVR7Dx9Ouob+/n1uVGP7Xt9WDG78ShDKI/eu3fCF4vpiVZMvaEBTS8cxGEEQ=
+  on:
+    tags: true
+    branch: master
+    repo: mutt-forms/mutt-forms

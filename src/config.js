@@ -69,6 +69,7 @@ class MuttConfig {
       validators: {
         required: validators.RequiredValidator,
         booleanRequired: validators.BooleanRequiredValidator,
+        booleanTrue: validators.BooleanTrueValidator,
         length: validators.LengthValidator,
         integer: validators.IntegerValidator,
         regex: validators.RegexValidator,
