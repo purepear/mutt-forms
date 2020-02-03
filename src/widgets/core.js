@@ -40,7 +40,6 @@ export class Widget {
     this.attribs = attribs
     this.options = options
     this.value = initial
-    this.locked = false
     this.errors = []
   }
 
@@ -100,50 +99,6 @@ export class Widget {
   postRender() {
     // Default is to do nothing...
     return
-  }
-
-  /**
-   * Lock the widget - this places it in a read only state
-   * @returns {bool} returns true if lock is successful, false otherwise
-   */
-  lock() {
-    if (this.locked) {
-      return false
-    }
-
-    let wrapper = this.getElementWrapper()
-    let element = this.getElement()
-
-    // Clear the existing field...
-    wrapper.removeChild(element)
-
-    this.locked = true
-
-    return true
-  }
-
-  /**
-   * Unlock the widget - this removes any previous lock and returns
-   * it to it's default state.
-   * @returns {bool} returns true if unlock is successful, false otherwise
-   */
-  unlock() {
-    if (!this.locked) {
-      return false
-    }
-
-    let wrapper = this.getElementWrapper()
-    let element = this.getElement()
-
-    // Clear the display field
-    wrapper.removeChild(element)
-
-    let field = this.renderField()
-    wrapper.appendChild(field)
-
-    this.locked = false
-
-    return true
   }
 
   /**

@@ -33,7 +33,6 @@ class MuttForm {
     this.mount = false
     this.multipart = false
     this.id = null
-    this.locked = false
 
     this.form = null
     this.fieldsets = []
@@ -309,29 +308,6 @@ class MuttForm {
     }
 
     return false
-  }
-
-  /**
-   * Lock a form, this changes all of the fields to a read only state
-   */
-  lock() {
-    Mutt.logger("Locking form")
-
-    for (let fieldset of this.fieldsets) {
-      fieldset.lock()
-    }
-  }
-
-  /**
-   * Unlock a form, this can be used to restore a locked form to it's
-   * editable state
-   */
-  unlock() {
-    Mutt.log("Unlocking form")
-
-    for (let fieldset of this.fieldsets) {
-      fieldset.unlock()
-    }
   }
 
   /**
