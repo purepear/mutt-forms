@@ -1,19 +1,25 @@
 {
   "presets": [
-    ["env", {
-      "modules": false,
-      "loose": true,
-      "targets": {
-        "browsers": [
-          "last 2 versions",
-          "Explorer 11"
-        ]
+    [
+      "@babel/env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "Explorer 11"
+          ]
+        }
       }
-    }]
+    ]
   ],
   "env": {
     "test": {
-      "presets": [["env"]]
+      "presets": [
+        [
+          "@babel/env"
+        ]
+      ]
     }
   }
 }

@@ -6,28 +6,6 @@
     "name": "Nick Snell",
     "email": "nick@boughtbymany.com"
   },
-  "contributors": [
-    {
-      "name": "Nick Snell",
-      "email": "nick@boughtbymany.com"
-    },
-    {
-      "name": "Richard Roth",
-      "email": "richard@boughtbymany.com"
-    },
-    {
-      "name": "Alex Russell",
-      "email": "me@alexrussell.me.uk"
-    },
-    {
-      "name": "Jack Prior",
-      "email": "jack@boughtbymany.com"
-    },
-    {
-      "name": "Andy Pattenden",
-      "email": "andyp@boughtbymany.com"
-    }
-  ],
   "main": "src/index.js",
   "module": "dist/mutt-forms.es.js",
   "description": "HTML Forms with a squishy face.",
@@ -55,13 +33,11 @@
     "deepmerge": "^2.2.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^25.1.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "braces": ">=2.3.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "eslint": "^5.6.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.0",
@@ -69,11 +45,9 @@
     "jsdoc": "^3.6.3",
     "prettier": "^1.15.2",
     "release-it": "^12.4.3",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup": "^1.31.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-terser": "^5.2.0"
   },
   "scripts": {
     "build": "rollup -c",
