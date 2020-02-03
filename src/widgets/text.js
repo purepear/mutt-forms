@@ -186,7 +186,7 @@ export class PasswordInput extends TextInput {
 
 /**
  * DisplayWidget - Display only widget, this just shows the field as
- * plain text. Typically used by the lock form utility.
+ * plain text.
  */
 export function displayReadonlyValue(value) {
   let display = document.createElement("span")
