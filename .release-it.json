@@ -1,0 +1,14 @@
+{
+  "github": {
+    "release": true
+  },
+  "git": {
+    "tagName": "v${version}"
+  },
+  "hooks": {
+    "before:init": [
+      "npm run lint",
+      "npm test"
+    ]
+  }
+}
