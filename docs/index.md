@@ -23,10 +23,6 @@ The easiest way to get started with Mutt is to install via NPM:
 
 `npm install mutt-forms`
 
-or
-
-`yarn add mutt-forms`
-
 
 ### Getting Started
 
