@@ -65,7 +65,7 @@
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.0",
     "jest": "^23.6.0",
-    "jsdoc": "^3.4.3",
+    "jsdoc": "^3.6.3",
     "prettier": "^1.15.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
