@@ -23,7 +23,10 @@ export class RadioInput extends BaseChoiceWidget {
       if (options.hasOwnProperty("choices")) {
         this.choices = options.choices
       } else {
-        this.choices = [[true, "Yes"], [false, "No"]]
+        this.choices = [
+          [true, "Yes"],
+          [false, "No"]
+        ]
       }
     }
   }

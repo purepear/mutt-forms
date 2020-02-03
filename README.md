@@ -25,10 +25,6 @@ The easiest way to get started with Mutt is to install via NPM:
 
 `npm install @mutt/forms`
 
-or
-
-`yarn add @mutt/forms`
-
 
 ### Getting Started
 
@@ -63,4 +59,4 @@ All pull requests should be made against the `master` branch.
 
 ---
 
-(c) Bought By Many 2019. Credit to Helena Long for the Mutt Logo :)
+(c) Bought By Many 2020. Credit to Helena Long for the Mutt Logo :)
