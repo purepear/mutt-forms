@@ -1,7 +1,7 @@
 "use strict"
 
 import Mutt from "../src/index"
-import { Validator } from "../src/validators"
+import { Validator, RequiredValidator } from "../src/validators"
 
 describe("Object Field", () => {
   test("test objects serialize correctly", () => {
@@ -164,6 +164,60 @@ describe("Object Field", () => {
       expect(field.object.name.widget.refreshErrorState).toHaveBeenCalledWith([
         "Muppets are not allowed"
       ])
+    })
+  })
+
+  describe("Nested object validation", () => {
+    const schema = {
+      type: "object",
+      properties: {
+        name: {
+          type: "string"
+        },
+        contacts: {
+          type: "object",
+          properties: {
+            address: {
+              type: "string"
+            }
+          }
+        }
+      }
+    }
+
+    const options = {
+      name: {
+        validators: [new RequiredValidator()]
+      },
+      contacts: {
+        address: {
+          validators: [new RequiredValidator()]
+        }
+      }
+    }
+
+    test("passes if nested object validation passes", () => {
+      const field = Mutt.fields.ObjectField.new("test", "test", schema, options)
+      field.value = {
+        name: "Wonder Woman",
+        contacts: {
+          address: "Themyscira"
+        }
+      }
+
+      expect(field.validate()).toBe(true)
+    })
+
+    test("fails if nested object validation fails", () => {
+      const field = Mutt.fields.ObjectField.new("test", "test", schema, options)
+      field.value = {
+        name: "Wonder Woman",
+        contacts: {
+          address: ""
+        }
+      }
+
+      expect(field.validate()).toBe(false)
     })
   })
 })

@@ -159,7 +159,11 @@ export class ObjectField extends Field {
     let valid = true
 
     // Run each of the subfields' validators
-    Object.values(this.object).forEach(field => field.validate())
+    Object.values(this.object).forEach(field => {
+      if (!field.validate()) {
+        valid = false
+      }
+    })
 
     // Run this field's validators
     if (this.validators.length > 0) {
